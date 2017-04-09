@@ -17,6 +17,7 @@ import com.example.yang.myapplication.basic.BaseActivity;
 
 import static com.example.yang.myapplication.Browser.sizeThisPage;
 import static com.example.yang.myapplication.Browser.webContentList;
+import static com.example.yang.myapplication.Browser.websiteNow;
 
 
 //列表所在Activity
@@ -109,6 +110,7 @@ public class ListActivity extends BaseActivity {
     protected void onDestroy(){
         super.onDestroy();
         webContentList.clear();//退出列表之后清空数组
+        websiteNow.setNextPageUrl(null);//重置下一页
         if (receiver!=null){
             unregisterReceiver(receiver);
         }

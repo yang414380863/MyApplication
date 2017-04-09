@@ -10,6 +10,8 @@ public class Website {
 
     private String webSiteName;//网站名
     private String indexUrl;//网站首页
+    private String nextPageUrl;
+    private String nextDetailPageUrl;
     private String[] category;//分类
     private int loginRequired;
 
@@ -56,6 +58,19 @@ public class Website {
         this.category = category;
     }
 
+    public String getNextPageUrl() {
+        return nextPageUrl;
+    }
 
+    public void setNextPageUrl(String nextPageUrl) {
+        this.nextPageUrl = nextPageUrl;
+    }
 
+    public String getNextDetailPageUrl() {
+        return nextDetailPageUrl;
+    }
+
+    public void setNextDetailPageUrl(String nextDetailPageUrl) {
+        this.nextDetailPageUrl = nextDetailPageUrl;
+    }
 }

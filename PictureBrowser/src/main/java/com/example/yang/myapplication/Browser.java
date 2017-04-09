@@ -21,8 +21,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static android.R.attr.id;
-
 
 /**
  * Created by YanGGGGG on 2017/3/21.
@@ -42,12 +40,13 @@ public class Browser {
             @Override
             public void run() {
                 try{
-
-                    //Document doc2= Jsoup.connect(websiteNow.getIndexUrl()).get();
-                    //analysis(doc2);
+                    String url=websiteNow.getIndexUrl();
                     OkHttpClient client = new OkHttpClient();
+                    if (websiteNow.getNextPageUrl()!=null){
+                        url=websiteNow.getNextPageUrl();
+                    }
                     final Request request = new Request.Builder()
-                            .url(websiteNow.getIndexUrl())
+                            .url(url)
                             .build();
                     Call call = client.newCall(request);
                     call.enqueue(new Callback() {
@@ -121,11 +120,11 @@ public class Browser {
                         .select(websiteNow.getRuleAll().getTitleRule().getSelector()).get(i)
                         .text());
             }
-
+            websiteNow.setNextDetailPageUrl(webContentList.get(sizeNow).getLink());
             //Log.d("No."+i,"Link:"+webContentList.get(sizeNow).getLink());
             //Log.d("No."+i,"Thumbnail:"+webContentList.get(sizeNow).getThumbnail());
             //Log.d("No."+i,"Title:"+webContentList.get(sizeNow).getTitle());
-            moreDetail(sizeNow,webContentList.get(sizeNow).getLink());
+            sendRequestDetail(sizeNow);
 
         }
         Log.d("Finish load "+sizeNow+" item","Next item is No "+sizeNow);
@@ -157,17 +156,14 @@ public class Browser {
 
     }
 
-    public  static void moreDetail(final int id,final String string){
-        //传入id 返回链接
+    public  static void sendRequestDetail(final int id){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try{
-                    //Document doc= Jsoup.connect(webContentList.get(id).getLink()).get();
-
                     OkHttpClient client = new OkHttpClient();
                     final Request request = new Request.Builder()
-                            .url(string)
+                            .url(websiteNow.getNextDetailPageUrl())
                             .build();
                     Call call = client.newCall(request);
                     call.enqueue(new Callback() {
@@ -190,6 +186,7 @@ public class Browser {
             }
         }).start();
     }
+
     public static void analysisDetail(final int id,Document doc) {
 
         String nextDetailPage;
@@ -208,7 +205,8 @@ public class Browser {
                 webContentList.get(id).setImg(string.toString());
                 //Log.d("string " + id, " " + string);
             } else {
-                moreDetail(id, nextDetailPage);
+                websiteNow.setNextDetailPageUrl(nextDetailPage);
+                sendRequestDetail(id);
                 //Log.d("nextPageDetail","not exist");
             }
         } else {//没有下一页的Rule
@@ -217,12 +215,13 @@ public class Browser {
         }
 
     }
+
     public  static void nextPage(){
         if (nextPageUrl!=null){
-            websiteNow.setIndexUrl(nextPageUrl);
+            websiteNow.setNextPageUrl(nextPageUrl);
             sendRequest(websiteNow);
         }else {
-            Log.d("TAG","NO MORE");
+            //Log.d("TAG","NO MORE");
         }
     }
 
