@@ -6,10 +6,10 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.yang.myapplication.basic.BaseActivity;
-
-import static android.R.attr.offset;
-import static android.R.attr.order;
-import static android.R.id.button1;
+import com.example.yang.myapplication.web.Browser;
+import com.example.yang.myapplication.web.Rule;
+import com.example.yang.myapplication.web.RuleAll;
+import com.example.yang.myapplication.web.Website;
 
 
 //开始界面 以后换

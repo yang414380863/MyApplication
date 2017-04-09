@@ -14,10 +14,11 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.yang.myapplication.basic.BaseActivity;
+import com.example.yang.myapplication.web.Browser;
 
-import static com.example.yang.myapplication.Browser.sizeThisPage;
-import static com.example.yang.myapplication.Browser.webContentList;
-import static com.example.yang.myapplication.Browser.websiteNow;
+import static com.example.yang.myapplication.web.Browser.sizeThisPage;
+import static com.example.yang.myapplication.web.Browser.webContentList;
+import static com.example.yang.myapplication.web.Browser.websiteNow;
 
 
 //列表所在Activity

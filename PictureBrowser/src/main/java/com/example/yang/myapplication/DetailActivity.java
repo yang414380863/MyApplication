@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import com.example.yang.myapplication.basic.BaseActivity;
+import com.example.yang.myapplication.web.Browser;
+import com.example.yang.myapplication.web.WebContent;
 
 //详情所在Activity
 public class DetailActivity extends BaseActivity {

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.basic.MyApplication;
+import com.example.yang.myapplication.web.WebContent;
 
 
 /**

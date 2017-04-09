@@ -1,0 +1,124 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:2:1-38:12
+	package
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:3:11-51
+		INJECTED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml
+		INJECTED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml
+		INJECTED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:2:11-69
+	android:versionCode
+		INJECTED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml
+		INJECTED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml
+uses-permission#android.permission.INTERNET
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:5:5-66
+	android:name
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:5:22-64
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:6:5-80
+	android:name
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:6:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:7:5-79
+	android:name
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:7:22-77
+application
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:9:5-36:19
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\YanGGGGG\.android\build-cache\a426725992d84ba7bb1b4067127281d1deb7dd5c\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\YanGGGGG\.android\build-cache\a20ce93b74c21b427dfdd00fb17eab7396710661\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\YanGGGGG\.android\build-cache\d9cd4473e76413de95d6d4b5cd0e2f975a31cb80\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\YanGGGGG\.android\build-cache\96da791a253df4eed3848ea773434d8a0d5d95ca\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\YanGGGGG\.android\build-cache\6fa895532f5c64a2a596acf35178e9c896b9df2b\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\YanGGGGG\.android\build-cache\b97e641a85c44992086d075cfad8c86c7564feb7\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\YanGGGGG\.android\build-cache\82fc8a4b46124e22019389f7f44a144cb8568261\output\AndroidManifest.xml:9:5-20
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\YanGGGGG\.android\build-cache\e59991a256b033471c749f1565e5059767358114\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\YanGGGGG\.android\build-cache\302fc4fd94b37eda49fb5ca5b040bdcc13a68f12\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\YanGGGGG\.android\build-cache\2b98c984f2ee34f38f552b8ef113c827c3a6cd23\output\AndroidManifest.xml:29:5-20
+	android:label
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:13:9-41
+	android:supportsRtl
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:15:9-35
+	android:roundIcon
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:14:9-54
+	android:allowBackup
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:11:9-35
+	android:icon
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:12:9-43
+	android:theme
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:16:9-40
+	android:name
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:10:9-44
+activity#com.example.yang.myapplication.MainActivity
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:17:9-23:20
+	android:name
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:17:19-47
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:18:13-22:29
+action#android.intent.action.MAIN
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:19:17-68
+	android:name
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:19:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:21:17-76
+	android:name
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:21:27-74
+activity#com.example.yang.myapplication.ListActivity
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:24:9-25:20
+	android:name
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:24:19-47
+activity#com.example.yang.myapplication.DetailActivity
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:26:9-27:20
+	android:name
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:26:19-49
+activity#com.example.yang.myapplication.ViewPicture
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:28:9-29:20
+	android:name
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:28:19-46
+service#com.example.yang.myapplication.download.DownloadService
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:31:9-35:19
+	android:enabled
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:33:13-35
+	android:exported
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:34:13-36
+	android:name
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:32:13-53
+uses-sdk
+INJECTED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\YanGGGGG\.android\build-cache\a426725992d84ba7bb1b4067127281d1deb7dd5c\output\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\YanGGGGG\.android\build-cache\a20ce93b74c21b427dfdd00fb17eab7396710661\output\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\YanGGGGG\.android\build-cache\d9cd4473e76413de95d6d4b5cd0e2f975a31cb80\output\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\YanGGGGG\.android\build-cache\96da791a253df4eed3848ea773434d8a0d5d95ca\output\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\YanGGGGG\.android\build-cache\6fa895532f5c64a2a596acf35178e9c896b9df2b\output\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\YanGGGGG\.android\build-cache\b97e641a85c44992086d075cfad8c86c7564feb7\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\YanGGGGG\.android\build-cache\82fc8a4b46124e22019389f7f44a144cb8568261\output\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\YanGGGGG\.android\build-cache\5de00fd249a28ff5e8fd25f0a87a55e0d8ed0aed\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\YanGGGGG\.android\build-cache\e59991a256b033471c749f1565e5059767358114\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.github.chrisbanes:PhotoView:2.0.0] C:\Users\YanGGGGG\.android\build-cache\604cdaaa7e919697724038d058fb1c85bf92c727\output\AndroidManifest.xml:8:5-10:41
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\YanGGGGG\.android\build-cache\302fc4fd94b37eda49fb5ca5b040bdcc13a68f12\output\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\YanGGGGG\.android\build-cache\2b98c984f2ee34f38f552b8ef113c827c3a6cd23\output\AndroidManifest.xml:21:5-23:58
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:25.3.1] C:\Users\YanGGGGG\.android\build-cache\a426725992d84ba7bb1b4067127281d1deb7dd5c\output\AndroidManifest.xml:23:9-75
+	android:targetSdkVersion
+		INJECTED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml
+		INJECTED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml
+		INJECTED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml
+meta-data#android.support.VERSION
+ADDED from [com.android.support:appcompat-v7:25.3.1] C:\Users\YanGGGGG\.android\build-cache\a426725992d84ba7bb1b4067127281d1deb7dd5c\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\YanGGGGG\.android\build-cache\a20ce93b74c21b427dfdd00fb17eab7396710661\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\YanGGGGG\.android\build-cache\d9cd4473e76413de95d6d4b5cd0e2f975a31cb80\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\YanGGGGG\.android\build-cache\96da791a253df4eed3848ea773434d8a0d5d95ca\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\YanGGGGG\.android\build-cache\6fa895532f5c64a2a596acf35178e9c896b9df2b\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\YanGGGGG\.android\build-cache\b97e641a85c44992086d075cfad8c86c7564feb7\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\YanGGGGG\.android\build-cache\5de00fd249a28ff5e8fd25f0a87a55e0d8ed0aed\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\YanGGGGG\.android\build-cache\e59991a256b033471c749f1565e5059767358114\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\YanGGGGG\.android\build-cache\302fc4fd94b37eda49fb5ca5b040bdcc13a68f12\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\YanGGGGG\.android\build-cache\2b98c984f2ee34f38f552b8ef113c827c3a6cd23\output\AndroidManifest.xml:25:5-27:34
+	android:value
+		ADDED from [com.android.support:appcompat-v7:25.3.1] C:\Users\YanGGGGG\.android\build-cache\a426725992d84ba7bb1b4067127281d1deb7dd5c\output\AndroidManifest.xml:27:9-31
+	android:name
+		ADDED from [com.android.support:appcompat-v7:25.3.1] C:\Users\YanGGGGG\.android\build-cache\a426725992d84ba7bb1b4067127281d1deb7dd5c\output\AndroidManifest.xml:26:9-47
