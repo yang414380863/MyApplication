@@ -52,7 +52,7 @@ public class MainActivity extends BaseActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Browser.sendRequest(DEVIANTART);
+                Browser.sendRequest(DEVIANTART,"new");
                 Intent intent=new Intent(MainActivity.this,ListActivity.class);
                 startActivity(intent);
             }
@@ -62,7 +62,7 @@ public class MainActivity extends BaseActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Browser.sendRequest(POOCG);
+                Browser.sendRequest(POOCG,"new");
                 Intent intent=new Intent(MainActivity.this,ListActivity.class);
                 startActivity(intent);
             }

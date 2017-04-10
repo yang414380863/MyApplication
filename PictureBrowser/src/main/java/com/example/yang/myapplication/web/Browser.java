@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.example.yang.myapplication.basic.MyApplication;
-import com.example.yang.myapplication.web.WebContent;
-import com.example.yang.myapplication.web.Website;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -37,7 +35,7 @@ public class Browser {
     static String nextPageUrl;
 
 
-    public static void sendRequest(final Website website){
+    public static void sendRequest(final Website website,final String refreshplace){
         websiteNow =website;
         new Thread(new Runnable() {
             @Override
@@ -45,7 +43,7 @@ public class Browser {
                 try{
                     String url=websiteNow.getIndexUrl();
                     OkHttpClient client = new OkHttpClient();
-                    if (websiteNow.getNextPageUrl()!=null){
+                    if (refreshplace=="bottom"){
                         url=websiteNow.getNextPageUrl();
                     }
                     final Request request = new Request.Builder()
@@ -61,7 +59,7 @@ public class Browser {
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
                             Document doc=Jsoup.parse(response.body().string());
-                            analysis(doc);
+                            analysis(doc,refreshplace);
                         }
                     });
 
@@ -72,31 +70,41 @@ public class Browser {
         }).start();
     }
 
-    public static void analysis(Document doc){
+    public static void analysis(Document doc,String refreshplace){
 
 
         sizeThisPage=doc.select(websiteNow.getRuleAll().getThumbnailRule().getSelector()).size();
         int sizeNow=webContentList.size();//sizeNow=已经加载的item数量
         //如果是相同的一个页面 就覆盖原来的,且不增加长度  否则就加在后面
-        if (sizeNow<sizeThisPage){//为空(首次加载)/数组过小
-            for (int i=sizeNow;i<sizeThisPage;i++){
-                webContentList.add(new WebContent());
-            }
-        }else {
-            //不为空
-            if (webContentList.get(1).getThumbnail().equals(doc
-                    .select(websiteNow.getRuleAll().getLinkRule().getSelector()).get(1)
-                    .attr(websiteNow.getRuleAll().getLinkRule().getAttribute()))){
-                //是同一页面(顶部下拉刷新)
+        switch (refreshplace){
+            case ("new"):
+            {
+                //为空(首次加载)
+                webContentList.clear();
+                for (int i=0;i<sizeThisPage;i++){
+                    webContentList.add(new WebContent());
+                }
                 sizeNow=0;
-            }else {
+                break;
+            }
+            case ("top"):
+            {
+                //是同一页面(顶部下拉刷新)刷新后可能数组过小
+                for (int i=sizeNow;i<sizeThisPage;i++){
+                    webContentList.add(new WebContent());
+                }
+                sizeNow=0;
+                break;
+            }
+            case ("bottom"):{
                 //不是同一页面(底部上拉刷新)
                 for (int i=0;i<sizeThisPage;i++){
                     webContentList.add(new WebContent());
                 }
+                break;
             }
+            default:break;
         }
-
 
         Log.d("Link"," "+doc
                 .select(websiteNow.getRuleAll().getLinkRule().getSelector()).size());
@@ -225,7 +233,7 @@ public class Browser {
     public  static void nextPage(){
         if (nextPageUrl!=null){
             websiteNow.setNextPageUrl(nextPageUrl);
-            sendRequest(websiteNow);
+            sendRequest(websiteNow,"bottom");
         }else {
             //Log.d("TAG","NO MORE");
         }

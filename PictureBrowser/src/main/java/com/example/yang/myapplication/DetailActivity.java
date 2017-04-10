@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.widget.Toast;
 
 import com.example.yang.myapplication.basic.BaseActivity;
+import com.example.yang.myapplication.basic.MyApplication;
 import com.example.yang.myapplication.web.Browser;
 import com.example.yang.myapplication.web.WebContent;
+
 
 //详情所在Activity
 public class DetailActivity extends BaseActivity {
@@ -23,6 +26,7 @@ public class DetailActivity extends BaseActivity {
         int position=intent.getExtras().getInt("position");
         WebContent webContent= Browser.webContentList.get(position);
         if (webContent.getImg()==null){
+            Toast.makeText(MyApplication.getContext(),"DETAIL NOT READY YET",Toast.LENGTH_SHORT).show();
             finish();
         }
 

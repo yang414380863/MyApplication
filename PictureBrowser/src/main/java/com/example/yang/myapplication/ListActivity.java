@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -32,13 +31,14 @@ public class ListActivity extends BaseActivity {
     final ListAdapter adapter=new ListAdapter(this);
 
     static int isRefreshing=0;
+    static String refreshPlace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list);
         final View systemBar = findViewById(R.id.content);
-
+        refreshPlace="top";
 
         //广播接收器
         IntentFilter intentFilter=new IntentFilter();
@@ -62,17 +62,12 @@ public class ListActivity extends BaseActivity {
             @Override
             public void onRefresh() {
                 //获取最新数据并刷新
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.getWebContents().clear();//要重新指向一次才能检测到刷新
-                        adapter.getWebContents().addAll(webContentList);
-                        swipeRefreshLayout.setRefreshing(false);
-                        Log.d("refresh","top refresh!");
-                        adapter.notifyDataSetChanged();
-                    }
-                },1000);//1S之后执行
-
+                if (isRefreshing==0){
+                    isRefreshing=1;
+                    refreshPlace="top";
+                    Browser.sendRequest(websiteNow,"top");
+                    Log.d("refresh","top is going to refresh!");
+                }
             }
         });
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -96,6 +91,7 @@ public class ListActivity extends BaseActivity {
                 if(!recyclerView.canScrollVertically(1)){//检测划到了底部
                     if (isRefreshing==0){
                         isRefreshing=1;
+                        refreshPlace="bottom";
                         Log.d("refresh","bottom is going to refresh!");
                         Browser.nextPage();//发送加载下一页的请求
                     }
@@ -110,8 +106,6 @@ public class ListActivity extends BaseActivity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        webContentList.clear();//退出列表之后清空数组
-        websiteNow.setNextPageUrl(null);//重置下一页
         if (receiver!=null){
             unregisterReceiver(receiver);
         }
@@ -127,7 +121,11 @@ public class ListActivity extends BaseActivity {
                     Log.d("refresh","finish refresh!");
                     adapter.getWebContents().clear();//要重新指向一次才能检测到刷新
                     adapter.getWebContents().addAll(webContentList);
-                    adapter.notifyItemRangeInserted(webContentList.size(),webContentList.size()+sizeThisPage);
+                    if (refreshPlace=="top"){
+                        adapter.notifyDataSetChanged();
+                    }else if (refreshPlace=="bottom"){
+                        adapter.notifyItemRangeInserted(webContentList.size(),webContentList.size()+sizeThisPage);
+                    }
                     swipeRefreshLayout.setRefreshing(false);
                     isRefreshing=0;
                 }
