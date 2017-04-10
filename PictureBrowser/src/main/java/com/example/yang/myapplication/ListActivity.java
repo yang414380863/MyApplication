@@ -29,7 +29,7 @@ public class ListActivity extends BaseActivity {
     //下拉刷新 监听器
     SwipeRefreshLayout swipeRefreshLayout;
 
-    final ListAdapter adapter=new ListAdapter();
+    final ListAdapter adapter=new ListAdapter(this);
 
     static int isRefreshing=0;
 

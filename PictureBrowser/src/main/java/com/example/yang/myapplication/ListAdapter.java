@@ -1,6 +1,7 @@
 package com.example.yang.myapplication;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.yang.myapplication.basic.MyApplication;
 import com.example.yang.myapplication.web.Browser;
 import com.example.yang.myapplication.web.WebContent;
 
@@ -25,6 +25,7 @@ import java.util.ArrayList;
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
 
     private ArrayList<WebContent> webContents=new ArrayList<>();
+    private Context context;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView image;
@@ -37,8 +38,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
         }
     }
 
-    public ListAdapter(){//构造方法
+    public ListAdapter(Context context){//构造方法
         webContents.addAll(Browser.webContentList);
+        this.context=context;
     }
 
     @Override
@@ -51,10 +53,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
             @Override public void onClick(View v) {
                 //点击->获取链接->显示图片/目录
                 int position=holder.getAdapterPosition();
-                Intent intent=new Intent(MyApplication.getContext(),DetailActivity.class);
+                Intent intent=new Intent(context,DetailActivity.class);
                 intent.putExtra("position",position);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                MyApplication.getContext().startActivity(intent);
+                context.startActivity(intent);
             }
         });
         return holder;
@@ -65,10 +67,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
         WebContent webContent= Browser.webContentList.get(position);
         holder.name.setText(webContent.getTitle());
         Glide
-                .with(MyApplication.getContext())
+                .with(context)
                 .load(webContent.getThumbnail())
-                .thumbnail(Glide.with(MyApplication.getContext()).load(R.drawable.loading1))
+                //.thumbnail(Glide.with(context).load(R.drawable.loading1))//好像有点问题
                 .placeholder(R.drawable.white)
+                .error(R.drawable.error)
                 .fitCenter()
                 .dontAnimate()//无载入动画
                 //.crossFade() //设置淡入淡出效果，默认300ms，可以传参 会导致图片变形 先不用

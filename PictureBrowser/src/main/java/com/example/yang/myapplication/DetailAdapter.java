@@ -1,6 +1,7 @@
 package com.example.yang.myapplication;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.yang.myapplication.basic.MyApplication;
 import com.example.yang.myapplication.web.WebContent;
 
 
@@ -21,9 +21,10 @@ import com.example.yang.myapplication.web.WebContent;
 
 public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder>{
 
-    String[] url;
-    int numOfPic;
-    WebContent webContent;
+    private String[] url;
+    private int numOfPic;
+    private WebContent webContent;
+    private Context context;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView image;
@@ -36,11 +37,14 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         }
     }
 
-    public DetailAdapter(WebContent webContent){
+    public DetailAdapter(WebContent webContent, Context context){
+        this.context=context;
         this.webContent=webContent;
-        String strings=webContent.getImg();
-        url=strings.split(",");//如果strings包含多个链接,将其拆分开成string[]
-        numOfPic=url.length;
+        if (webContent.getImg()!=null){
+            String strings=webContent.getImg();
+            url=strings.split(",");//如果strings包含多个链接,将其拆分开成string[]
+            numOfPic=url.length;
+        }
 
 
     }
@@ -54,10 +58,10 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             @Override public void onClick(View v) {
                 //显示下载按钮 以及其他
                 int position=holder.getAdapterPosition();
-                Intent intent=new Intent(MyApplication.getContext(),ViewPicture.class);
+                Intent intent=new Intent(context,ViewPicture.class);
                 intent.putExtra("url",url[position]);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                MyApplication.getContext().startActivity(intent);
+                context.startActivity(intent);
             }
         });
         return holder;
@@ -67,9 +71,11 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder,int position){
         holder.name.setText(webContent.getTitle());
         Glide
-                .with(MyApplication.getContext())
+                .with(context)
                 .load(url[position])
-                .thumbnail(Glide.with(MyApplication.getContext()).load(R.drawable.loading1))
+                .thumbnail(Glide.with(context).load(R.drawable.loading1))
+                .placeholder(R.drawable.white)
+                .error(R.drawable.error)
                 .fitCenter()
                 .dontAnimate()//无载入动画
                 //.crossFade() //设置淡入淡出效果，默认300ms，可以传参 会导致图片变形 先不用

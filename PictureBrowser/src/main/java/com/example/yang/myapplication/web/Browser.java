@@ -195,25 +195,28 @@ public class Browser {
         String nextDetailPage;
         StringBuilder string = new StringBuilder();
         Elements list = doc.select(websiteNow.getRuleAll().getImgRule().getSelector());
+        if (webContentList.get(id).getImg()==null){
+            webContentList.get(id).setImg("");
+        }
         for (int i = 0; i < list.size(); i++) {
             string.append(list.get(i)
                     .attr(websiteNow.getRuleAll().getImgRule().getAttribute()));
             string.append(",");
         }
+        webContentList.get(id).setImg(webContentList.get(id).getImg()+string.toString());
+        //Log.d("STRING"," "+webContentList.get(id).getImg());
         if (websiteNow.getRuleAll().getNextPageDetailRule()!=null) {
             nextDetailPage = doc
                     .select(websiteNow.getRuleAll().getNextPageDetailRule().getSelector())
                     .attr(websiteNow.getRuleAll().getNextPageDetailRule().getAttribute());
             if (nextDetailPage.equals("")) {//没有下一页
-                webContentList.get(id).setImg(string.toString());
                 //Log.d("string " + id, " " + string);
-            } else {
+            } else {//继续下一页
                 websiteNow.setNextDetailPageUrl(nextDetailPage);
                 sendRequestDetail(id);
                 //Log.d("nextPageDetail","not exist");
             }
         } else {//没有下一页的Rule
-            webContentList.get(id).setImg(string.toString());
             //Log.d("nextPageDetailRule","not exist");
         }
 

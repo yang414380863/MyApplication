@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.basic.BaseActivity;
-import com.example.yang.myapplication.basic.MyApplication;
 import com.example.yang.myapplication.download.DownloadService;
 import com.github.chrisbanes.photoview.PhotoView;
 
@@ -59,7 +58,7 @@ public class ViewPicture extends BaseActivity implements View.OnClickListener {
         url=intent2.getExtras().getString("url");
         PhotoView photoView = (PhotoView) findViewById(R.id.photo_view);
         Glide
-                .with(MyApplication.getContext())
+                .with(this)
                 .load(url)
                 .into(photoView);
     }

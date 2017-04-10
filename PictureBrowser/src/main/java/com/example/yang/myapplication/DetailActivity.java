@@ -22,13 +22,16 @@ public class DetailActivity extends BaseActivity {
         Intent intent=getIntent();
         int position=intent.getExtras().getInt("position");
         WebContent webContent= Browser.webContentList.get(position);
+        if (webContent.getImg()==null){
+            finish();
+        }
 
 
         RecyclerView recyclerView=(RecyclerView)findViewById(R.id.recycle_view);
         StaggeredGridLayoutManager layoutManager=new
                 StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        final DetailAdapter adapter=new DetailAdapter(webContent);
+        final DetailAdapter adapter=new DetailAdapter(webContent,this);
         recyclerView.setAdapter(adapter);
     }
 }
