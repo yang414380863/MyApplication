@@ -37,9 +37,10 @@ public class ListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list);
-        final View systemBar = findViewById(R.id.content);
-        refreshPlace="top";
+        //final View systemBar = findViewById(R.id.content);
 
+
+        refreshPlace="top";
         //广播接收器
         IntentFilter intentFilter=new IntentFilter();
         intentFilter.addAction("com.example.yang.myapplication.LOAD_FINISH");
@@ -47,6 +48,7 @@ public class ListActivity extends BaseActivity {
         registerReceiver(receiver,intentFilter);
         swipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
 
+        //瀑布流
         RecyclerView recyclerView=(RecyclerView)findViewById(R.id.recycle_view);
         StaggeredGridLayoutManager layoutManager=new
                 StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);//列数2
@@ -78,7 +80,7 @@ public class ListActivity extends BaseActivity {
                 int SCROLL_STATE_IDLE=0;//表示屏幕已停止。屏幕停止滚动时为0
                 int SCROLL_STATE_TOUCH_SCROLL=1;//表示正在滚动。当屏幕滚动且用户使用的触碰或手指还在屏幕上时为1
                 int SCROLL_STATE_FLING=2;//手指做了抛的动作（手指离开屏幕前，用力滑了一下，屏幕产生惯性滑动）
-                if(newState ==SCROLL_STATE_FLING){
+                /**if(newState ==SCROLL_STATE_FLING){
                     systemBar.setSystemUiVisibility(
                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                                     | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION//显示导航栏
@@ -86,7 +88,7 @@ public class ListActivity extends BaseActivity {
                                     //| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION//不显示导航栏
                                     //| View.SYSTEM_UI_FLAG_FULLSCREEN//不显示状态栏
                                     | View.SYSTEM_UI_FLAG_IMMERSIVE);//沉浸模式
-                }
+                }*/
                 //划到底部刷新
                 if(!recyclerView.canScrollVertically(1)){//检测划到了底部
                     if (isRefreshing==0){
@@ -96,7 +98,7 @@ public class ListActivity extends BaseActivity {
                         Browser.nextPage();//发送加载下一页的请求
                     }
                 }else if(!recyclerView.canScrollVertically(-1)) {//检测划到了顶部
-                    systemBar.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                    /**systemBar.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);*/
                 }
 
             }
@@ -115,21 +117,16 @@ public class ListActivity extends BaseActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            swipeRefreshLayout.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Log.d("refresh","finish refresh!");
-                    adapter.getWebContents().clear();//要重新指向一次才能检测到刷新
-                    adapter.getWebContents().addAll(webContentList);
-                    if (refreshPlace=="top"){
-                        adapter.notifyDataSetChanged();
-                    }else if (refreshPlace=="bottom"){
-                        adapter.notifyItemRangeInserted(webContentList.size(),webContentList.size()+sizeThisPage);
-                    }
-                    swipeRefreshLayout.setRefreshing(false);
-                    isRefreshing=0;
-                }
-            },1000);//1S之后执行
+            Log.d("refresh","finish refresh!");
+            adapter.getWebContents().clear();//要重新指向一次才能检测到刷新
+            adapter.getWebContents().addAll(webContentList);
+            if (refreshPlace=="top"){
+                adapter.notifyDataSetChanged();
+            }else if (refreshPlace=="bottom"){
+                adapter.notifyItemRangeInserted(webContentList.size(),webContentList.size()+sizeThisPage);
+            }
+            swipeRefreshLayout.setRefreshing(false);
+            isRefreshing=0;
         }
     }
 

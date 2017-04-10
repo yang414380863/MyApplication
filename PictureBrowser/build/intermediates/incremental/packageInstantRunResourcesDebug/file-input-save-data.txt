@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Mon Apr 10 22:22:41 GMT+08:00 2017
+#Tue Apr 11 01:10:42 GMT+08:00 2017
 210.set=ANDROID_RESOURCE
 14.set=ANDROID_RESOURCE
 180.file=D\:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\design_bottom_navigation_item.xml
