@@ -12,7 +12,23 @@
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\drawable-v21\\abc_btn_colored_material.xml"
     },
     {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\design_password_eye.xml",
+        "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\fef5acf8b8ea1eccf3bdb08a5f4995819dda3fa9\\output\\res\\drawable-v21\\design_password_eye.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\avd_show_password.xml",
+        "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\fef5acf8b8ea1eccf3bdb08a5f4995819dda3fa9\\output\\res\\drawable-v21\\avd_show_password.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\design_bottom_navigation_item_background.xml",
+        "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\fef5acf8b8ea1eccf3bdb08a5f4995819dda3fa9\\output\\res\\drawable-v21\\design_bottom_navigation_item_background.xml"
+    },
+    {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_edit_text_material.xml",
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\drawable-v21\\abc_edit_text_material.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\avd_hide_password.xml",
+        "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\fef5acf8b8ea1eccf3bdb08a5f4995819dda3fa9\\output\\res\\drawable-v21\\avd_hide_password.xml"
     }
 ]

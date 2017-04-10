@@ -6,42 +6,52 @@
     density="xxhdpi"
     format="10"
     plugin-version="2.3.1"
-    timestamp="1491805345582"
+    timestamp="1491834154114"
     token="-2236645258746134422"
     verifier="COLD_SWAP_REQUESTED" >
 
     <task
         name="javac"
-        duration="0" />
+        duration="3343" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="0" />
+        duration="1553" />
     <task
         name="verifier"
-        duration="0" />
+        duration="258" />
+
+    <artifact
+        location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\dep\dependencies.apk"
+        type="SPLIT" />
+    <artifact
+        location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_9.apk"
+        type="SPLIT" />
+    <artifact
+        location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_2.apk"
+        type="SPLIT" />
+    <artifact
+        location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_7.apk"
+        type="SPLIT" />
+    <artifact
+        location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_8.apk"
+        type="SPLIT" />
+    <artifact
+        location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_3.apk"
+        type="SPLIT" />
+    <artifact
+        location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_0.apk"
+        type="SPLIT" />
+    <artifact
+        location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\outputs\apk\PictureBrowser-debug.apk"
+        type="SPLIT_MAIN" />
 
     <build
         build-mode="FULL"
-        timestamp="1491800993798"
+        timestamp="1491825798252"
         verifier="FULL_BUILD_REQUESTED" >
-        <artifact
-            location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_8.apk"
-            type="SPLIT" />
-        <artifact
-            location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_2.apk"
-            type="SPLIT" />
-        <artifact
-            location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_0.apk"
-            type="SPLIT" />
-        <artifact
-            location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_6.apk"
-            type="SPLIT" />
-        <artifact
-            location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\outputs\apk\PictureBrowser-debug.apk"
-            type="SPLIT_MAIN" />
         <artifact
             location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_4.apk"
             type="SPLIT" />
@@ -52,7 +62,16 @@
             location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_5.apk"
             type="SPLIT" />
         <artifact
+            location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_6.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_8.apk"
+            type="SPLIT" />
+        <artifact
             location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_9.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_2.apk"
             type="SPLIT" />
         <artifact
             location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_7.apk"
@@ -61,15 +80,36 @@
             location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_3.apk"
             type="SPLIT" />
         <artifact
+            location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_0.apk"
+            type="SPLIT" />
+        <artifact
             location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_1.apk"
             type="SPLIT" />
+        <artifact
+            location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\outputs\apk\PictureBrowser-debug.apk"
+            type="SPLIT_MAIN" />
     </build>
     <build
         build-mode="COLD"
-        timestamp="1491805289148"
+        timestamp="1491834154114"
         verifier="COLD_SWAP_REQUESTED" >
         <artifact
-            location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_6.apk"
+            location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\dep\dependencies.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_9.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_2.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_7.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_8.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_3.apk"
             type="SPLIT" />
         <artifact
             location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_0.apk"
@@ -78,9 +118,5 @@
             location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\outputs\apk\PictureBrowser-debug.apk"
             type="SPLIT_MAIN" />
     </build>
-    <build
-        build-mode="COLD"
-        timestamp="1491805345582"
-        verifier="COLD_SWAP_REQUESTED" />
 
 </instant-run>

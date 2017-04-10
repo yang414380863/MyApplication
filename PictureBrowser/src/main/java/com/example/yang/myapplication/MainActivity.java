@@ -2,8 +2,18 @@ package com.example.yang.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.internal.NavigationMenu;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import com.example.yang.myapplication.basic.BaseActivity;
 import com.example.yang.myapplication.web.Browser;
@@ -14,10 +24,35 @@ import com.example.yang.myapplication.web.Website;
 
 //开始界面 以后换
 public class MainActivity extends BaseActivity {
+
+    private DrawerLayout drawerLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //ToolBar
+        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        //侧滑菜单
+        drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+        NavigationView navView=(NavigationView)findViewById(R.id.nav_view) ;
+        ActionBar actionBar=getSupportActionBar();
+        if (actionBar!=null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.mipmap.ic_launcher_round);
+        }
+        navView.setCheckedItem(R.id.item1);//默认选中
+        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                //点击item之后的操作
+                drawerLayout.closeDrawers();
+                return true;
+            }
+        });
 
 
         RuleAll rulePOOCG=new RuleAll();
@@ -69,5 +104,26 @@ public class MainActivity extends BaseActivity {
 
         });
     }
+    //ToolBar
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.toolbar,menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                drawerLayout.openDrawer(Gravity.START);
+                break;
+            case R.id.setting:
+                Toast.makeText(this,"Click Setting Button",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.download:
+                Toast.makeText(this,"Click Download Button",Toast.LENGTH_SHORT).show();
+                break;
+            default:break;
+        }
+        return true;
+    }
 }
