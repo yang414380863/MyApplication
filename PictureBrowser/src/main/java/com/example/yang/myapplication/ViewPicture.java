@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.IBinder;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
@@ -45,6 +46,14 @@ public class ViewPicture extends BaseActivity implements View.OnClickListener {
         startDownload.setOnClickListener(this);
         pauseDownload.setOnClickListener(this);
         cancelDownload.setOnClickListener(this);
+
+        FloatingActionButton fab=(FloatingActionButton)findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //点击事件
+            }
+        });
 
         Intent intent=new Intent(this,DownloadService.class);
         startService(intent);

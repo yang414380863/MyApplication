@@ -105,15 +105,21 @@ public class Browser {
             }
             default:break;
         }
-
+/**
         Log.d("Link"," "+doc
                 .select(websiteNow.getRuleAll().getLinkRule().getSelector()).size());
         Log.d("Thumbnail"," "+doc
                 .select(websiteNow.getRuleAll().getThumbnailRule().getSelector()).size());
         Log.d("Title"," "+doc
                 .select(websiteNow.getRuleAll().getTitleRule().getSelector()).size());
+ */
         for (int i=0;i<sizeThisPage;i++,sizeNow++){
-
+            if (webContentList.size()==0){
+                return;
+            }
+            /*Log.d("TAG1"," "+sizeNow);
+            Log.d("TAG2"," "+webContentList.size());
+            Log.d("TAG3"," "+doc.select(websiteNow.getRuleAll().getLinkRule().getSelector()).size());*/
             webContentList.get(sizeNow).setLink(doc
                     .select(websiteNow.getRuleAll().getLinkRule().getSelector()).get(i)
                     .attr(websiteNow.getRuleAll().getLinkRule().getAttribute()));

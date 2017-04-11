@@ -53,6 +53,7 @@ public class DetailActivity extends BaseActivity {
                         .load(url[0])
                         .fitCenter()
                         .into(imageView);
+                imageView.setImageAlpha(150);
                 RecyclerView recyclerView=(RecyclerView)findViewById(R.id.recycle_view);
                 StaggeredGridLayoutManager layoutManager=new
                         StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);

@@ -109,7 +109,6 @@ public class MainActivity extends BaseActivity {
         getMenuInflater().inflate(R.menu.toolbar,menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){

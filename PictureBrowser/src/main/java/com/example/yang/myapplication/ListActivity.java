@@ -6,19 +6,32 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.basic.BaseActivity;
 import com.example.yang.myapplication.web.Browser;
+import com.example.yang.myapplication.web.Rule;
+import com.example.yang.myapplication.web.RuleAll;
+import com.example.yang.myapplication.web.Website;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
+import static android.support.design.widget.Snackbar.make;
 import static com.example.yang.myapplication.R.id.collapsing_toolbar;
+import static com.example.yang.myapplication.R.id.item1;
+import static com.example.yang.myapplication.R.id.item2;
 import static com.example.yang.myapplication.web.Browser.sizeThisPage;
 import static com.example.yang.myapplication.web.Browser.webContentList;
 import static com.example.yang.myapplication.web.Browser.websiteNow;
@@ -27,13 +40,15 @@ import static com.example.yang.myapplication.web.Browser.websiteNow;
 //列表所在Activity
 public class ListActivity extends BaseActivity {
 
-
+    //侧滑菜单
+    private DrawerLayout drawerLayout;
+    //广播接收器
     private LoadFinishReceiver receiver;
     //下拉刷新 监听器
     SwipeRefreshLayout swipeRefreshLayout;
+    Snackbar snackbar;
 
     final ListAdapter adapter=new ListAdapter(this);
-
     static int isRefreshing=0;
     static String refreshPlace;
 
@@ -44,16 +59,72 @@ public class ListActivity extends BaseActivity {
         //final View systemBar = findViewById(R.id.content);
 
         //折叠标题栏
-        ImageView imageView=(ImageView)findViewById(R.id.image_view);
-        CollapsingToolbarLayout collapsingToolbarLayout=(CollapsingToolbarLayout)findViewById(collapsing_toolbar);
+        final ImageView imageView=(ImageView)findViewById(R.id.image_view);
+        final CollapsingToolbarLayout collapsingToolbarLayout=(CollapsingToolbarLayout)findViewById(collapsing_toolbar);
         collapsingToolbarLayout.setTitle(websiteNow.getWebSiteName());
         Glide
                 .with(this)
                 .load(R.mipmap.ic_launcher)
                 .fitCenter()
                 .into(imageView);
-
         refreshPlace="top";
+
+
+        RuleAll rulePOOCG=new RuleAll();
+        rulePOOCG.setLinkRule(new Rule("div.imgbox > a[href]","attr","href"));
+        rulePOOCG.setThumbnailRule(new Rule("div.imgbox > a > img[src]","attr","src"));
+        rulePOOCG.setTitleRule(new Rule("div.imgbox > a > img[src]","attr","alt"));
+        rulePOOCG.setImgRule(new Rule("div.wrapper > div > ul > li > a > img[src]","attr","src"));
+        rulePOOCG.setNextPageRule(new Rule("a#pagenav","attr","href"));
+        rulePOOCG.setNextPageDetailRule(new Rule("a#pagenav","attr","href"));
+        final Website POOCG=new Website("poocg","http://www.poocg.com/works/index",rulePOOCG);
+
+
+        RuleAll ruleDEVIANTART=new RuleAll();
+        ruleDEVIANTART.setLinkRule(new Rule("span[class*=thumb] > a","attr","href"));
+        ruleDEVIANTART.setThumbnailRule(new Rule("span[class*=thumb] > a > img[data-sigil=torpedo-img]","attr","src"));
+        ruleDEVIANTART.setTitleRule(new Rule("span[class*=thumb] > span.info > span.title-wrap > span.title","text"));
+        ruleDEVIANTART.setImgRule(new Rule("div.dev-view-deviation > img[class=dev-content-full]","attr","src"));
+        String[] replace={"size"};
+        ruleDEVIANTART.setNextPageRule(new Rule("(http:\\/\\/www\\.deviantart\\.com\\/browse\\/all\\/\\?order=\\d+&offset=)\\d+",replace));
+        final Website DEVIANTART=new Website("deviantart","http://www.deviantart.com/browse/all/?order=5&offset=0",ruleDEVIANTART);
+
+
+        //侧滑菜单
+        drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+        NavigationView navView=(NavigationView)findViewById(R.id.nav_view) ;
+        ActionBar actionBar=getSupportActionBar();
+        if (actionBar!=null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.mipmap.ic_launcher_round);
+        }
+        navView.setCheckedItem(item1);//默认选中
+        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                //点击item之后的操作
+                drawerLayout.closeDrawers();
+                switch (item.getItemId()){
+                    case item1:
+                        Browser.sendRequest(POOCG,"new");
+                        break;
+                    case item2:
+                        Browser.sendRequest(DEVIANTART,"new");
+                        break;
+                    default:break;
+                }
+                swipeRefreshLayout.setRefreshing(true);
+                isRefreshing=1;
+                refreshPlace="top";
+                Browser.sendRequest(websiteNow,"top");
+                Log.d("refresh","change website refresh!");
+                collapsingToolbarLayout.setTitle(websiteNow.getWebSiteName());
+                return true;
+            }
+        });
+
+
         //广播接收器
         IntentFilter intentFilter=new IntentFilter();
         intentFilter.addAction("com.example.yang.myapplication.LOAD_FINISH");
@@ -109,6 +180,9 @@ public class ListActivity extends BaseActivity {
                         refreshPlace="bottom";
                         Log.d("refresh","bottom is going to refresh!");
                         Browser.nextPage();//发送加载下一页的请求
+                        snackbar = Snackbar.make(imageView, "Loading", Snackbar.LENGTH_INDEFINITE);
+                        snackbar.getView().getBackground().setAlpha(100);
+                        snackbar.show();
                     }
                 }else if(!recyclerView.canScrollVertically(-1)) {//检测划到了顶部
                     /**systemBar.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);*/
@@ -136,6 +210,9 @@ public class ListActivity extends BaseActivity {
             if (refreshPlace=="top"){
                 adapter.notifyDataSetChanged();
             }else if (refreshPlace=="bottom"){
+                snackbar.setText("Finish Loading");
+                snackbar.setDuration(Snackbar.LENGTH_SHORT);
+                snackbar.show();
                 adapter.notifyItemRangeInserted(webContentList.size(),webContentList.size()+sizeThisPage);
             }
             swipeRefreshLayout.setRefreshing(false);

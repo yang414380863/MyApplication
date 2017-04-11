@@ -52,7 +52,7 @@ MERGED from [com.android.support:support-compat:25.3.1] C:\Users\YanGGGGG\.andro
 	android:icon
 		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:12:9-43
 	android:theme
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:16:9-40
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:16:9-41
 	android:name
 		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:10:9-44
 activity#com.example.yang.myapplication.MainActivity
