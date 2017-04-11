@@ -45,8 +45,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             url=strings.split(",");//如果strings包含多个链接,将其拆分开成string[]
             numOfPic=url.length;
         }
-
-
     }
 
     @Override
@@ -60,7 +58,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 int position=holder.getAdapterPosition();
                 Intent intent=new Intent(context,ViewPicture.class);
                 intent.putExtra("url",url[position]);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });
@@ -69,7 +67,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder,int position){
-        holder.name.setText(webContent.getTitle());
         Glide
                 .with(context)
                 .load(url[position])

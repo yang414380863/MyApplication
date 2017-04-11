@@ -6,15 +6,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.basic.BaseActivity;
 import com.example.yang.myapplication.web.Browser;
 
+import static com.example.yang.myapplication.R.id.collapsing_toolbar;
 import static com.example.yang.myapplication.web.Browser.sizeThisPage;
 import static com.example.yang.myapplication.web.Browser.webContentList;
 import static com.example.yang.myapplication.web.Browser.websiteNow;
@@ -39,6 +43,15 @@ public class ListActivity extends BaseActivity {
         setContentView(R.layout.list);
         //final View systemBar = findViewById(R.id.content);
 
+        //折叠标题栏
+        ImageView imageView=(ImageView)findViewById(R.id.image_view);
+        CollapsingToolbarLayout collapsingToolbarLayout=(CollapsingToolbarLayout)findViewById(collapsing_toolbar);
+        collapsingToolbarLayout.setTitle(websiteNow.getWebSiteName());
+        Glide
+                .with(this)
+                .load(R.mipmap.ic_launcher)
+                .fitCenter()
+                .into(imageView);
 
         refreshPlace="top";
         //广播接收器
@@ -129,5 +142,6 @@ public class ListActivity extends BaseActivity {
             isRefreshing=0;
         }
     }
+
 
 }
