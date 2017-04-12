@@ -35,12 +35,12 @@
 
     <!--左侧滑菜单-->
     <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
+        android:id="@+id/nav_view_left"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:menu="@menu/nav_menu"
-        app:headerLayout="@layout/nav_header"/>
+        app:menu="@menu/nav_menu_left"
+        app:headerLayout="@layout/nav_header_left"/>
 
     <!--右侧滑菜单-->
     <LinearLayout

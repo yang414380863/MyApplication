@@ -17,7 +17,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -27,11 +26,10 @@ import com.example.yang.myapplication.web.Rule;
 import com.example.yang.myapplication.web.RuleAll;
 import com.example.yang.myapplication.web.Website;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 import static android.support.design.widget.Snackbar.make;
 import static com.example.yang.myapplication.R.id.collapsing_toolbar;
-import static com.example.yang.myapplication.R.id.item1;
-import static com.example.yang.myapplication.R.id.item2;
+import static com.example.yang.myapplication.R.id.deviantart;
+import static com.example.yang.myapplication.R.id.poocg;
 import static com.example.yang.myapplication.web.Browser.sizeThisPage;
 import static com.example.yang.myapplication.web.Browser.webContentList;
 import static com.example.yang.myapplication.web.Browser.websiteNow;
@@ -92,13 +90,13 @@ public class ListActivity extends BaseActivity {
 
         //侧滑菜单
         drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
-        NavigationView navView=(NavigationView)findViewById(R.id.nav_view) ;
+        NavigationView navView=(NavigationView)findViewById(R.id.nav_view_left) ;
         ActionBar actionBar=getSupportActionBar();
         if (actionBar!=null){
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.mipmap.ic_launcher_round);
         }
-        navView.setCheckedItem(item1);//默认选中
+        //navView.setCheckedItem(poocg);//默认选中
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             @Override
@@ -106,10 +104,10 @@ public class ListActivity extends BaseActivity {
                 //点击item之后的操作
                 drawerLayout.closeDrawers();
                 switch (item.getItemId()){
-                    case item1:
+                    case poocg:
                         Browser.sendRequest(POOCG,"new");
                         break;
-                    case item2:
+                    case deviantart:
                         Browser.sendRequest(DEVIANTART,"new");
                         break;
                     default:break;

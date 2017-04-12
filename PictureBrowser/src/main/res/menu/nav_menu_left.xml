@@ -3,13 +3,13 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/item1"
+            android:id="@+id/poocg"
             android:icon="@mipmap/ic_launcher_round"
-            android:title="item1"/>
+            android:title="poocg"/>
         <item
-            android:id="@+id/item2"
+            android:id="@+id/deviantart"
             android:icon="@mipmap/ic_launcher_round"
-            android:title="item2"/>
+            android:title="deviantart"/>
     </group>
     <group android:checkableBehavior="single">
         <item
