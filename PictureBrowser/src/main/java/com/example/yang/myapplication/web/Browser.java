@@ -32,10 +32,10 @@ public class Browser {
     public static ArrayList<WebContent> webContentList=new ArrayList<>();
     public static Website websiteNow;
     public static int sizeThisPage;
-    static String nextPageUrl;
+    private static String nextPageUrl;
 
 
-    public static void sendRequest(final Website website,final String refreshplace){
+    public static void sendRequest(final Website website,final String refreshPlace){
         websiteNow =website;
         new Thread(new Runnable() {
             @Override
@@ -43,7 +43,7 @@ public class Browser {
                 try{
                     String url=websiteNow.getIndexUrl();
                     OkHttpClient client = new OkHttpClient();
-                    if (refreshplace=="bottom"){
+                    if (refreshPlace=="bottom"){
                         url=websiteNow.getNextPageUrl();
                     }
                     final Request request = new Request.Builder()
@@ -59,7 +59,7 @@ public class Browser {
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
                             Document doc=Jsoup.parse(response.body().string());
-                            analysis(doc,refreshplace);
+                            analysis(doc,refreshPlace);
                         }
                     });
 
@@ -137,15 +137,15 @@ public class Browser {
                         .select(websiteNow.getRuleAll().getTitleRule().getSelector()).get(i)
                         .text());
             }
-            websiteNow.setNextDetailPageUrl(webContentList.get(sizeNow).getLink());
             //Log.d("No."+i,"Link:"+webContentList.get(sizeNow).getLink());
             //Log.d("No."+i,"Thumbnail:"+webContentList.get(sizeNow).getThumbnail());
             //Log.d("No."+i,"Title:"+webContentList.get(sizeNow).getTitle());
-            sendRequestDetail(sizeNow);
+            //sendRequestDetail(sizeNow);
 
         }
         Log.d("Finish load "+sizeNow+" item","Next item is No "+sizeNow);
 
+        //列表下一页
         if (websiteNow.getRuleAll().getNextPageRule().getSelector()!=null){//如果选择器有值 则用选择器匹配
             nextPageUrl= doc
                     .select(websiteNow.getRuleAll().getNextPageRule().getSelector())
@@ -172,11 +172,13 @@ public class Browser {
         MyApplication.getContext().sendBroadcast(intent);
 
     }
-
     public  static void sendRequestDetail(final int id){
         new Thread(new Runnable() {
             @Override
             public void run() {
+                if (webContentList.get(id).getImg()!=null){
+                    webContentList.get(id).getImg().clear();
+                }
                 try{
                     OkHttpClient client = new OkHttpClient();
                     final Request request = new Request.Builder()
@@ -207,24 +209,24 @@ public class Browser {
     public static void analysisDetail(final int id,Document doc) {
 
         String nextDetailPage;
-        StringBuilder string = new StringBuilder();
+        ArrayList<String> strings=new ArrayList<>();
+        if (webContentList.get(id).getImg()!=null){
+            strings=webContentList.get(id).getImg();
+        }
         Elements list = doc.select(websiteNow.getRuleAll().getImgRule().getSelector());
-        if (webContentList.get(id).getImg()==null){
-            webContentList.get(id).setImg("");
-        }
+
         for (int i = 0; i < list.size(); i++) {
-            string.append(list.get(i)
-                    .attr(websiteNow.getRuleAll().getImgRule().getAttribute()));
-            string.append(",");
+
+            strings.add("");
+            strings.set(i,(list.get(i).attr(websiteNow.getRuleAll().getImgRule().getAttribute())));
         }
-        webContentList.get(id).setImg(webContentList.get(id).getImg()+string.toString());
-        //Log.d("STRING"," "+webContentList.get(id).getImg());
+        webContentList.get(id).setImg(strings);
+        Log.d("size"," "+webContentList.get(id).getImg().size());
         if (websiteNow.getRuleAll().getNextPageDetailRule()!=null) {
             nextDetailPage = doc
                     .select(websiteNow.getRuleAll().getNextPageDetailRule().getSelector())
                     .attr(websiteNow.getRuleAll().getNextPageDetailRule().getAttribute());
             if (nextDetailPage.equals("")) {//没有下一页
-                //Log.d("string " + id, " " + string);
             } else {//继续下一页
                 websiteNow.setNextDetailPageUrl(nextDetailPage);
                 sendRequestDetail(id);
@@ -234,6 +236,9 @@ public class Browser {
             //Log.d("nextPageDetailRule","not exist");
         }
 
+        //发送一个加载完成了的广播
+        Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");
+        MyApplication.getContext().sendBroadcast(intent);
     }
 
     public  static void nextPage(){

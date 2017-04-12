@@ -1,5 +1,7 @@
 package com.example.yang.myapplication.web;
 
+import java.util.ArrayList;
+
 /**
  * Created by YanGGGGG on 2017/4/5.
  */
@@ -10,7 +12,7 @@ public class WebContent {
     private String thumbnail;//配图/缩略图
     private String title;//标题
     private String link;//点击之后要进去的网页URL
-    private String img;//原图链接
+    private ArrayList<String> img;//原图链接
     private String detail;//详细文字内容
 
 
@@ -29,12 +31,12 @@ public class WebContent {
         this.detail = detail;
     }
 
-    public String getImg(){
+    public ArrayList<String> getImg() {
         return img;
     }
 
-    public void setImg(String img){
-        this.img =img;
+    public void setImg(ArrayList<String> img) {
+        this.img = img;
     }
 
     public String getThumbnail() {

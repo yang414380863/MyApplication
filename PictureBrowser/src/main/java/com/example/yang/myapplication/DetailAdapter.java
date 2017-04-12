@@ -11,7 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.yang.myapplication.web.Browser;
 import com.example.yang.myapplication.web.WebContent;
+
+import java.util.ArrayList;
 
 
 /**
@@ -21,9 +24,7 @@ import com.example.yang.myapplication.web.WebContent;
 
 public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder>{
 
-    private String[] url;
-    private int numOfPic;
-    private WebContent webContent;
+    private ArrayList<String> urls=new ArrayList<>();
     private Context context;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -37,14 +38,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         }
     }
 
-    public DetailAdapter(WebContent webContent, Context context){
+    public DetailAdapter(Context context){
         this.context=context;
-        this.webContent=webContent;
-        if (webContent.getImg()!=null){
-            String strings=webContent.getImg();
-            url=strings.split(",");//如果strings包含多个链接,将其拆分开成string[]
-            numOfPic=url.length;
-        }
     }
 
     @Override
@@ -57,7 +52,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 //显示下载按钮 以及其他
                 int position=holder.getAdapterPosition();
                 Intent intent=new Intent(context,ViewPicture.class);
-                intent.putExtra("url",url[position]);
+                intent.putExtra("url",urls.get(position));
                 //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -69,7 +64,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder,int position){
         Glide
                 .with(context)
-                .load(url[position])
+                .load(urls.get(position))
                 .thumbnail(Glide.with(context).load(R.drawable.loading1))
                 .placeholder(R.drawable.white)
                 .error(R.drawable.error)
@@ -82,6 +77,10 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
     @Override
     public int getItemCount(){
-        return numOfPic;
+        return urls.size();
+    }
+
+    public ArrayList<String> getUrls(){
+        return urls;
     }
 }

@@ -10,8 +10,8 @@ public class Website {
 
     private String webSiteName;//网站名
     private String indexUrl;//网站首页
-    private String nextPageUrl;
-    private String nextDetailPageUrl;
+    private String nextPageUrl;//列表的下一页
+    private String nextDetailPageUrl;//详情的下一页
     private String[] category;//分类
     private int loginRequired;
 

@@ -4,6 +4,7 @@ package com.example.yang.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,9 @@ import com.example.yang.myapplication.web.Browser;
 import com.example.yang.myapplication.web.WebContent;
 
 import java.util.ArrayList;
+
+import static com.example.yang.myapplication.web.Browser.webContentList;
+import static com.example.yang.myapplication.web.Browser.websiteNow;
 
 
 /**
@@ -39,7 +43,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
     }
 
     public ListAdapter(Context context){//构造方法
-        webContents.addAll(Browser.webContentList);
         this.context=context;
     }
 
@@ -53,6 +56,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
             @Override public void onClick(View v) {
                 //点击->获取链接->显示图片/目录
                 int position=holder.getAdapterPosition();
+                websiteNow.setNextDetailPageUrl(webContentList.get(position).getLink());
+                Browser.sendRequestDetail(position);
                 Intent intent=new Intent(context,DetailActivity.class);
                 intent.putExtra("position",position);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -64,7 +69,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(ViewHolder holder,int position){
-        WebContent webContent= Browser.webContentList.get(position);
+        WebContent webContent= webContentList.get(position);
         holder.name.setText(webContent.getTitle());
         Glide
                 .with(context)
