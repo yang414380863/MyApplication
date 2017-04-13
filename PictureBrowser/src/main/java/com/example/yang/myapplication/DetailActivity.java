@@ -40,25 +40,24 @@ public class DetailActivity extends BaseActivity {
     //下拉刷新 监听器
     SwipeRefreshLayout swipeRefreshLayout;
     static int isRefreshing=0;
-
+    //瀑布流
     final DetailAdapter adapter=new DetailAdapter(this);
     static int positionNow;
-
+    //标题栏
     ImageView imageView;
     CollapsingToolbarLayout collapsingToolbarLayout;
-    private static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail);
+        //标题栏
         imageView=(ImageView)findViewById(R.id.image_view);
         collapsingToolbarLayout=(CollapsingToolbarLayout)findViewById(collapsing_toolbar);
-
-        //获取具体是哪一张图片 以及图片总数
+        //获取具体是哪一张图片
         Intent intent=getIntent();
         positionNow=intent.getExtras().getInt("position");
-
+        //瀑布流
         RecyclerView recyclerView=(RecyclerView)findViewById(R.id.recycle_view);
         StaggeredGridLayoutManager layoutManager=new
                 StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
@@ -70,10 +69,8 @@ public class DetailActivity extends BaseActivity {
         receiver=new LoadFinishReceiver();
         registerReceiver(receiver,intentFilter);
         swipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
-
         //首次进入先显示加载中
         swipeRefreshLayout.setRefreshing(true);
-
         //手动下拉刷新
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -87,7 +84,6 @@ public class DetailActivity extends BaseActivity {
             }
         });
     }
-
     @Override
     protected void onDestroy(){
         super.onDestroy();
@@ -95,37 +91,27 @@ public class DetailActivity extends BaseActivity {
             unregisterReceiver(receiver);
         }
     }
-
     class LoadFinishReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            WebContent webContent= webContentList.get(positionNow);
-            ArrayList<String> urls=webContent.getImg();
-            if (urls.size()==1){
-                //单张图片直接进ViewPic
-                Intent intent1=new Intent(DetailActivity.this,ViewPicture.class);
-                intent1.putExtra("url",urls.get(0));
-                //intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent1);
-                finish();
-            }else {//多张图
+            if (intent.getExtras().getInt("position")!=0&&intent.getExtras().getInt("position")==positionNow){
+                WebContent webContent= webContentList.get(positionNow);
                 collapsingToolbarLayout.setTitle(webContent.getTitle());
                 Glide
-                        .with(context)
-                        .load(urls.get(0))
+                        .with(DetailActivity.this)
+                        .load(webContent.getImg().get(0))
                         .fitCenter()
                         .into(imageView);
                 imageView.setImageAlpha(150);
+                Log.d("refresh","finish refresh!");
+                adapter.getUrls().clear();//要重新指向一次才能检测到刷新
+                adapter.getUrls().addAll(webContentList.get(positionNow).getImg());
+                adapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
+                isRefreshing=0;
             }
-
-            Log.d("refresh","finish refresh!");
-            adapter.getUrls().clear();//要重新指向一次才能检测到刷新
-            adapter.getUrls().addAll(webContentList.get(positionNow).getImg());
-            adapter.notifyDataSetChanged();
-            swipeRefreshLayout.setRefreshing(false);
-            isRefreshing=0;
         }
     }
 

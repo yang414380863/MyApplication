@@ -71,7 +71,7 @@ public class MainActivity extends BaseActivity {
         ruleDEVIANTART.setImgRule(new Rule("div.dev-view-deviation > img[class=dev-content-full]","attr","src"));
         String[] replace={"size"};
         ruleDEVIANTART.setNextPageRule(new Rule("(http:\\/\\/www\\.deviantart\\.com\\/browse\\/all\\/\\?order=\\d+&offset=)\\d+",replace));
-        final Website DEVIANTART=new Website("deviantart","http://www.deviantart.com/browse/all/?order=5&offset=0",ruleDEVIANTART);
+        final Website DEVIANTART=new Website("deviantart","http://www.deviantart.com/browse/all/?order=67108864&offset=0",ruleDEVIANTART);
 
 
 /**

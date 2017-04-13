@@ -21,6 +21,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static android.R.attr.id;
+
 
 /**
  * Created by YanGGGGG on 2017/3/21.
@@ -113,6 +115,7 @@ public class Browser {
         Log.d("Title"," "+doc
                 .select(websiteNow.getRuleAll().getTitleRule().getSelector()).size());
  */
+        //解析主要信息
         for (int i=0;i<sizeThisPage;i++,sizeNow++){
             if (webContentList.size()==0){
                 return;
@@ -140,12 +143,9 @@ public class Browser {
             //Log.d("No."+i,"Link:"+webContentList.get(sizeNow).getLink());
             //Log.d("No."+i,"Thumbnail:"+webContentList.get(sizeNow).getThumbnail());
             //Log.d("No."+i,"Title:"+webContentList.get(sizeNow).getTitle());
-            //sendRequestDetail(sizeNow);
-
         }
         Log.d("Finish load "+sizeNow+" item","Next item is No "+sizeNow);
-
-        //列表下一页
+        //解析列表的下一页
         if (websiteNow.getRuleAll().getNextPageRule().getSelector()!=null){//如果选择器有值 则用选择器匹配
             nextPageUrl= doc
                     .select(websiteNow.getRuleAll().getNextPageRule().getSelector())
@@ -169,14 +169,16 @@ public class Browser {
         }
         //发送一个加载完成了的广播
         Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");
+        intent.putExtra("websiteName",websiteNow.getWebSiteName());
         MyApplication.getContext().sendBroadcast(intent);
-
     }
+
     public  static void sendRequestDetail(final int id){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 if (webContentList.get(id).getImg()!=null){
+                    //退出Detail后再次进入前清空原来的数据
                     webContentList.get(id).getImg().clear();
                 }
                 try{
@@ -190,15 +192,12 @@ public class Browser {
                         public void onFailure(Call call, IOException e) {
                             Log.d("OkHttpClient","onFailure");
                         }
-
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
                             Document doc=Jsoup.parse(response.body().string());
                             analysisDetail(id,doc);
                         }
                     });
-
-
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -214,9 +213,7 @@ public class Browser {
             strings=webContentList.get(id).getImg();
         }
         Elements list = doc.select(websiteNow.getRuleAll().getImgRule().getSelector());
-
         for (int i = 0; i < list.size(); i++) {
-
             strings.add("");
             strings.set(i,(list.get(i).attr(websiteNow.getRuleAll().getImgRule().getAttribute())));
         }
@@ -235,9 +232,9 @@ public class Browser {
         } else {//没有下一页的Rule
             //Log.d("nextPageDetailRule","not exist");
         }
-
         //发送一个加载完成了的广播
         Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");
+        intent.putExtra("position",id);
         MyApplication.getContext().sendBroadcast(intent);
     }
 
@@ -246,9 +243,7 @@ public class Browser {
             websiteNow.setNextPageUrl(nextPageUrl);
             sendRequest(websiteNow,"bottom");
         }else {
-            //Log.d("TAG","NO MORE");
+            //Log.d("TAG","no more page");
         }
     }
-
-
 }

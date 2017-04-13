@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -32,9 +33,7 @@ public class ViewPicture extends BaseActivity implements View.OnClickListener {
         public void onServiceDisconnected(ComponentName name) {
         }
     };
-
     private String url="";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +61,6 @@ public class ViewPicture extends BaseActivity implements View.OnClickListener {
             ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission. WRITE_EXTERNAL_STORAGE }, 1);
         }
 
-
         Intent intent2=getIntent();
         url=intent2.getExtras().getString("url");
         PhotoView photoView = (PhotoView) findViewById(R.id.photo_view);
@@ -71,7 +69,6 @@ public class ViewPicture extends BaseActivity implements View.OnClickListener {
                 .load(url)
                 .into(photoView);
     }
-
     @Override
     public void onClick(View view){
         if (downloadBinder==null){
@@ -91,7 +88,6 @@ public class ViewPicture extends BaseActivity implements View.OnClickListener {
                 break;
         }
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -104,7 +100,6 @@ public class ViewPicture extends BaseActivity implements View.OnClickListener {
             default:
         }
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

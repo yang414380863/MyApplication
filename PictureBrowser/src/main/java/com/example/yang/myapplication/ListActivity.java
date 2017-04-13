@@ -65,7 +65,7 @@ public class ListActivity extends BaseActivity {
                 .load(R.mipmap.ic_launcher)
                 .fitCenter()
                 .into(imageView);
-        refreshPlace="top";
+        refreshPlace="top";//
 
 
         RuleAll rulePOOCG=new RuleAll();
@@ -85,7 +85,7 @@ public class ListActivity extends BaseActivity {
         ruleDEVIANTART.setImgRule(new Rule("div.dev-view-deviation > img[class=dev-content-full]","attr","src"));
         String[] replace={"size"};
         ruleDEVIANTART.setNextPageRule(new Rule("(http:\\/\\/www\\.deviantart\\.com\\/browse\\/all\\/\\?order=\\d+&offset=)\\d+",replace));
-        final Website DEVIANTART=new Website("deviantart","http://www.deviantart.com/browse/all/?order=5&offset=0",ruleDEVIANTART);
+        final Website DEVIANTART=new Website("deviantart","http://www.deviantart.com/browse/all/?order=67108864&offset=0",ruleDEVIANTART);
 
 
         //侧滑菜单
@@ -121,26 +121,22 @@ public class ListActivity extends BaseActivity {
                 return true;
             }
         });
-
-
         //广播接收器
         IntentFilter intentFilter=new IntentFilter();
         intentFilter.addAction("com.example.yang.myapplication.LOAD_FINISH");
         receiver=new LoadFinishReceiver();
         registerReceiver(receiver,intentFilter);
         swipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
-
         //瀑布流
         RecyclerView recyclerView=(RecyclerView)findViewById(R.id.recycle_view);
         StaggeredGridLayoutManager layoutManager=new
                 StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);//列数2
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
-        //swipeRefreshLayout.setColorSchemeColors();//设置loading颜色 最多4个
+        //设置loading颜色 最多4个
+        //swipeRefreshLayout.setColorSchemeColors();
         //首次进入先显示加载中
         swipeRefreshLayout.setRefreshing(true);
-
         //手动下拉刷新
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -158,11 +154,11 @@ public class ListActivity extends BaseActivity {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-
                 int SCROLL_STATE_IDLE=0;//表示屏幕已停止。屏幕停止滚动时为0
                 int SCROLL_STATE_TOUCH_SCROLL=1;//表示正在滚动。当屏幕滚动且用户使用的触碰或手指还在屏幕上时为1
                 int SCROLL_STATE_FLING=2;//手指做了抛的动作（手指离开屏幕前，用力滑了一下，屏幕产生惯性滑动）
-                /**if(newState ==SCROLL_STATE_FLING){
+                /*沉浸式
+                    if(newState ==SCROLL_STATE_FLING){
                     systemBar.setSystemUiVisibility(
                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                                     | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION//显示导航栏
@@ -183,13 +179,12 @@ public class ListActivity extends BaseActivity {
                         snackbar.show();
                     }
                 }else if(!recyclerView.canScrollVertically(-1)) {//检测划到了顶部
-                    /**systemBar.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);*/
+                    /*systemBar.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);*/
                 }
 
             }
         });
     }
-
     @Override
     protected void onDestroy(){
         super.onDestroy();
@@ -197,26 +192,24 @@ public class ListActivity extends BaseActivity {
             unregisterReceiver(receiver);
         }
     }
-
     class LoadFinishReceiver extends BroadcastReceiver{
-
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("refresh","finish refresh!");
-            adapter.getWebContents().clear();//要重新指向一次才能检测到刷新
-            adapter.getWebContents().addAll(webContentList);
-            if (refreshPlace=="top"){
-                adapter.notifyDataSetChanged();
-            }else if (refreshPlace=="bottom"){
-                snackbar.setText("Finish Loading");
-                snackbar.setDuration(Snackbar.LENGTH_SHORT);
-                snackbar.show();
-                adapter.notifyItemRangeInserted(webContentList.size(),webContentList.size()+sizeThisPage);
+            if (intent.getExtras().getString("websiteName")!=null&&intent.getExtras().getString("websiteName").equals(websiteNow.getWebSiteName())){
+                Log.d("refresh","finish refresh!");
+                adapter.getWebContents().clear();//要重新指向一次才能检测到刷新
+                adapter.getWebContents().addAll(webContentList);
+                if (refreshPlace=="top"){
+                    adapter.notifyDataSetChanged();
+                }else if (refreshPlace=="bottom"){
+                    snackbar.setText("Finish Loading");
+                    snackbar.setDuration(Snackbar.LENGTH_SHORT);
+                    snackbar.show();
+                    adapter.notifyItemRangeInserted(webContentList.size(),webContentList.size()+sizeThisPage);
+                }
+                swipeRefreshLayout.setRefreshing(false);
+                isRefreshing=0;
             }
-            swipeRefreshLayout.setRefreshing(false);
-            isRefreshing=0;
         }
     }
-
-
 }
