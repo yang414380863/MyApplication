@@ -1,11 +1,11 @@
 [
     {
-        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\white.png",
-        "source": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\src\\main\\res\\drawable\\white.png"
-    },
-    {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\loading1.gif",
         "source": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\src\\main\\res\\drawable\\loading1.gif"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\white.png",
+        "source": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\src\\main\\res\\drawable\\white.png"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_holo_light.xml",

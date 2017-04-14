@@ -1,24 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/poocg"
-            android:icon="@mipmap/ic_launcher_round"
-            android:title="poocg"/>
-        <item
-            android:id="@+id/deviantart"
-            android:icon="@mipmap/ic_launcher_round"
-            android:title="deviantart"/>
+<menu
+    android:id="@+id/menu_right"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single"
+        android:id="@+id/group_right">
     </group>
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/item3"
-            android:icon="@mipmap/ic_launcher_round"
-            android:title="item3"/>
-        <item
-            android:id="@+id/item4"
-            android:icon="@mipmap/ic_launcher_round"
-            android:title="item4"/>
-    </group>
+<!--
+    <item
+        android:id="@+id/item1"
+        android:icon="@mipmap/ic_launcher_round"
+        android:title="最新作品"/>
+    <item
+        android:id="@+id/item2"
+        android:icon="@mipmap/ic_launcher_round"
+        android:title="精华作品"/>
+    <item
+        android:id="@+id/item3"
+        android:icon="@mipmap/ic_launcher_round"
+        android:title="王国推荐"/>
+    <item
+        android:id="@+id/item4"
+        android:icon="@mipmap/ic_launcher_round"
+        android:title="热门作品"/>
+    <item
+        android:id="@+id/item5"
+        android:icon="@mipmap/ic_launcher_round"
+        android:title="最新喜欢"/>
+    <item
+        android:id="@+id/item6"
+        android:icon="@mipmap/ic_launcher_round"
+        android:title="新人作品"/>
+-->
 </menu>

@@ -17,7 +17,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -26,10 +28,10 @@ import com.example.yang.myapplication.web.Rule;
 import com.example.yang.myapplication.web.RuleAll;
 import com.example.yang.myapplication.web.Website;
 
-import static com.example.yang.myapplication.R.id.collapsing_toolbar;
-import static com.example.yang.myapplication.R.id.deviantart;
-import static com.example.yang.myapplication.R.id.poocg;
-import static com.example.yang.myapplication.R.id.unsplash;
+import static android.R.attr.id;
+import static android.R.attr.order;
+import static android.os.Build.VERSION_CODES.M;
+import static com.example.yang.myapplication.R.id.*;
 import static com.example.yang.myapplication.web.Browser.sizeThisPage;
 import static com.example.yang.myapplication.web.Browser.webContentList;
 import static com.example.yang.myapplication.web.Browser.websiteNow;
@@ -48,6 +50,8 @@ public class ListActivity extends AppCompatActivity {
     //标题栏
     ImageView imageView;
     CollapsingToolbarLayout collapsingToolbarLayout;
+    //侧滑菜单
+    NavigationView navViewRight;
 
     final ListAdapter adapter=new ListAdapter(this);
     static int isRefreshing=0;
@@ -63,10 +67,13 @@ public class ListActivity extends AppCompatActivity {
         rulePOOCG.setLinkRule(new Rule("div.imgbox > a[href]","attr","href"));
         rulePOOCG.setThumbnailRule(new Rule("div.imgbox > a > img[src]","attr","src"));
         rulePOOCG.setTitleRule(new Rule("div.imgbox > a > img[src]","attr","alt"));
-        rulePOOCG.setImgRule(new Rule("div.wrapper > div > ul > li > a > img[src]","attr","src","(https:\\/\\/imagescdn\\.poocg\\.me\\/uploadfile\\/photo\\/[0-9]{4}\\/[0-9]{1,2}\\/\\d+\\.[a-z]+)\\!photo\\.middle\\.[a-z]+",new String[]{""}));
+        rulePOOCG.setImgRule(new Rule("div.wrapper > div > ul > li > a > img[src]","attr","src"
+                ,"(https:\\/\\/imagescdn\\.poocg\\.me\\/uploadfile\\/photo\\/[0-9]{4}\\/[0-9]{1,2}\\/\\d+\\.[a-z]+)\\!photo\\.middle\\.[a-z]+",new String[]{""}));
         rulePOOCG.setNextPageRule(new Rule("a#pagenav","attr","href"));
         rulePOOCG.setNextPageDetailRule(new Rule("a#pagenav","attr","href"));
         final Website POOCG=new Website("poocg","http://www.poocg.com/works/index",rulePOOCG);
+        POOCG.setCategory(new String[]{"最新作品","http://www.poocg.com/works/new","精华作品","http://www.poocg.com/works/index","王国推荐","http://www.poocg.com/works/tjwork"
+                ,"热门作品","http://www.poocg.com/works/hot","最新喜欢","http://www.poocg.com/works/newlove","新人作品","http://www.poocg.com/works/newauthor"});
 
         RuleAll ruleDEVIANTART=new RuleAll();
         ruleDEVIANTART.setLinkRule(new Rule("span[class*=thumb] > a","attr","href"));
@@ -74,34 +81,36 @@ public class ListActivity extends AppCompatActivity {
         ruleDEVIANTART.setTitleRule(new Rule("span[class*=thumb] > span.info > span.title-wrap > span.title","text"));
         ruleDEVIANTART.setImgRule(new Rule("div.dev-view-deviation > img[class=dev-content-full]","attr","src"));
         ruleDEVIANTART.setNextPageRule(new Rule("a.selected","attr","href","(http:\\/\\/www\\.deviantart\\.com\\/browse\\/all\\/\\?order=\\d+)()",new String[]{"&offset=","size"}));
-        final Website DEVIANTART=new Website("deviantart","http://www.deviantart.com/browse/all/?order=67108864&offset=0",ruleDEVIANTART);
+        final Website DEVIANTART=new Website("deviantart","http://www.deviantart.com/browse/all/?order=67108864",ruleDEVIANTART);
+        DEVIANTART.setCategory(new String[]{"Newest","http://www.deviantart.com/browse/all/?order=5","What's Hot","http://www.deviantart.com/browse/all/?order=67108864"
+                ,"Undiscovered","http://www.deviantart.com/browse/all/?order=134217728","Popular 24 hours","http://www.deviantart.com/browse/all/?order=11","Popular All Time","http://www.deviantart.com/browse/all/?order=9"});
 
         RuleAll ruleUNSPLASH=new RuleAll();
         ruleUNSPLASH.setLinkRule(new Rule("div.y5w1y > a","attr","href","()(\\/\\?photo=[a-z|A-Z|0-9|-]+)",new String[]{"https://unsplash.com",""}));
         ruleUNSPLASH.setThumbnailRule(new Rule("div.y5w1y > a","attr","style","(https:\\/\\/images.unsplash\\.com\\/photo\\-[a-z|0-9|-|-|?|=|&|,]+)",new String[]{""}));
         ruleUNSPLASH.setTitleRule(new Rule("a[class=_3XzpS _3myVE _2zITg]","text"));
         ruleUNSPLASH.setImgRule(new Rule("div.RN0KT","attr","style","(https:\\/\\/images.unsplash\\.com\\/photo\\-[a-z|0-9|-|-|?|=|&]+)\\?",new String[]{""}));
-        //ruleUNSPLASH.setNextPageRule(new Rule());
+        //ruleUNSPLASH.setNextPageRule(new Rule());没写下一页RULE
         final Website UNSPLASH=new Website("unsplash","https://unsplash.com/",ruleUNSPLASH);
+
+        Browser.sendRequest(POOCG,"new");//首页 进去先加载这个
 
         //折叠标题栏
         imageView=(ImageView)findViewById(R.id.image_view);
         collapsingToolbarLayout=(CollapsingToolbarLayout)findViewById(collapsing_toolbar);
-
         refreshPlace="top";
-
         //侧滑菜单
         drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
-        NavigationView navView=(NavigationView)findViewById(R.id.nav_view_left) ;
+        NavigationView navViewLeft=(NavigationView)findViewById(R.id.nav_view_left);
+        navViewRight=(NavigationView)findViewById(R.id.nav_view_right);
         ActionBar actionBar=getSupportActionBar();
         if (actionBar!=null){
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.mipmap.ic_launcher_round);
         }
-        navView.setCheckedItem(poocg);//默认选中
-        Browser.sendRequest(POOCG,"new");
-        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
+        //navViewLeft.setCheckedItem(poocg);//默认选中
+        navViewLeft.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 //点击item之后的操作
@@ -122,6 +131,27 @@ public class ListActivity extends AppCompatActivity {
                 isRefreshing=1;
                 refreshPlace="top";
                 Log.d("refresh","change website refresh!");
+                collapsingToolbarLayout.setTitle(websiteNow.getWebSiteName());
+                return true;
+            }
+        });
+        navViewRight.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                //点击item之后的操作
+                drawerLayout.closeDrawers();
+                int positionOfCategory=0;
+                for (int i=0;i<websiteNow.getCategory().length/2;i++){
+                    if (item.getTitle().equals(websiteNow.getCategory()[2*i])){
+                        positionOfCategory=2*i+1;
+                    }
+                }
+                websiteNow.setIndexUrl(websiteNow.getCategory()[positionOfCategory]);
+                Browser.sendRequest(websiteNow,"new");
+                swipeRefreshLayout.setRefreshing(true);
+                isRefreshing=1;
+                refreshPlace="top";
+                Log.d("refresh","change category refresh!");
                 collapsingToolbarLayout.setTitle(websiteNow.getWebSiteName());
                 return true;
             }
@@ -217,6 +247,16 @@ public class ListActivity extends AppCompatActivity {
                     snackbar.setDuration(Snackbar.LENGTH_SHORT);
                     snackbar.show();
                     adapter.notifyItemRangeInserted(webContentList.size(),webContentList.size()+sizeThisPage);
+                }
+                //动态生成侧滑菜单(Right)
+                Menu menuRight=navViewRight.getMenu();
+                menuRight.clear();
+                for (int i=0;i<websiteNow.getCategory().length/2;i++){
+                    menuRight.add(group_right,i,i,websiteNow.getCategory()[2*i]);
+                    menuRight.findItem(i).setCheckable(true);
+                    if (websiteNow.getCategory()[2*i+1].equals(websiteNow.getIndexUrl())){
+                        navViewRight.setCheckedItem(menuRight.findItem(i).getItemId());
+                    }
                 }
                 swipeRefreshLayout.setRefreshing(false);
                 isRefreshing=0;

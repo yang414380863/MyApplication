@@ -45,6 +45,7 @@ public class Browser {
                     if (refreshPlace=="bottom"){
                         url=websiteNow.getNextPageUrl();
                     }
+                    //Log.d("url"," "+url);
                     final Request request = new Request.Builder()
                             .url(url)
                             .build();

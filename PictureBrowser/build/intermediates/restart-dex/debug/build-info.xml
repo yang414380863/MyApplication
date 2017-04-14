@@ -6,7 +6,7 @@
     density="xxhdpi"
     format="10"
     plugin-version="2.3.1"
-    timestamp="1492163660860"
+    timestamp="1492187555588"
     token="-2236645258746134422"
     verifier="COLD_SWAP_REQUESTED" >
 
@@ -22,6 +22,10 @@
     <task
         name="verifier"
         duration="0" />
+
+    <artifact
+        location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\outputs\apk\PictureBrowser-debug.apk"
+        type="SPLIT_MAIN" />
 
     <build
         build-mode="FULL"
@@ -66,7 +70,27 @@
     </build>
     <build
         build-mode="COLD"
-        timestamp="1492163660860"
-        verifier="COLD_SWAP_REQUESTED" />
+        timestamp="1492183043809"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_6.apk"
+            type="SPLIT" />
+    </build>
+    <build
+        build-mode="COLD"
+        timestamp="1492187272838"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\intermediates\split-apk\debug\slices\slice_0.apk"
+            type="SPLIT" />
+    </build>
+    <build
+        build-mode="COLD"
+        timestamp="1492187555588"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="D:\AndroidStudioProjects\MyApplication\PictureBrowser\build\outputs\apk\PictureBrowser-debug.apk"
+            type="SPLIT_MAIN" />
+    </build>
 
 </instant-run>

@@ -19,7 +19,7 @@ public class SelectorAndRegex {
     public static String get(Document doc,Rule rule,int position,int sizeNow){
         //先用选择器
         string=doc.select(rule.getSelector()).get(position).attr(rule.getAttribute());
-        Log.d("Selector"+position," "+string);
+        //Log.d("Selector"+position," "+string);
         if (rule.getRegex()!=null){
             //用正则
             Pattern pattern=Pattern.compile(rule.getRegex());
@@ -37,7 +37,7 @@ public class SelectorAndRegex {
                             break;
                     }
                 }
-                Log.d("Regex"+position," "+string);
+                //Log.d("Regex"+position," "+string);
             }
         }
         return string;
@@ -65,10 +65,10 @@ public class SelectorAndRegex {
                             break;
                     }
                 }
-                Log.d("Regex"," "+string);
+                //Log.d("Regex"," "+string);
             }
         }else {
-            Log.d("Selector"," "+string);
+            //Log.d("Selector"," "+string);
         }
         return string;
     }
