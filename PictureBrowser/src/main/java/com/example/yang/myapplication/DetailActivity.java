@@ -78,7 +78,7 @@ public class DetailActivity extends BaseActivity {
                 //获取最新数据并刷新
                 if (isRefreshing==0){
                     isRefreshing=1;
-                    Browser.sendRequestDetail(positionNow);
+                    Browser.sendRequestDetail(positionNow,"top");
                     Log.d("refresh","detail is going to refresh!");
                 }
             }
@@ -87,6 +87,7 @@ public class DetailActivity extends BaseActivity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
+        webContentList.get(positionNow).getImg().clear();
         if (receiver!=null){
             unregisterReceiver(receiver);
         }
@@ -95,8 +96,7 @@ public class DetailActivity extends BaseActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-
-            if (intent.getExtras().getInt("position")!=0&&intent.getExtras().getInt("position")==positionNow){
+            if (intent.getExtras().getInt("position")==positionNow){
                 WebContent webContent= webContentList.get(positionNow);
                 collapsingToolbarLayout.setTitle(webContent.getTitle());
                 Glide

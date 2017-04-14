@@ -57,7 +57,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
                 //点击->获取链接->显示图片/目录
                 int position=holder.getAdapterPosition();
                 websiteNow.setNextDetailPageUrl(webContentList.get(position).getLink());
-                Browser.sendRequestDetail(position);
+                Browser.sendRequestDetail(position,"new");
                 Intent intent=new Intent(context,DetailActivity.class);
                 intent.putExtra("position",position);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -12,8 +12,6 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -21,7 +19,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static android.R.attr.id;
 
 
 /**
@@ -72,13 +69,13 @@ public class Browser {
         }).start();
     }
 
-    public static void analysis(Document doc,String refreshplace){
+    public static void analysis(Document doc,String refreshPlace){
 
 
         sizeThisPage=doc.select(websiteNow.getRuleAll().getThumbnailRule().getSelector()).size();
         int sizeNow=webContentList.size();//sizeNow=已经加载的item数量
         //如果是相同的一个页面 就覆盖原来的,且不增加长度  否则就加在后面
-        switch (refreshplace){
+        switch (refreshPlace){
             case ("new"):
             {
                 //为空(首次加载)
@@ -120,9 +117,9 @@ public class Browser {
             if (webContentList.size()==0){
                 return;
             }
-            /*Log.d("TAG1"," "+sizeNow);
-            Log.d("TAG2"," "+webContentList.size());
-            Log.d("TAG3"," "+doc.select(websiteNow.getRuleAll().getLinkRule().getSelector()).size());*/
+            Log.d("ListSize"," "+sizeNow);
+            Log.d("ThisPage"," "+webContentList.size());
+            Log.d("Match"," "+doc.select(websiteNow.getRuleAll().getLinkRule().getSelector()).size());
             webContentList.get(sizeNow).setLink(doc
                     .select(websiteNow.getRuleAll().getLinkRule().getSelector()).get(i)
                     .attr(websiteNow.getRuleAll().getLinkRule().getAttribute()));
@@ -146,40 +143,24 @@ public class Browser {
         }
         Log.d("Finish load "+sizeNow+" item","Next item is No "+sizeNow);
         //解析列表的下一页
-        if (websiteNow.getRuleAll().getNextPageRule().getSelector()!=null){//如果选择器有值 则用选择器匹配
-            nextPageUrl= doc
-                    .select(websiteNow.getRuleAll().getNextPageRule().getSelector())
-                    .attr(websiteNow.getRuleAll().getNextPageRule().getAttribute());
-        }else {//用正则匹配
-            Pattern pattern=Pattern.compile(websiteNow.getRuleAll().getNextPageRule().getRegex());
-            Matcher matcher=pattern.matcher(websiteNow.getIndexUrl());
-            if (matcher.find()){
-                for (int i=0;i<matcher.groupCount();i++){
-                    switch(websiteNow.getRuleAll().getNextPageRule().getReplace()[i]){
-                        case "size":{
-                            nextPageUrl=matcher.group(i+1)+sizeNow;
-                            //Log.d("nextPageUrl"," "+nextPageUrl);
-                            break;
-                        }
-                        default:
-                            break;
-                    }
-                }
-            }
-        }
+        nextPageUrl=SelectorAndRegex.get(doc,websiteNow.getRuleAll().getNextPageRule(),0,sizeNow);
+        Log.d("nextPageUrl"," "+nextPageUrl);
         //发送一个加载完成了的广播
         Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");
         intent.putExtra("websiteName",websiteNow.getWebSiteName());
         MyApplication.getContext().sendBroadcast(intent);
     }
 
-    public  static void sendRequestDetail(final int id){
+    public  static void sendRequestDetail(final int id,final String refreshPlace){
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (webContentList.get(id).getImg()!=null){
-                    //退出Detail后再次进入前清空原来的数据
+                if (refreshPlace=="new"){
+                    webContentList.get(id).setImg(new ArrayList<String>());
+                }else if (refreshPlace=="top"){
                     webContentList.get(id).getImg().clear();
+                }else if (refreshPlace=="bottom"){
+
                 }
                 try{
                     OkHttpClient client = new OkHttpClient();
@@ -206,36 +187,35 @@ public class Browser {
     }
 
     public static void analysisDetail(final int id,Document doc) {
-
         String nextDetailPage;
-        ArrayList<String> strings=new ArrayList<>();
-        if (webContentList.get(id).getImg()!=null){
-            strings=webContentList.get(id).getImg();
-        }
         Elements list = doc.select(websiteNow.getRuleAll().getImgRule().getSelector());
         for (int i = 0; i < list.size(); i++) {
-            strings.add("");
-            strings.set(i,(list.get(i).attr(websiteNow.getRuleAll().getImgRule().getAttribute())));
+            webContentList.get(id).getImg().add("");
+            webContentList.get(id).getImg().set(webContentList.get(id).getImg().size()-1,SelectorAndRegex.get(doc,websiteNow.getRuleAll().getImgRule(),i));
         }
-        webContentList.get(id).setImg(strings);
-        Log.d("size"," "+webContentList.get(id).getImg().size());
         if (websiteNow.getRuleAll().getNextPageDetailRule()!=null) {
-            nextDetailPage = doc
-                    .select(websiteNow.getRuleAll().getNextPageDetailRule().getSelector())
-                    .attr(websiteNow.getRuleAll().getNextPageDetailRule().getAttribute());
-            if (nextDetailPage.equals("")) {//没有下一页
+            nextDetailPage = SelectorAndRegex.get(doc,websiteNow.getRuleAll().getNextPageDetailRule());
+            //Log.d("nextDetailPage"," "+nextDetailPage);
+            if (nextDetailPage.equals("")) {
+                //没有下一页
+                //发送一个加载完成了的广播
+                //Log.d("detail"," "+webContentList.get(id).getImg());
+                Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");
+                intent.putExtra("position",id);
+                MyApplication.getContext().sendBroadcast(intent);
             } else {//继续下一页
                 websiteNow.setNextDetailPageUrl(nextDetailPage);
-                sendRequestDetail(id);
+                sendRequestDetail(id,"bottom");
                 //Log.d("nextPageDetail","not exist");
             }
         } else {//没有下一页的Rule
             //Log.d("nextPageDetailRule","not exist");
+            //发送一个加载完成了的广播
+            //Log.d("detail"," "+webContentList.get(id).getImg());
+            Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");
+            intent.putExtra("position",id);
+            MyApplication.getContext().sendBroadcast(intent);
         }
-        //发送一个加载完成了的广播
-        Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");
-        intent.putExtra("position",id);
-        MyApplication.getContext().sendBroadcast(intent);
     }
 
     public  static void nextPage(){
