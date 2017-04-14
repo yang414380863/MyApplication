@@ -3356,7 +3356,7 @@ containing a value of this type.
         public static final int design_navigation_view=0x7f0d0087;
         public static final int deviantart=0x7f0d00b4;
         public static final int disableHome=0x7f0d001b;
-        public static final int download=0x7f0d00b8;
+        public static final int download=0x7f0d00b9;
         public static final int drawer_layout=0x7f0d007a;
         public static final int edit_query=0x7f0d006d;
         public static final int end=0x7f0d0032;
@@ -3380,7 +3380,7 @@ containing a value of this type.
         public static final int image=0x7f0d004d;
         public static final int image_view=0x7f0d008e;
         public static final int info=0x7f0d00a1;
-        public static final int item3=0x7f0d00b5;
+        public static final int item3=0x7f0d00b7;
         public static final int item4=0x7f0d00b6;
         public static final int item_touch_helper_previous_elevation=0x7f0d0005;
         public static final int largeLabel=0x7f0d0081;
@@ -3437,7 +3437,7 @@ containing a value of this type.
         public static final int search_src_text=0x7f0d0074;
         public static final int search_voice_btn=0x7f0d0078;
         public static final int select_dialog_listview=0x7f0d0079;
-        public static final int setting=0x7f0d00b7;
+        public static final int setting=0x7f0d00b8;
         public static final int shortcut=0x7f0d0063;
         public static final int showCustom=0x7f0d001d;
         public static final int showHome=0x7f0d001e;
@@ -3478,6 +3478,7 @@ containing a value of this type.
         public static final int touch_outside=0x7f0d0082;
         public static final int transition_current_scene=0x7f0d000b;
         public static final int transition_scene_layoutid_cache=0x7f0d000c;
+        public static final int unsplash=0x7f0d00b5;
         public static final int up=0x7f0d000d;
         public static final int useLogo=0x7f0d0020;
         public static final int view_offset_helper=0x7f0d000e;

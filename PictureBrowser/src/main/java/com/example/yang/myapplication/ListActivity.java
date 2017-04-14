@@ -29,6 +29,7 @@ import com.example.yang.myapplication.web.Website;
 import static com.example.yang.myapplication.R.id.collapsing_toolbar;
 import static com.example.yang.myapplication.R.id.deviantart;
 import static com.example.yang.myapplication.R.id.poocg;
+import static com.example.yang.myapplication.R.id.unsplash;
 import static com.example.yang.myapplication.web.Browser.sizeThisPage;
 import static com.example.yang.myapplication.web.Browser.webContentList;
 import static com.example.yang.myapplication.web.Browser.websiteNow;
@@ -75,7 +76,13 @@ public class ListActivity extends AppCompatActivity {
         ruleDEVIANTART.setNextPageRule(new Rule("a.selected","attr","href","(http:\\/\\/www\\.deviantart\\.com\\/browse\\/all\\/\\?order=\\d+)()",new String[]{"&offset=","size"}));
         final Website DEVIANTART=new Website("deviantart","http://www.deviantart.com/browse/all/?order=67108864&offset=0",ruleDEVIANTART);
 
-
+        RuleAll ruleUNSPLASH=new RuleAll();
+        ruleUNSPLASH.setLinkRule(new Rule("div.y5w1y > a","attr","href","()(\\/\\?photo=[a-z|A-Z|0-9|-]+)",new String[]{"https://unsplash.com",""}));
+        ruleUNSPLASH.setThumbnailRule(new Rule("div.y5w1y > a","attr","style","(https:\\/\\/images.unsplash\\.com\\/photo\\-[a-z|0-9|-|-|?|=|&|,]+)",new String[]{""}));
+        ruleUNSPLASH.setTitleRule(new Rule("a[class=_3XzpS _3myVE _2zITg]","text"));
+        ruleUNSPLASH.setImgRule(new Rule("div.RN0KT","attr","style","(https:\\/\\/images.unsplash\\.com\\/photo\\-[a-z|0-9|-|-|?|=|&]+)\\?",new String[]{""}));
+        //ruleUNSPLASH.setNextPageRule(new Rule());
+        final Website UNSPLASH=new Website("unsplash","https://unsplash.com/",ruleUNSPLASH);
 
         //折叠标题栏
         imageView=(ImageView)findViewById(R.id.image_view);
@@ -105,6 +112,9 @@ public class ListActivity extends AppCompatActivity {
                         break;
                     case deviantart:
                         Browser.sendRequest(DEVIANTART,"new");
+                        break;
+                    case unsplash:
+                        Browser.sendRequest(UNSPLASH,"new");
                         break;
                     default:break;
                 }

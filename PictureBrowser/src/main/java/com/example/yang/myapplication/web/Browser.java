@@ -115,30 +115,27 @@ public class Browser {
             Log.d("ThisPage"," "+webContentList.size());
             Log.d("Match"," "+doc.select(websiteNow.getRuleAll().getLinkRule().getSelector()).size());
             */
-            webContentList.get(sizeNow).setLink(doc
-                    .select(websiteNow.getRuleAll().getLinkRule().getSelector()).get(i)
-                    .attr(websiteNow.getRuleAll().getLinkRule().getAttribute()));
-
-            webContentList.get(sizeNow).setThumbnail(doc
-                    .select(websiteNow.getRuleAll().getThumbnailRule().getSelector()).get(i)
-                    .attr(websiteNow.getRuleAll().getThumbnailRule().getAttribute()));
+            webContentList.get(sizeNow).setLink(SelectorAndRegex.get(doc,websiteNow.getRuleAll().getLinkRule(),i));
+            webContentList.get(sizeNow).setThumbnail(SelectorAndRegex.get(doc,websiteNow.getRuleAll().getThumbnailRule(),i));
 
             if (websiteNow.getRuleAll().getTitleRule().getMethod()=="attr"){
-                webContentList.get(sizeNow).setTitle(doc
-                        .select(websiteNow.getRuleAll().getTitleRule().getSelector()).get(i)
-                        .attr(websiteNow.getRuleAll().getTitleRule().getAttribute()));
-            }else if (websiteNow.getRuleAll().getTitleRule().getMethod()=="text"){
+                webContentList.get(sizeNow).setTitle(SelectorAndRegex.get(doc,websiteNow.getRuleAll().getTitleRule(),i));
+            }else if (websiteNow.getRuleAll().getTitleRule().getMethod()=="text"){//关于title的Rule先不整合
                 webContentList.get(sizeNow).setTitle(doc
                         .select(websiteNow.getRuleAll().getTitleRule().getSelector()).get(i)
                         .text());
             }
-            //Log.d("No."+i,"Link:"+webContentList.get(sizeNow).getLink());
-            //Log.d("No."+i,"Thumbnail:"+webContentList.get(sizeNow).getThumbnail());
-            //Log.d("No."+i,"Title:"+webContentList.get(sizeNow).getTitle());
+            /*
+            Log.d("No."+i,"Link:"+webContentList.get(sizeNow).getLink());
+            Log.d("No."+i,"Thumbnail:"+webContentList.get(sizeNow).getThumbnail());
+            Log.d("No."+i,"Title:"+webContentList.get(sizeNow).getTitle());
+            */
         }
         Log.d("Finish load "+sizeNow+" item","Next item is No "+sizeNow);
         //解析列表的下一页
-        nextPageUrl=SelectorAndRegex.get(doc,websiteNow.getRuleAll().getNextPageRule(),0,sizeNow);
+        if (websiteNow.getRuleAll().getNextPageRule()!=null){
+            nextPageUrl=SelectorAndRegex.get(doc,websiteNow.getRuleAll().getNextPageRule(),0,sizeNow);
+        }
         //Log.d("nextPageUrl"," "+nextPageUrl);
         //发送一个加载完成了的广播
         Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");

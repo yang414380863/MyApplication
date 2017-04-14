@@ -24,11 +24,6 @@ public class Rule {
         this.attribute=attribute;
         this.method=method;
     }
-    //只需要用正则的
-    public Rule(String regex,String[] replace){
-        this.regex=regex;
-        this.replace=replace;
-    }
     //需要用选择器+正则的
     public Rule(String selector,String method,String attribute,String regex,String[] replace){
         this(selector,method,attribute);
