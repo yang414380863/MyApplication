@@ -10,17 +10,18 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.yang.myapplication.basic.BaseActivity;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.yang.myapplication.download.DownloadService;
 import com.github.chrisbanes.photoview.PhotoView;
 
-public class ViewPicture extends BaseActivity implements View.OnClickListener {
+public class ViewPicture extends AppCompatActivity implements View.OnClickListener {
 
     private DownloadService.DownloadBinder downloadBinder;
     private ServiceConnection connection=new ServiceConnection() {
@@ -67,6 +68,7 @@ public class ViewPicture extends BaseActivity implements View.OnClickListener {
         Glide
                 .with(this)
                 .load(url)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(photoView);
     }
     @Override

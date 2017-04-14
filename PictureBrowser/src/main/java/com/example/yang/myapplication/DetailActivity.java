@@ -7,33 +7,22 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.widget.ImageView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-import com.example.yang.myapplication.basic.BaseActivity;
-import com.example.yang.myapplication.basic.MyApplication;
 import com.example.yang.myapplication.web.Browser;
 import com.example.yang.myapplication.web.WebContent;
-
-import java.util.ArrayList;
-
-import static android.R.attr.id;
-import static com.bumptech.glide.Glide.with;
-import static com.example.yang.myapplication.ListActivity.refreshPlace;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 import static com.example.yang.myapplication.R.id.collapsing_toolbar;
-import static com.example.yang.myapplication.web.Browser.sizeThisPage;
 import static com.example.yang.myapplication.web.Browser.webContentList;
-import static com.example.yang.myapplication.web.Browser.websiteNow;
 
 
 //详情所在Activity
-public class DetailActivity extends BaseActivity {
+public class DetailActivity extends SwipeBackActivity {
 
     //广播接收器
     private LoadFinishReceiver receiver;

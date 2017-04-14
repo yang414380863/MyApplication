@@ -104,22 +104,17 @@ public class Browser {
             }
             default:break;
         }
-/**
-        Log.d("Link"," "+doc
-                .select(websiteNow.getRuleAll().getLinkRule().getSelector()).size());
-        Log.d("Thumbnail"," "+doc
-                .select(websiteNow.getRuleAll().getThumbnailRule().getSelector()).size());
-        Log.d("Title"," "+doc
-                .select(websiteNow.getRuleAll().getTitleRule().getSelector()).size());
- */
+
         //解析主要信息
         for (int i=0;i<sizeThisPage;i++,sizeNow++){
             if (webContentList.size()==0){
                 return;
             }
+            /*
             Log.d("ListSize"," "+sizeNow);
             Log.d("ThisPage"," "+webContentList.size());
             Log.d("Match"," "+doc.select(websiteNow.getRuleAll().getLinkRule().getSelector()).size());
+            */
             webContentList.get(sizeNow).setLink(doc
                     .select(websiteNow.getRuleAll().getLinkRule().getSelector()).get(i)
                     .attr(websiteNow.getRuleAll().getLinkRule().getAttribute()));
@@ -144,7 +139,7 @@ public class Browser {
         Log.d("Finish load "+sizeNow+" item","Next item is No "+sizeNow);
         //解析列表的下一页
         nextPageUrl=SelectorAndRegex.get(doc,websiteNow.getRuleAll().getNextPageRule(),0,sizeNow);
-        Log.d("nextPageUrl"," "+nextPageUrl);
+        //Log.d("nextPageUrl"," "+nextPageUrl);
         //发送一个加载完成了的广播
         Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");
         intent.putExtra("websiteName",websiteNow.getWebSiteName());
