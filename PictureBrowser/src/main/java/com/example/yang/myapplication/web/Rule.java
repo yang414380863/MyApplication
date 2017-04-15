@@ -18,13 +18,19 @@ public class Rule {
         this.selector=selector;
         this.method=method;
     }
+    //选择器(method=text)+正则
+    public Rule(String selector,String method,String regex,String[] replace){
+        this(selector,method);
+        this.regex=regex;
+        this.replace=replace;
+    }
     //默认
     public Rule(String selector,String method,String attribute){
         this.selector=selector;
         this.attribute=attribute;
         this.method=method;
     }
-    //需要用选择器+正则的
+    //选择器+正则
     public Rule(String selector,String method,String attribute,String regex,String[] replace){
         this(selector,method,attribute);
         this.regex=regex;

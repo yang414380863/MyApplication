@@ -4,7 +4,6 @@ package com.example.yang.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +55,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
             @Override public void onClick(View v) {
                 //点击->获取链接->显示图片/目录
                 int position=holder.getAdapterPosition();
-                websiteNow.setNextDetailPageUrl(webContentList.get(position).getLink());
+                websiteNow.setNextPageDetailUrl(webContentList.get(position).getLink());
                 Browser.sendRequestDetail(position,"new");
                 Intent intent=new Intent(context,DetailActivity.class);
                 intent.putExtra("position",position);

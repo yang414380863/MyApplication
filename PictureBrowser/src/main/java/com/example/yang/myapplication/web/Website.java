@@ -11,7 +11,7 @@ public class Website {
     private String webSiteName;//网站名
     private String indexUrl;//网站首页
     private String nextPageUrl;//列表的下一页
-    private String nextDetailPageUrl;//详情的下一页
+    private String nextPageDetailUrl;//详情的下一页
     private String[] category;//分类
     private int loginRequired;
 
@@ -66,11 +66,11 @@ public class Website {
         this.nextPageUrl = nextPageUrl;
     }
 
-    public String getNextDetailPageUrl() {
-        return nextDetailPageUrl;
+    public String getNextPageDetailUrl() {
+        return nextPageDetailUrl;
     }
 
-    public void setNextDetailPageUrl(String nextDetailPageUrl) {
-        this.nextDetailPageUrl = nextDetailPageUrl;
+    public void setNextPageDetailUrl(String nextPageDetailUrl) {
+        this.nextPageDetailUrl = nextPageDetailUrl;
     }
 }

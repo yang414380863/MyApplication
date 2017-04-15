@@ -13,7 +13,6 @@ public class RuleAll {
     private Rule imgRule;
     private Rule detailRule;
     private Rule nextPageRule;//List页面下一页
-    private String nextPageRegex;//正则
     private Rule nextPageDetailRule;//Detail页面下一页
 
 
@@ -63,14 +62,6 @@ public class RuleAll {
 
     public void setNextPageRule(Rule nextPageRule) {
         this.nextPageRule = nextPageRule;
-    }
-
-    public String getNextPageRegex() {
-        return nextPageRegex;
-    }
-
-    public void setNextPageRegex(String nextPageRegex) {
-        this.nextPageRegex = nextPageRegex;
     }
 
     public Rule getNextPageDetailRule() {

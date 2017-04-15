@@ -36,6 +36,7 @@ dependencies {
     compile 'org.jsoup:jsoup:1.10.2'
     compile 'com.github.chrisbanes:PhotoView:2.0.0'
     compile 'me.imid.swipebacklayout.lib:library:1.0.0'
+    compile 'com.alibaba:fastjson:1.2.31'
 
     testCompile 'junit:junit:4.12'
 }

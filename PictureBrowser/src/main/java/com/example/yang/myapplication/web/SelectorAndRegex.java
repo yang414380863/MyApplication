@@ -18,7 +18,16 @@ public class SelectorAndRegex {
 
     public static String get(Document doc,Rule rule,int position,int sizeNow){
         //先用选择器
-        string=doc.select(rule.getSelector()).get(position).attr(rule.getAttribute());
+        if (doc.select(rule.getSelector()).size()==0){
+            //匹配不到
+            //Log.d("Selector","can't find");
+            return "";
+        }
+        if (rule.getMethod()=="attr"){
+            string=doc.select(rule.getSelector()).get(position).attr(rule.getAttribute());
+        }else if (rule.getMethod()=="text"){
+            string=doc.select(rule.getSelector()).get(position).text();
+        }
         //Log.d("Selector"+position," "+string);
         if (rule.getRegex()!=null){
             //用正则
@@ -47,29 +56,6 @@ public class SelectorAndRegex {
         return get(doc,rule,position,0);
     }
     public static String get(Document doc,Rule rule){
-        //先用选择器
-        string=doc.select(rule.getSelector()).attr(rule.getAttribute());
-        if (rule.getRegex()!=null){
-            //用正则
-            Pattern pattern=Pattern.compile(rule.getRegex());
-            Matcher matcher=pattern.matcher(string);
-            string="";
-            if (matcher.find()){
-                for (int i=0;i<matcher.groupCount();i++){
-                    switch(rule.getReplace()[i]){
-                        case "size":{
-                            break;
-                        }
-                        default:
-                            string+=matcher.group(i+1)+rule.getReplace()[i];
-                            break;
-                    }
-                }
-                //Log.d("Regex"," "+string);
-            }
-        }else {
-            //Log.d("Selector"," "+string);
-        }
-        return string;
+        return get(doc,rule,0);
     }
 }

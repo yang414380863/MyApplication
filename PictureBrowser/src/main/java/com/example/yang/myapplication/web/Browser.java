@@ -118,14 +118,7 @@ public class Browser {
             */
             webContentList.get(sizeNow).setLink(SelectorAndRegex.get(doc,websiteNow.getRuleAll().getLinkRule(),i));
             webContentList.get(sizeNow).setThumbnail(SelectorAndRegex.get(doc,websiteNow.getRuleAll().getThumbnailRule(),i));
-
-            if (websiteNow.getRuleAll().getTitleRule().getMethod()=="attr"){
-                webContentList.get(sizeNow).setTitle(SelectorAndRegex.get(doc,websiteNow.getRuleAll().getTitleRule(),i));
-            }else if (websiteNow.getRuleAll().getTitleRule().getMethod()=="text"){//关于title的Rule先不整合
-                webContentList.get(sizeNow).setTitle(doc
-                        .select(websiteNow.getRuleAll().getTitleRule().getSelector()).get(i)
-                        .text());
-            }
+            webContentList.get(sizeNow).setTitle(SelectorAndRegex.get(doc,websiteNow.getRuleAll().getTitleRule(),i));
             /*
             Log.d("No."+i,"Link:"+webContentList.get(sizeNow).getLink());
             Log.d("No."+i,"Thumbnail:"+webContentList.get(sizeNow).getThumbnail());
@@ -158,7 +151,7 @@ public class Browser {
                 try{
                     OkHttpClient client = new OkHttpClient();
                     final Request request = new Request.Builder()
-                            .url(websiteNow.getNextDetailPageUrl())
+                            .url(websiteNow.getNextPageDetailUrl())
                             .build();
                     Call call = client.newCall(request);
                     call.enqueue(new Callback() {
@@ -180,16 +173,16 @@ public class Browser {
     }
 
     public static void analysisDetail(final int id,Document doc) {
-        String nextDetailPage;
+        String nextPageDetail;
         Elements list = doc.select(websiteNow.getRuleAll().getImgRule().getSelector());
         for (int i = 0; i < list.size(); i++) {
             webContentList.get(id).getImg().add("");
             webContentList.get(id).getImg().set(webContentList.get(id).getImg().size()-1,SelectorAndRegex.get(doc,websiteNow.getRuleAll().getImgRule(),i));
         }
         if (websiteNow.getRuleAll().getNextPageDetailRule()!=null) {
-            nextDetailPage = SelectorAndRegex.get(doc,websiteNow.getRuleAll().getNextPageDetailRule());
-            //Log.d("nextDetailPage"," "+nextDetailPage);
-            if (nextDetailPage.equals("")) {
+            nextPageDetail = SelectorAndRegex.get(doc,websiteNow.getRuleAll().getNextPageDetailRule());
+            //Log.d("nextPageDetail"," "+nextPageDetail);
+            if (nextPageDetail.equals("")) {
                 //没有下一页
                 //发送一个加载完成了的广播
                 //Log.d("detail"," "+webContentList.get(id).getImg());
@@ -197,7 +190,7 @@ public class Browser {
                 intent.putExtra("position",id);
                 MyApplication.getContext().sendBroadcast(intent);
             } else {//继续下一页
-                websiteNow.setNextDetailPageUrl(nextDetailPage);
+                websiteNow.setNextPageDetailUrl(nextPageDetail);
                 sendRequestDetail(id,"bottom");
                 //Log.d("nextPageDetail","not exist");
             }

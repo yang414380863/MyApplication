@@ -70,7 +70,7 @@ public class ListActivity extends AppCompatActivity {
         rulePOOCG.setImgRule(new Rule("div.wrapper > div > ul > li > a > img[src]","attr","src"
                 ,"(https:\\/\\/imagescdn\\.poocg\\.me\\/uploadfile\\/photo\\/[0-9]{4}\\/[0-9]{1,2}\\/\\d+\\.[a-z]+)\\!photo\\.middle\\.[a-z]+",new String[]{""}));
         rulePOOCG.setNextPageRule(new Rule("a#pagenav","attr","href"));
-        rulePOOCG.setNextPageDetailRule(new Rule("a#pagenav","attr","href"));
+        rulePOOCG.setNextPageDetailRule(new Rule("a[id=pagenav]","attr","href"));
         final Website POOCG=new Website("poocg","http://www.poocg.com/works/index",rulePOOCG);
         POOCG.setCategory(new String[]{"最新作品","http://www.poocg.com/works/new","精华作品","http://www.poocg.com/works/index","王国推荐","http://www.poocg.com/works/tjwork"
                 ,"热门作品","http://www.poocg.com/works/hot","最新喜欢","http://www.poocg.com/works/newlove","新人作品","http://www.poocg.com/works/newauthor"});
@@ -88,7 +88,7 @@ public class ListActivity extends AppCompatActivity {
         RuleAll ruleUNSPLASH=new RuleAll();
         ruleUNSPLASH.setLinkRule(new Rule("div.y5w1y > a","attr","href","()(\\/\\?photo=[a-z|A-Z|0-9|-]+)",new String[]{"https://unsplash.com",""}));
         ruleUNSPLASH.setThumbnailRule(new Rule("div.y5w1y > a","attr","style","(https:\\/\\/images.unsplash\\.com\\/photo\\-[a-z|0-9|-|-|?|=|&|,]+)",new String[]{""}));
-        ruleUNSPLASH.setTitleRule(new Rule("a[class=_3XzpS _3myVE _2zITg]","text"));
+        ruleUNSPLASH.setTitleRule(new Rule("a[class=_3XzpS _3myVE _2zITg]","text","()([a-z|A-Z|\\s]+)",new String[]{"Photo By: ",""}));
         ruleUNSPLASH.setImgRule(new Rule("div.RN0KT","attr","style","(https:\\/\\/images.unsplash\\.com\\/photo\\-[a-z|0-9|-|-|?|=|&]+)\\?",new String[]{""}));
         //ruleUNSPLASH.setNextPageRule(new Rule());没写下一页RULE
         final Website UNSPLASH=new Website("unsplash","https://unsplash.com/",ruleUNSPLASH);
@@ -141,18 +141,20 @@ public class ListActivity extends AppCompatActivity {
                 //点击item之后的操作
                 drawerLayout.closeDrawers();
                 int positionOfCategory=0;
-                for (int i=0;i<websiteNow.getCategory().length/2;i++){
-                    if (item.getTitle().equals(websiteNow.getCategory()[2*i])){
-                        positionOfCategory=2*i+1;
+                if (websiteNow.getCategory()!=null){
+                    for (int i=0;i<websiteNow.getCategory().length/2;i++){
+                        if (item.getTitle().equals(websiteNow.getCategory()[2*i])){
+                            positionOfCategory=2*i+1;
+                        }
                     }
+                    websiteNow.setIndexUrl(websiteNow.getCategory()[positionOfCategory]);
+                    Browser.sendRequest(websiteNow,"new");
+                    swipeRefreshLayout.setRefreshing(true);
+                    isRefreshing=1;
+                    refreshPlace="top";
+                    Log.d("refresh","change category refresh!");
+                    collapsingToolbarLayout.setTitle(websiteNow.getWebSiteName());
                 }
-                websiteNow.setIndexUrl(websiteNow.getCategory()[positionOfCategory]);
-                Browser.sendRequest(websiteNow,"new");
-                swipeRefreshLayout.setRefreshing(true);
-                isRefreshing=1;
-                refreshPlace="top";
-                Log.d("refresh","change category refresh!");
-                collapsingToolbarLayout.setTitle(websiteNow.getWebSiteName());
                 return true;
             }
         });
@@ -251,11 +253,13 @@ public class ListActivity extends AppCompatActivity {
                 //动态生成侧滑菜单(Right)
                 Menu menuRight=navViewRight.getMenu();
                 menuRight.clear();
-                for (int i=0;i<websiteNow.getCategory().length/2;i++){
-                    menuRight.add(group_right,i,i,websiteNow.getCategory()[2*i]);
-                    menuRight.findItem(i).setCheckable(true);
-                    if (websiteNow.getCategory()[2*i+1].equals(websiteNow.getIndexUrl())){
-                        navViewRight.setCheckedItem(menuRight.findItem(i).getItemId());
+                if (websiteNow.getCategory()!=null){
+                    for (int i=0;i<websiteNow.getCategory().length/2;i++){
+                        menuRight.add(group_right,i,i,websiteNow.getCategory()[2*i]);
+                        menuRight.findItem(i).setCheckable(true);
+                        if (websiteNow.getCategory()[2*i+1].equals(websiteNow.getIndexUrl())){
+                            navViewRight.setCheckedItem(menuRight.findItem(i).getItemId());
+                        }
                     }
                 }
                 swipeRefreshLayout.setRefreshing(false);

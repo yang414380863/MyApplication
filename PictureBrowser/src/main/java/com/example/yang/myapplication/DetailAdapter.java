@@ -64,6 +64,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder,int position){
+        holder.name.setVisibility(View.GONE);//隐藏title
         Glide
                 .with(context)
                 .load(urls.get(position))
