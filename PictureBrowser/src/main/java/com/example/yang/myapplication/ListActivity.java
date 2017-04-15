@@ -16,11 +16,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.web.Browser;
@@ -28,9 +31,6 @@ import com.example.yang.myapplication.web.Rule;
 import com.example.yang.myapplication.web.RuleAll;
 import com.example.yang.myapplication.web.Website;
 
-import static android.R.attr.id;
-import static android.R.attr.order;
-import static android.os.Build.VERSION_CODES.M;
 import static com.example.yang.myapplication.R.id.*;
 import static com.example.yang.myapplication.web.Browser.sizeThisPage;
 import static com.example.yang.myapplication.web.Browser.webContentList;
@@ -61,7 +61,6 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list);
-        //final View systemBar = findViewById(R.id.content);
 
         RuleAll rulePOOCG=new RuleAll();
         rulePOOCG.setLinkRule(new Rule("div.imgbox > a[href]","attr","href"));
@@ -93,20 +92,29 @@ public class ListActivity extends AppCompatActivity {
         //ruleUNSPLASH.setNextPageRule(new Rule());没写下一页RULE
         final Website UNSPLASH=new Website("unsplash","https://unsplash.com/",ruleUNSPLASH);
 
+
+
         Browser.sendRequest(POOCG,"new");//首页 进去先加载这个
 
+        // 沉浸式
+        final View systemBar = findViewById(collapsing_toolbar);
         //折叠标题栏
         imageView=(ImageView)findViewById(R.id.image_view);
         collapsingToolbarLayout=(CollapsingToolbarLayout)findViewById(collapsing_toolbar);
+        collapsingToolbarLayout.setTitle("Loading...");
         refreshPlace="top";
+        //ToolBar
+        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         //侧滑菜单
         drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
         NavigationView navViewLeft=(NavigationView)findViewById(R.id.nav_view_left);
         navViewRight=(NavigationView)findViewById(R.id.nav_view_right);
+        //ToolBar 用于打开侧滑菜单的按钮
         ActionBar actionBar=getSupportActionBar();
         if (actionBar!=null){
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.mipmap.ic_launcher_round);
+            //actionBar.setHomeAsUpIndicator(R.mipmap.ic_launcher_round);
         }
 
         //navViewLeft.setCheckedItem(poocg);//默认选中
@@ -125,7 +133,7 @@ public class ListActivity extends AppCompatActivity {
                     case unsplash:
                         Browser.sendRequest(UNSPLASH,"new");
                         break;
-                    default:break;
+                    default:return true;
                 }
                 swipeRefreshLayout.setRefreshing(true);
                 isRefreshing=1;
@@ -194,16 +202,21 @@ public class ListActivity extends AppCompatActivity {
                 int SCROLL_STATE_IDLE=0;//表示屏幕已停止。屏幕停止滚动时为0
                 int SCROLL_STATE_TOUCH_SCROLL=1;//表示正在滚动。当屏幕滚动且用户使用的触碰或手指还在屏幕上时为1
                 int SCROLL_STATE_FLING=2;//手指做了抛的动作（手指离开屏幕前，用力滑了一下，屏幕产生惯性滑动）
-                /*沉浸式
-                    if(newState ==SCROLL_STATE_FLING){
+                //沉浸式
+                if(newState == SCROLL_STATE_FLING){
+                    /*//隐藏?需要
                     systemBar.setSystemUiVisibility(
                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION//显示导航栏
-                                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN//显示状态栏
+                                    //| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION//显示导航栏
+                                    //| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN//显示状态栏
                                     //| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION//不显示导航栏
-                                    //| View.SYSTEM_UI_FLAG_FULLSCREEN//不显示状态栏
+                                    | View.SYSTEM_UI_FLAG_FULLSCREEN//不显示状态栏
                                     | View.SYSTEM_UI_FLAG_IMMERSIVE);//沉浸模式
-                }*/
+                    */
+                }
+                if(newState == SCROLL_STATE_IDLE){
+                    systemBar.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                }
                 //划到底部刷新
                 if(!recyclerView.canScrollVertically(1)){//检测划到了底部
                     if (isRefreshing==0){
@@ -216,7 +229,7 @@ public class ListActivity extends AppCompatActivity {
                         snackbar.show();
                     }
                 }else if(!recyclerView.canScrollVertically(-1)) {//检测划到了顶部
-                    /*systemBar.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);*/
+                    systemBar.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
                 }
 
             }
@@ -266,5 +279,26 @@ public class ListActivity extends AppCompatActivity {
                 isRefreshing=0;
             }
         }
+    }
+    //ToolBar
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.toolbar,menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                drawerLayout.openDrawer(Gravity.START);
+                break;
+            case R.id.setting:
+                Toast.makeText(this,"Click Setting Button",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.download:
+                Toast.makeText(this,"Click Download Button",Toast.LENGTH_SHORT).show();
+                break;
+            default:break;
+        }
+        return true;
     }
 }

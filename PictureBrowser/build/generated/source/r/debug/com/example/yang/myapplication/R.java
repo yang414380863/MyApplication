@@ -3356,7 +3356,7 @@ containing a value of this type.
         public static final int design_navigation_view=0x7f0d0087;
         public static final int deviantart=0x7f0d00b4;
         public static final int disableHome=0x7f0d001b;
-        public static final int download=0x7f0d00ba;
+        public static final int download=0x7f0d00b9;
         public static final int drawer_layout=0x7f0d007a;
         public static final int edit_query=0x7f0d006d;
         public static final int end=0x7f0d0032;
@@ -3438,7 +3438,7 @@ containing a value of this type.
         public static final int search_src_text=0x7f0d0074;
         public static final int search_voice_btn=0x7f0d0078;
         public static final int select_dialog_listview=0x7f0d0079;
-        public static final int setting=0x7f0d00b9;
+        public static final int setting=0x7f0d00ba;
         public static final int shortcut=0x7f0d0063;
         public static final int showCustom=0x7f0d001d;
         public static final int showHome=0x7f0d001e;
@@ -3628,6 +3628,8 @@ containing a value of this type.
         public static final int Animation_AppCompat_Dialog=0x7f0900a5;
         public static final int Animation_AppCompat_DropDownUp=0x7f0900a6;
         public static final int Animation_Design_BottomSheetDialog=0x7f0900a7;
+        /** 窗口透明
+         */
         public static final int AppTheme=0x7f0900a8;
         public static final int AppTheme2=0x7f090040;
         public static final int Base_AlertDialog_AppCompat=0x7f0900a9;

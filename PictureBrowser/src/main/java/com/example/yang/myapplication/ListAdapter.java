@@ -4,6 +4,7 @@ package com.example.yang.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ import static com.example.yang.myapplication.web.Browser.websiteNow;
  * 显示列表
  */
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>implements View.OnClickListener {
 
     private ArrayList<WebContent> webContents=new ArrayList<>();
     private Context context;
@@ -51,18 +52,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.web_content_item, parent, false);
         final ViewHolder holder = new ViewHolder(view);
-        holder.image.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                //点击->获取链接->显示图片/目录
-                int position=holder.getAdapterPosition();
-                websiteNow.setNextPageDetailUrl(webContentList.get(position).getLink());
-                Browser.sendRequestDetail(position,"new");
-                Intent intent=new Intent(context,DetailActivity.class);
-                intent.putExtra("position",position);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            }
-        });
+        view.setOnClickListener(this);
         return holder;
     }
 
@@ -80,6 +70,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
                 .dontAnimate()//无载入动画
                 //.crossFade() //设置淡入淡出效果，默认300ms，可以传参 会导致图片变形 先不用
                 .into(holder.image);
+        holder.itemView.setTag(position);
     }
 
     @Override
@@ -91,4 +82,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
         return webContents;
     }
 
+    @Override
+    public void onClick(View view){
+        //点击->获取链接->显示图片/目录
+        int position=(int)view.getTag();
+        websiteNow.setNextPageDetailUrl(webContentList.get(position).getLink());
+        Browser.sendRequestDetail(position,"new");
+        Intent intent=new Intent(context,DetailActivity.class);
+        intent.putExtra("position",position);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
 }

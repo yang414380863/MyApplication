@@ -24,7 +24,8 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fitsSystemWindows="true">
+                android:fitsSystemWindows="true"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
                 <!--contentScrim 折叠后颜色  scroll|exitUntilCollapsed 随滚动|滚动后折叠-->
 
                 <ImageView
@@ -34,14 +35,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true"/>
-
                 <!--layout_collapseMode 折叠过程模式-->
+
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="#00FFFFFF">
-                </android.support.v7.widget.Toolbar>
+                    android:background="#00FFFFFF"
+                    android:theme="@style/ThemeOverlay.AppCompat.Light"
+                    app:layout_collapseMode="pin"/>
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -71,7 +73,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/nav_menu_left"
-        app:headerLayout="@layout/nav_header_left"/>
+        app:headerLayout="@layout/nav_header_left"
+        app:insetForeground="#00000000"/>
 
     <!--右侧滑菜单-->
     <android.support.design.widget.NavigationView
@@ -80,5 +83,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         app:menu="@menu/nav_menu_right"
-        app:headerLayout="@layout/nav_header_right"/>
+        app:headerLayout="@layout/nav_header_right"
+        app:insetForeground="#00000000"/>
 </android.support.v4.widget.DrawerLayout>

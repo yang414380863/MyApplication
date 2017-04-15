@@ -19,7 +19,8 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true">
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
             <!--contentScrim 折叠后颜色  scroll|exitUntilCollapsed 随滚动|滚动后折叠-->
 
             <ImageView
@@ -34,7 +35,8 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="#00FFFFFF">
+                android:background="#00FFFFFF"
+                android:theme="@style/ThemeOverlay.AppCompat.Light">
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>

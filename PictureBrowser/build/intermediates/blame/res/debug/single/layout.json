@@ -60,12 +60,12 @@
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\layout\\abc_list_menu_item_layout.xml"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_separator.xml",
-        "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\fef5acf8b8ea1eccf3bdb08a5f4995819dda3fa9\\output\\res\\layout\\design_navigation_item_separator.xml"
-    },
-    {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_media_custom.xml",
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\layout\\notification_template_media_custom.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_separator.xml",
+        "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\fef5acf8b8ea1eccf3bdb08a5f4995819dda3fa9\\output\\res\\layout\\design_navigation_item_separator.xml"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\abc_dialog_title_material.xml",

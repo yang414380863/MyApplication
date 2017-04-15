@@ -18,13 +18,16 @@ import com.example.yang.myapplication.web.WebContent;
 
 import java.util.ArrayList;
 
+import static com.example.yang.myapplication.web.Browser.webContentList;
+import static com.example.yang.myapplication.web.Browser.websiteNow;
+
 
 /**
  * Created by YanGGGGG on 2017/3/22.
  * 显示详细情况
  */
 
-public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder>{
+public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder>implements View.OnClickListener{
 
     private ArrayList<String> urls=new ArrayList<>();
     private Context context;
@@ -49,16 +52,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.web_content_item, parent, false);
         final ViewHolder holder = new ViewHolder(view);
-        holder.image.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                //显示下载按钮 以及其他
-                int position=holder.getAdapterPosition();
-                Intent intent=new Intent(context,ViewPicture.class);
-                intent.putExtra("url",urls.get(position));
-                //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            }
-        });
+        view.setOnClickListener(this);
         return holder;
     }
 
@@ -75,6 +69,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 .dontAnimate()//无载入动画
                 //.crossFade() //设置淡入淡出效果，默认300ms，可以传参 会导致图片变形 先不用
                 .into(holder.image);
+        holder.itemView.setTag(position);
     }
 
     @Override
@@ -84,5 +79,15 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
     public ArrayList<String> getUrls(){
         return urls;
+    }
+
+    @Override
+    public void onClick(View view){
+        //点击->获取链接->显示图片/目录
+        int position=(int)view.getTag();
+        Intent intent=new Intent(context,ViewPicture.class);
+        intent.putExtra("url",urls.get(position));
+        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }

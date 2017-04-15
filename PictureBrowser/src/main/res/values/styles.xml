@@ -1,13 +1,14 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowIsTranslucent">true</item>
-    </style>
-    <style name="AppTheme2" parent="AppTheme">
-    </style>
+<!-- Base application theme. -->
+<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimary</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:navigationBarColor">@color/colorPrimary</item>
+    <item name="android:windowIsTranslucent">true</item><!--窗口透明-->
+</style>
+<style name="AppTheme2" parent="AppTheme">
+</style>
 </resources>
