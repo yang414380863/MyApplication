@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.web.Browser;
+import com.example.yang.myapplication.web.JsonUtils;
 import com.example.yang.myapplication.web.Rule;
 import com.example.yang.myapplication.web.RuleAll;
 import com.example.yang.myapplication.web.Website;
@@ -66,11 +67,11 @@ public class ListActivity extends AppCompatActivity {
         rulePOOCG.setLinkRule(new Rule("div.imgbox > a[href]","attr","href"));
         rulePOOCG.setThumbnailRule(new Rule("div.imgbox > a > img[src]","attr","src"));
         rulePOOCG.setTitleRule(new Rule("div.infobox > p.titles","text"));
-        rulePOOCG.setImgRule(new Rule("div.wrapper > div > ul > div.workPage-images > a[href]","attr","href"
-                ,"(https:\\/\\/imagescdn\\.poocg\\.me\\/uploadfile\\/photo\\/[0-9]{4}\\/[0-9]{1,2}\\/\\d+\\.[a-z]+)",new String[]{""}));
+        rulePOOCG.setImgRule(new Rule("div.wrapper > div > ul > div[class=workPage-images] > img[src]","attr","src"
+                ,"(https:\\/\\/imagescdn\\.poocg\\.me\\/uploadfile\\/photo\\/[0-9]{4}\\/[0-9]{1,2}\\/[a-z|0-9|_]+\\.[a-z]+)",new String[]{""}));
         rulePOOCG.setNextPageRule(new Rule("a#pagenav","attr","href"));
         rulePOOCG.setNextPageDetailRule(new Rule("a[id=pagenav]","attr","href"));
-        final Website POOCG=new Website("poocg","http://www.poocg.com/works/index",rulePOOCG);
+        final Website POOCG=new Website("poocg","https://www.poocg.com/works/index/type/new",rulePOOCG);
         POOCG.setCategory(new String[]{"最新","https://www.poocg.com/works/index/type/new","新赞","https://www.poocg.com/works/index/type/love","热门","https://www.poocg.com/works/index/type/hot"
                 ,"精华","https://www.poocg.com/works/index/type/best","推荐","https://www.poocg.com/works/index/type/rem"});
 
@@ -93,7 +94,9 @@ public class ListActivity extends AppCompatActivity {
         final Website UNSPLASH=new Website("unsplash","https://unsplash.com/",ruleUNSPLASH);
 
 
-
+        Log.d("JSON", JsonUtils.ObjectToJson(POOCG));
+        final Website newWebsite=JsonUtils.JsonToObject(JsonUtils.ObjectToJson(POOCG));
+        //Browser.sendRequest(newWebsite,"new");//从JSON格式转换为Website对象
         Browser.sendRequest(POOCG,"new");//首页 进去先加载这个
 
         // 沉浸式

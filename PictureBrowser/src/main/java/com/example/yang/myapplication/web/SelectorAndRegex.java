@@ -23,9 +23,9 @@ public class SelectorAndRegex {
             Log.d("Selector","can't find");
             return "";
         }
-        if (rule.getMethod()=="attr"){
+        if (rule.getMethod().equals("attr")){
             string=doc.select(rule.getSelector()).get(position).attr(rule.getAttribute());
-        }else if (rule.getMethod()=="text"){
+        }else if (rule.getMethod().equals("text")){
             string=doc.select(rule.getSelector()).get(position).text();
         }
         //Log.d("Selector"+position," "+string);
