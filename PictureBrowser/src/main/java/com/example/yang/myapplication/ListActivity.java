@@ -65,14 +65,14 @@ public class ListActivity extends AppCompatActivity {
         RuleAll rulePOOCG=new RuleAll();
         rulePOOCG.setLinkRule(new Rule("div.imgbox > a[href]","attr","href"));
         rulePOOCG.setThumbnailRule(new Rule("div.imgbox > a > img[src]","attr","src"));
-        rulePOOCG.setTitleRule(new Rule("div.imgbox > a > img[src]","attr","alt"));
-        rulePOOCG.setImgRule(new Rule("div.wrapper > div > ul > li > a > img[src]","attr","src"
-                ,"(https:\\/\\/imagescdn\\.poocg\\.me\\/uploadfile\\/photo\\/[0-9]{4}\\/[0-9]{1,2}\\/\\d+\\.[a-z]+)\\!photo\\.middle\\.[a-z]+",new String[]{""}));
+        rulePOOCG.setTitleRule(new Rule("div.infobox > p.titles","text"));
+        rulePOOCG.setImgRule(new Rule("div.wrapper > div > ul > div.workPage-images > a[href]","attr","href"
+                ,"(https:\\/\\/imagescdn\\.poocg\\.me\\/uploadfile\\/photo\\/[0-9]{4}\\/[0-9]{1,2}\\/\\d+\\.[a-z]+)",new String[]{""}));
         rulePOOCG.setNextPageRule(new Rule("a#pagenav","attr","href"));
         rulePOOCG.setNextPageDetailRule(new Rule("a[id=pagenav]","attr","href"));
         final Website POOCG=new Website("poocg","http://www.poocg.com/works/index",rulePOOCG);
-        POOCG.setCategory(new String[]{"最新作品","http://www.poocg.com/works/new","精华作品","http://www.poocg.com/works/index","王国推荐","http://www.poocg.com/works/tjwork"
-                ,"热门作品","http://www.poocg.com/works/hot","最新喜欢","http://www.poocg.com/works/newlove","新人作品","http://www.poocg.com/works/newauthor"});
+        POOCG.setCategory(new String[]{"最新","https://www.poocg.com/works/index/type/new","新赞","https://www.poocg.com/works/index/type/love","热门","https://www.poocg.com/works/index/type/hot"
+                ,"精华","https://www.poocg.com/works/index/type/best","推荐","https://www.poocg.com/works/index/type/rem"});
 
         RuleAll ruleDEVIANTART=new RuleAll();
         ruleDEVIANTART.setLinkRule(new Rule("span[class*=thumb] > a","attr","href"));

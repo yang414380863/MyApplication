@@ -20,7 +20,7 @@ public class SelectorAndRegex {
         //先用选择器
         if (doc.select(rule.getSelector()).size()==0){
             //匹配不到
-            //Log.d("Selector","can't find");
+            Log.d("Selector","can't find");
             return "";
         }
         if (rule.getMethod()=="attr"){
