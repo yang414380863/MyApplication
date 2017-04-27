@@ -21,48 +21,24 @@ import com.example.yang.myapplication.web.RuleAll;
 import com.example.yang.myapplication.web.Website;
 
 
-//开始界面 以后换
 public class MainActivity extends AppCompatActivity {
 
-    private DrawerLayout drawerLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //ToolBar
-        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        //侧滑菜单
-        drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
-        NavigationView navView=(NavigationView)findViewById(R.id.nav_view_left) ;
-        ActionBar actionBar=getSupportActionBar();
-        if (actionBar!=null){
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.mipmap.ic_launcher_round);
-        }
-        //navView.setCheckedItem(R.id.poocg);//默认选中
-        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                //点击item之后的操作
-                drawerLayout.closeDrawers();
-                return true;
-            }
-        });
-
-
         RuleAll rulePOOCG=new RuleAll();
         rulePOOCG.setLinkRule(new Rule("div.imgbox > a[href]","attr","href"));
         rulePOOCG.setThumbnailRule(new Rule("div.imgbox > a > img[src]","attr","src"));
-        rulePOOCG.setTitleRule(new Rule("div.imgbox > a > img[src]","attr","alt"));
-        rulePOOCG.setImgRule(new Rule("div.wrapper > div > ul > li > a > img[src]","attr","src","(https:\\/\\/imagescdn\\.poocg\\.me\\/uploadfile\\/photo\\/[0-9]{4}\\/[0-9]{1,2}\\/\\d+\\.[a-z]+)\\!photo\\.middle\\.[a-z]+",new String[]{""}));
+        rulePOOCG.setTitleRule(new Rule("div.infobox > p.titles","text"));
+        rulePOOCG.setImgRule(new Rule("div.wrapper > div > ul > div[class=workPage-images] > img[src]","attr","src"
+                ,"(https:\\/\\/imagescdn\\.poocg\\.me\\/uploadfile\\/photo\\/[0-9]{4}\\/[0-9]{1,2}\\/[a-z|0-9|_]+\\.[a-z]+)",new String[]{""}));
         rulePOOCG.setNextPageRule(new Rule("a#pagenav","attr","href"));
-        rulePOOCG.setNextPageDetailRule(new Rule("a#pagenav","attr","href"));
-        final Website POOCG=new Website("poocg","http://www.poocg.com/works/index",rulePOOCG);
-
+        rulePOOCG.setNextPageDetailRule(new Rule("a[id=pagenav]","attr","href"));
+        final Website POOCG=new Website("poocg","https://www.poocg.com/works/index/type/new",rulePOOCG);
+        POOCG.setCategory(new String[]{"最新","https://www.poocg.com/works/index/type/new","新赞","https://www.poocg.com/works/index/type/love","热门","https://www.poocg.com/works/index/type/hot"
+                ,"精华","https://www.poocg.com/works/index/type/best","推荐","https://www.poocg.com/works/index/type/rem"});
 
         RuleAll ruleDEVIANTART=new RuleAll();
         ruleDEVIANTART.setLinkRule(new Rule("span[class*=thumb] > a","attr","href"));
@@ -70,17 +46,19 @@ public class MainActivity extends AppCompatActivity {
         ruleDEVIANTART.setTitleRule(new Rule("span[class*=thumb] > span.info > span.title-wrap > span.title","text"));
         ruleDEVIANTART.setImgRule(new Rule("div.dev-view-deviation > img[class=dev-content-full]","attr","src"));
         ruleDEVIANTART.setNextPageRule(new Rule("a.selected","attr","href","(http:\\/\\/www\\.deviantart\\.com\\/browse\\/all\\/\\?order=\\d+)()",new String[]{"&offset=","size"}));
-        final Website DEVIANTART=new Website("deviantart","http://www.deviantart.com/browse/all/?order=67108864&offset=0",ruleDEVIANTART);
+        final Website DEVIANTART=new Website("deviantart","http://www.deviantart.com/browse/all/?order=67108864",ruleDEVIANTART);
+        DEVIANTART.setCategory(new String[]{"Newest","http://www.deviantart.com/browse/all/?order=5","What's Hot","http://www.deviantart.com/browse/all/?order=67108864"
+                ,"Undiscovered","http://www.deviantart.com/browse/all/?order=134217728","Popular 24 hours","http://www.deviantart.com/browse/all/?order=11","Popular All Time","http://www.deviantart.com/browse/all/?order=9"});
 
-
-/**
         RuleAll ruleUNSPLASH=new RuleAll();
-        ruleUNSPLASH.setLinkRule(new Rule("span[class*=thumb]","href"));
-        ruleUNSPLASH.setThumbnailRule(new Rule("div[id^=grid] > div > div > a","src"));
-        ruleUNSPLASH.setImgRule(new Rule("div.dev-view-deviation > img[class=dev-content-full]","src"));
-        ruleUNSPLASH.setNextPageRule(new Rule("a#pagenav","href"));
-        final Website UNSPLASH=new Website("Unsplash","https://unsplash.com/",ruleUNSPLASH);
-*/
+        ruleUNSPLASH.setLinkRule(new Rule("div.y5w1y > a","attr","href","()(\\/\\?photo=[a-z|A-Z|0-9|-]+)",new String[]{"https://unsplash.com",""}));
+        ruleUNSPLASH.setThumbnailRule(new Rule("div.y5w1y > a","attr","style","(https:\\/\\/images.unsplash\\.com\\/photo\\-[a-z|0-9|-|-|?|=|&|,]+)",new String[]{""}));
+        ruleUNSPLASH.setTitleRule(new Rule("a[class=_3XzpS _3myVE _2zITg]","text","()([a-z|A-Z|\\s]+)",new String[]{"Photo By: ",""}));
+        ruleUNSPLASH.setImgRule(new Rule("div.RN0KT","attr","style","(https:\\/\\/images.unsplash\\.com\\/photo\\-[a-z|0-9|-|-|?|=|&]+)\\?",new String[]{""}));
+        //ruleUNSPLASH.setNextPageRule(new Rule());没写下一页RULE
+        final Website UNSPLASH=new Website("unsplash","https://unsplash.com/",ruleUNSPLASH);
+
+
         Button button1 = (Button) findViewById(R.id.button_1);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,26 +79,5 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-    }
-    //ToolBar
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.toolbar,menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                drawerLayout.openDrawer(Gravity.START);
-                break;
-            case R.id.setting:
-                Toast.makeText(this,"Click Setting Button",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.download:
-                Toast.makeText(this,"Click Download Button",Toast.LENGTH_SHORT).show();
-                break;
-            default:break;
-        }
-        return true;
     }
 }

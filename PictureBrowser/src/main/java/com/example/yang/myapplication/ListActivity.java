@@ -67,7 +67,7 @@ public class ListActivity extends AppCompatActivity {
         rulePOOCG.setLinkRule(new Rule("div.imgbox > a[href]","attr","href"));
         rulePOOCG.setThumbnailRule(new Rule("div.imgbox > a > img[src]","attr","src"));
         rulePOOCG.setTitleRule(new Rule("div.infobox > p.titles","text"));
-        rulePOOCG.setImgRule(new Rule("div.wrapper > div > ul > div[class=workPage-images] > img[src]","attr","src"
+        rulePOOCG.setImgRule(new Rule("div[class=workPage-images] > a[href]","attr","href"
                 ,"(https:\\/\\/imagescdn\\.poocg\\.me\\/uploadfile\\/photo\\/[0-9]{4}\\/[0-9]{1,2}\\/[a-z|0-9|_]+\\.[a-z]+)",new String[]{""}));
         rulePOOCG.setNextPageRule(new Rule("a#pagenav","attr","href"));
         rulePOOCG.setNextPageDetailRule(new Rule("a[id=pagenav]","attr","href"));
