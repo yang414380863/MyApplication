@@ -94,7 +94,7 @@ public class ListActivity extends AppCompatActivity {
         final Website UNSPLASH=new Website("unsplash","https://unsplash.com/",ruleUNSPLASH);
 
 
-        Log.d("JSON", JsonUtils.ObjectToJson(POOCG));
+        //Log.d("JSON", JsonUtils.ObjectToJson(POOCG));
         final Website newWebsite=JsonUtils.JsonToObject(JsonUtils.ObjectToJson(POOCG));
         //Browser.sendRequest(newWebsite,"new");//从JSON格式转换为Website对象
         Browser.sendRequest(POOCG,"new");//首页 进去先加载这个
