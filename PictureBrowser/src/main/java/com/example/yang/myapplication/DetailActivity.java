@@ -17,6 +17,8 @@ import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.web.Browser;
 import com.example.yang.myapplication.web.WebContent;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
+
+import static com.bumptech.glide.Glide.with;
 import static com.example.yang.myapplication.R.id.collapsing_toolbar;
 import static com.example.yang.myapplication.web.Browser.webContentList;
 

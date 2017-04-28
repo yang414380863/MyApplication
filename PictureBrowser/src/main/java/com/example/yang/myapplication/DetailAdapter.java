@@ -18,6 +18,7 @@ import com.example.yang.myapplication.web.WebContent;
 
 import java.util.ArrayList;
 
+import static com.bumptech.glide.Glide.with;
 import static com.example.yang.myapplication.web.Browser.webContentList;
 import static com.example.yang.myapplication.web.Browser.websiteNow;
 

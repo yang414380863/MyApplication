@@ -18,10 +18,10 @@ public class SelectorAndRegex {
 
     public static String get(Document doc,Rule rule,int position,int sizeNow){
         //先用选择器
-            if (doc.select(rule.getSelector()).size()==0){
-                //匹配不到
-                Log.d("Selector","can't find");
-                return "";
+        if (doc.select(rule.getSelector()).size()==0){
+            //匹配不到
+            Log.d("Selector","can't find");
+            return "";
         }
         if (rule.getMethod().equals("attr")){
             string=doc.select(rule.getSelector()).get(position).attr(rule.getAttribute());
@@ -49,6 +49,7 @@ public class SelectorAndRegex {
                 //Log.d("Regex"+position," "+string);
             }
         }
+        //Log.d("result"," "+string);
         return string;
     }
 

@@ -185,7 +185,6 @@ public class Browser {
             if (nextPageDetail.equals("")) {
                 //没有下一页
                 //发送一个加载完成了的广播
-                //Log.d("detail"," "+webContentList.get(id).getImg());
                 Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");
                 intent.putExtra("position",id);
                 MyApplication.getContext().sendBroadcast(intent);
