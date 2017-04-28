@@ -1,11 +1,11 @@
 [
     {
-        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\white.png",
-        "source": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\src\\main\\res\\drawable\\white.png"
-    },
-    {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\loading1.gif",
         "source": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\src\\main\\res\\drawable\\loading1.gif"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\white.png",
+        "source": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\src\\main\\res\\drawable\\white.png"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_holo_light.xml",
@@ -76,6 +76,10 @@
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\fef5acf8b8ea1eccf3bdb08a5f4995819dda3fa9\\output\\res\\drawable\\design_snackbar_background.xml"
     },
     {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\avoscloud_feedback_thread_actionbar_back.png",
+        "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\1accdcded67eb4388eeb71ac65040385b82c5309\\output\\res\\drawable\\avoscloud_feedback_thread_actionbar_back.png"
+    },
+    {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_tick_mark_material.xml",
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\drawable\\abc_seekbar_tick_mark_material.xml"
     },
@@ -96,12 +100,20 @@
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\drawable\\abc_btn_default_mtrl_shape.xml"
     },
     {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\avoscloud_feedback_actionbar_background.xml",
+        "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\1accdcded67eb4388eeb71ac65040385b82c5309\\output\\res\\drawable\\avoscloud_feedback_actionbar_background.xml"
+    },
+    {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_go_search_api_material.xml",
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\drawable\\abc_ic_go_search_api_material.xml"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_material.xml",
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\drawable\\abc_ratingbar_material.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\avoscloud_search_actionbar_back.png",
+        "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\3efcb411f9261474548a437af3f8b2ce754d1e78\\output\\res\\drawable\\avoscloud_search_actionbar_back.png"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_track_material.xml",
@@ -170,5 +182,9 @@
     {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml",
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\avoscloud_search_result_open_background.xml",
+        "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\3efcb411f9261474548a437af3f8b2ce754d1e78\\output\\res\\drawable\\avoscloud_search_result_open_background.xml"
     }
 ]

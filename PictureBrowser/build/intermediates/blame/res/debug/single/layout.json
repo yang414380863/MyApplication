@@ -4,6 +4,10 @@
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\layout\\abc_list_menu_item_radio.xml"
     },
     {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\activity_login.xml",
+        "source": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\src\\main\\res\\layout\\activity_login.xml"
+    },
+    {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_header.xml",
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\fef5acf8b8ea1eccf3bdb08a5f4995819dda3fa9\\output\\res\\layout\\design_navigation_item_header.xml"
     },
@@ -76,6 +80,10 @@
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\layout\\abc_action_menu_layout.xml"
     },
     {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\avoscloud_search_activity.xml",
+        "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\3efcb411f9261474548a437af3f8b2ce754d1e78\\output\\res\\layout\\avoscloud_search_activity.xml"
+    },
+    {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple_overlay_action_mode.xml",
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\layout\\abc_screen_simple_overlay_action_mode.xml"
     },
@@ -102,6 +110,10 @@
     {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\abc_search_dropdown_item_icons_2line.xml",
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\layout\\abc_search_dropdown_item_icons_2line.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\avoscloud_feedback_dev_reply.xml",
+        "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\1accdcded67eb4388eeb71ac65040385b82c5309\\output\\res\\layout\\avoscloud_feedback_dev_reply.xml"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\support_simple_spinner_dropdown_item.xml",
@@ -180,6 +192,10 @@
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\fef5acf8b8ea1eccf3bdb08a5f4995819dda3fa9\\output\\res\\layout\\design_navigation_item.xml"
     },
     {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\avoscloud_search_result_item.xml",
+        "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\3efcb411f9261474548a437af3f8b2ce754d1e78\\output\\res\\layout\\avoscloud_search_result_item.xml"
+    },
+    {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_material.xml",
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\layout\\abc_alert_dialog_material.xml"
     },
@@ -192,6 +208,10 @@
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\layout\\abc_popup_menu_header_item_layout.xml"
     },
     {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\avoscloud_search_actionbar.xml",
+        "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\3efcb411f9261474548a437af3f8b2ce754d1e78\\output\\res\\layout\\avoscloud_search_actionbar.xml"
+    },
+    {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_media.xml",
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\layout\\notification_template_media.xml"
     },
@@ -200,12 +220,20 @@
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\layout\\abc_action_mode_bar.xml"
     },
     {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\avoscloud_sns_web_activity.xml",
+        "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\894062c7de316693e631efd9a2dbf420d10492f3\\output\\res\\layout\\avoscloud_sns_web_activity.xml"
+    },
+    {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_title_material.xml",
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\layout\\abc_alert_dialog_title_material.xml"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\swipeback_layout.xml",
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\f5a92656cc7e5db828eac2ee212e87eec1155c03\\output\\res\\layout\\swipeback_layout.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\avoscloud_feedback_activity_conversation.xml",
+        "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\1accdcded67eb4388eeb71ac65040385b82c5309\\output\\res\\layout\\avoscloud_feedback_activity_conversation.xml"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_button_bar_material.xml",
@@ -220,12 +248,24 @@
         "source": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\src\\main\\res\\layout\\nav_header_left.xml"
     },
     {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\avoscloud_feedback_user_reply.xml",
+        "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\1accdcded67eb4388eeb71ac65040385b82c5309\\output\\res\\layout\\avoscloud_feedback_user_reply.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\avoscloud_feedback_thread_actionbar.xml",
+        "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\1accdcded67eb4388eeb71ac65040385b82c5309\\output\\res\\layout\\avoscloud_feedback_thread_actionbar.xml"
+    },
+    {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_title_item.xml",
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\layout\\abc_action_bar_title_item.xml"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_part_chronometer.xml",
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\layout\\notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\avoscloud_search_loading.xml",
+        "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\3efcb411f9261474548a437af3f8b2ce754d1e78\\output\\res\\layout\\avoscloud_search_loading.xml"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\design_text_input_password_icon.xml",

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="avoscloud-push-v3.16.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.android/build-cache/3cb96ebd50ceeeffd1c06fe05107f0193da60f06/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/3cb96ebd50ceeeffd1c06fe05107f0193da60f06/output/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

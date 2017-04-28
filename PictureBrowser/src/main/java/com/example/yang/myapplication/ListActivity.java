@@ -25,6 +25,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.SaveCallback;
 import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.web.Browser;
 import com.example.yang.myapplication.web.JsonUtils;
@@ -54,6 +57,7 @@ public class ListActivity extends AppCompatActivity {
     //侧滑菜单
     NavigationView navViewRight;
 
+
     final ListAdapter adapter=new ListAdapter(this);
     static int isRefreshing=0;
     static String refreshPlace;
@@ -62,6 +66,11 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list);
+
+        //用户信息
+        Intent intent=getIntent();
+        String userName=intent.getExtras().getString("username");
+
 
         RuleAll rulePOOCG=new RuleAll();
         rulePOOCG.setLinkRule(new Rule("div.imgbox > a[href]","attr","href"));
@@ -237,6 +246,7 @@ public class ListActivity extends AppCompatActivity {
 
             }
         });
+
     }
     @Override
     protected void onDestroy(){
