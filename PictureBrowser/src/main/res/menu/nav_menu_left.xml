@@ -2,22 +2,7 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/poocg"
-            android:icon="@mipmap/ic_launcher_round"
-            android:title="poocg"/>
-        <item
-            android:id="@+id/deviantart"
-            android:icon="@mipmap/ic_launcher_round"
-            android:title="deviantart"/>
-        <item
-            android:id="@+id/unsplash"
-            android:icon="@mipmap/ic_launcher_round"
-            android:title="unsplash"/>
-        <item
-            android:id="@+id/item4"
-            android:icon="@mipmap/ic_launcher_round"
-            android:title="item4"/>
+    <group android:checkableBehavior="single"
+           android:id="@+id/group_left">
     </group>
 </menu>

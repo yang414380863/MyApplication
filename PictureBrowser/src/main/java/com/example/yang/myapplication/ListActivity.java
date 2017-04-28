@@ -56,6 +56,7 @@ public class ListActivity extends AppCompatActivity {
     CollapsingToolbarLayout collapsingToolbarLayout;
     //侧滑菜单
     NavigationView navViewRight;
+    NavigationView navViewLeft;
 
 
     final ListAdapter adapter=new ListAdapter(this);
@@ -80,7 +81,7 @@ public class ListActivity extends AppCompatActivity {
                 ,"(https:\\/\\/imagescdn\\.poocg\\.me\\/uploadfile\\/photo\\/[0-9]{4}\\/[0-9]{1,2}\\/[a-z|0-9|_]+\\.[a-z]+)",new String[]{""}));
         rulePOOCG.setNextPageRule(new Rule("a#pagenav","attr","href"));
         rulePOOCG.setNextPageDetailRule(new Rule("a[id=pagenav]","attr","href"));
-        final Website POOCG=new Website("poocg","https://www.poocg.com/works/index/type/new",rulePOOCG);
+        final Website POOCG=new Website("Poocg","https://www.poocg.com/works/index/type/new",rulePOOCG);
         POOCG.setCategory(new String[]{"最新","https://www.poocg.com/works/index/type/new","新赞","https://www.poocg.com/works/index/type/love","热门","https://www.poocg.com/works/index/type/hot"
                 ,"精华","https://www.poocg.com/works/index/type/best","推荐","https://www.poocg.com/works/index/type/rem"});
 
@@ -90,7 +91,7 @@ public class ListActivity extends AppCompatActivity {
         ruleDEVIANTART.setTitleRule(new Rule("span[class*=thumb] > span.info > span.title-wrap > span.title","text"));
         ruleDEVIANTART.setImgRule(new Rule("div.dev-view-deviation > img[class=dev-content-full]","attr","src"));
         ruleDEVIANTART.setNextPageRule(new Rule("a.selected","attr","href","(http:\\/\\/www\\.deviantart\\.com\\/browse\\/all\\/\\?order=\\d+)()",new String[]{"&offset=","size"}));
-        final Website DEVIANTART=new Website("deviantart","http://www.deviantart.com/browse/all/?order=67108864",ruleDEVIANTART);
+        final Website DEVIANTART=new Website("Deviantart","http://www.deviantart.com/browse/all/?order=67108864",ruleDEVIANTART);
         DEVIANTART.setCategory(new String[]{"Newest","http://www.deviantart.com/browse/all/?order=5","What's Hot","http://www.deviantart.com/browse/all/?order=67108864"
                 ,"Undiscovered","http://www.deviantart.com/browse/all/?order=134217728","Popular 24 hours","http://www.deviantart.com/browse/all/?order=11","Popular All Time","http://www.deviantart.com/browse/all/?order=9"});
 
@@ -100,13 +101,15 @@ public class ListActivity extends AppCompatActivity {
         ruleUNSPLASH.setTitleRule(new Rule("a[class=_3XzpS _3myVE _2zITg]","text","()([a-z|A-Z|\\s]+)",new String[]{"Photo By: ",""}));
         ruleUNSPLASH.setImgRule(new Rule("div.RN0KT","attr","style","(https:\\/\\/images.unsplash\\.com\\/photo\\-[a-z|0-9|-|-|?|=|&]+)\\?",new String[]{""}));
         //ruleUNSPLASH.setNextPageRule(new Rule());没写下一页RULE
-        final Website UNSPLASH=new Website("unsplash","https://unsplash.com/",ruleUNSPLASH);
+        final Website UNSPLASH=new Website("Unsplash","https://unsplash.com/",ruleUNSPLASH);
 
 
         //Log.d("JSON", JsonUtils.ObjectToJson(POOCG));
         final Website newWebsite=JsonUtils.JsonToObject(JsonUtils.ObjectToJson(POOCG));
         //Browser.sendRequest(newWebsite,"new");//从JSON格式转换为Website对象
-        Browser.sendRequest(POOCG,"new");//首页 进去先加载这个
+        Browser.sendRequest(POOCG,"new");//首页 进去先加载这个 以后要改
+
+        final Website[] websites=new Website[]{POOCG,DEVIANTART,UNSPLASH};//先暂时这样写WebsiteList 以后再动态生成
 
         // 沉浸式
         final View systemBar = findViewById(collapsing_toolbar);
@@ -128,25 +131,30 @@ public class ListActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             //actionBar.setHomeAsUpIndicator(R.mipmap.ic_launcher_round);
         }
-
-        //navViewLeft.setCheckedItem(poocg);//默认选中
+        //动态生成侧滑菜单(Left)
+        Menu menuLeft=navViewLeft.getMenu();
+        menuLeft.clear();
+        if (websites!=null){
+            for (int i=0;i<websites.length;i++){
+                menuLeft.add(group_left,i,i,websites[i].getWebSiteName());
+                menuLeft.findItem(i).setCheckable(true);
+                if (websites[i].getWebSiteName().equals(websiteNow.getWebSiteName())){
+                    navViewRight.setCheckedItem(menuLeft.findItem(i).getItemId());
+                }
+            }
+        }
         navViewLeft.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 //点击item之后的操作
                 drawerLayout.closeDrawers();
-                switch (item.getItemId()){
-                    case poocg:
-                        Browser.sendRequest(POOCG,"new");
-                        break;
-                    case deviantart:
-                        Browser.sendRequest(DEVIANTART,"new");
-                        break;
-                    case unsplash:
-                        Browser.sendRequest(UNSPLASH,"new");
-                        break;
-                    default:return true;
+                int position=0;
+                for (int i=0;i<websites.length;i++){
+                    if (item.getTitle().equals(websites[i].getWebSiteName())){
+                        position=i;
+                    }
                 }
+                Browser.sendRequest(websites[position],"new");
                 swipeRefreshLayout.setRefreshing(true);
                 isRefreshing=1;
                 refreshPlace="top";
