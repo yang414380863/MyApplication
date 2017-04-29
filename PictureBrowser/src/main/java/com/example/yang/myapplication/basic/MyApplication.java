@@ -19,7 +19,7 @@ public class MyApplication extends Application {
         context=getApplicationContext();
 
         // 初始化参数依次为 this, AppId, AppKey
-        AVOSCloud.initialize(this,"4dwrmnAzfaW5WUmVI7yCu9P0-gzGzoHsz","lMQEwuP7o9ybGRApuGLwpGsR");
+        AVOSCloud.initialize(this,"w4tloHK6D8anHb6yEgxjMJz5-gzGzoHsz","S1p2cUT8PCSpDgeKKciy7IYg");
         // 放在 SDK 初始化语句 AVOSCloud.initialize() 后面，只需要调用一次即可
         // 在应用发布之前，请关闭调试日志，以免暴露敏感数据。
         AVOSCloud.setDebugLogEnabled(true);
