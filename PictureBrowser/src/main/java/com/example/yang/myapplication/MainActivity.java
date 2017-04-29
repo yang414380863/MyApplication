@@ -32,11 +32,11 @@ public class MainActivity extends AppCompatActivity {
         rulePOOCG.setLinkRule(new Rule("div.imgbox > a[href]","attr","href"));
         rulePOOCG.setThumbnailRule(new Rule("div.imgbox > a > img[src]","attr","src"));
         rulePOOCG.setTitleRule(new Rule("div.infobox > p.titles","text"));
-        rulePOOCG.setImgRule(new Rule("div.wrapper > div > ul > div[class=workPage-images] > img[src]","attr","src"
+        rulePOOCG.setImgRule(new Rule("img[style*=max-width]","attr","src"
                 ,"(https:\\/\\/imagescdn\\.poocg\\.me\\/uploadfile\\/photo\\/[0-9]{4}\\/[0-9]{1,2}\\/[a-z|0-9|_]+\\.[a-z]+)",new String[]{""}));
         rulePOOCG.setNextPageRule(new Rule("a#pagenav","attr","href"));
         rulePOOCG.setNextPageDetailRule(new Rule("a[id=pagenav]","attr","href"));
-        final Website POOCG=new Website("poocg","https://www.poocg.com/works/index/type/new",rulePOOCG);
+        final Website POOCG=new Website("Poocg","https://www.poocg.com/works/index/type/new",rulePOOCG);
         POOCG.setCategory(new String[]{"最新","https://www.poocg.com/works/index/type/new","新赞","https://www.poocg.com/works/index/type/love","热门","https://www.poocg.com/works/index/type/hot"
                 ,"精华","https://www.poocg.com/works/index/type/best","推荐","https://www.poocg.com/works/index/type/rem"});
 
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         ruleDEVIANTART.setTitleRule(new Rule("span[class*=thumb] > span.info > span.title-wrap > span.title","text"));
         ruleDEVIANTART.setImgRule(new Rule("div.dev-view-deviation > img[class=dev-content-full]","attr","src"));
         ruleDEVIANTART.setNextPageRule(new Rule("a.selected","attr","href","(http:\\/\\/www\\.deviantart\\.com\\/browse\\/all\\/\\?order=\\d+)()",new String[]{"&offset=","size"}));
-        final Website DEVIANTART=new Website("deviantart","http://www.deviantart.com/browse/all/?order=67108864",ruleDEVIANTART);
+        final Website DEVIANTART=new Website("Deviantart","http://www.deviantart.com/browse/all/?order=67108864",ruleDEVIANTART);
         DEVIANTART.setCategory(new String[]{"Newest","http://www.deviantart.com/browse/all/?order=5","What's Hot","http://www.deviantart.com/browse/all/?order=67108864"
                 ,"Undiscovered","http://www.deviantart.com/browse/all/?order=134217728","Popular 24 hours","http://www.deviantart.com/browse/all/?order=11","Popular All Time","http://www.deviantart.com/browse/all/?order=9"});
 
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         ruleUNSPLASH.setTitleRule(new Rule("a[class=_3XzpS _3myVE _2zITg]","text","()([a-z|A-Z|\\s]+)",new String[]{"Photo By: ",""}));
         ruleUNSPLASH.setImgRule(new Rule("div.RN0KT","attr","style","(https:\\/\\/images.unsplash\\.com\\/photo\\-[a-z|0-9|-|-|?|=|&]+)\\?",new String[]{""}));
         //ruleUNSPLASH.setNextPageRule(new Rule());没写下一页RULE
-        final Website UNSPLASH=new Website("unsplash","https://unsplash.com/",ruleUNSPLASH);
+        final Website UNSPLASH=new Website("Unsplash","https://unsplash.com/",ruleUNSPLASH);
 
 
         Button button1 = (Button) findViewById(R.id.button_1);
