@@ -5,7 +5,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
@@ -25,9 +27,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.SaveCallback;
 import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.web.Browser;
 import com.example.yang.myapplication.web.JsonUtils;
@@ -70,7 +69,7 @@ public class ListActivity extends AppCompatActivity {
 
         //用户信息
         Intent intent=getIntent();
-        String userName=intent.getExtras().getString("username");
+        String userName=intent.getExtras().getString("loginUsername");
 
 
         RuleAll rulePOOCG=new RuleAll();
@@ -123,7 +122,7 @@ public class ListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         //侧滑菜单
         drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
-        NavigationView navViewLeft=(NavigationView)findViewById(R.id.nav_view_left);
+        navViewLeft=(NavigationView)findViewById(R.id.nav_view_left);
         navViewRight=(NavigationView)findViewById(R.id.nav_view_right);
         //ToolBar 用于打开侧滑菜单的按钮
         ActionBar actionBar=getSupportActionBar();

@@ -15,7 +15,10 @@ import android.widget.Toast;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.LogInCallback;
+import com.avos.avoscloud.LogUtil;
 import com.avos.avoscloud.SignUpCallback;
+
+import static com.example.yang.myapplication.R.id.username;
 
 
 public class Login extends AppCompatActivity {
@@ -30,20 +33,42 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        accountEdit=(EditText)findViewById(R.id.username);
+        accountEdit=(EditText)findViewById(username);
         passwordEdit=(EditText)findViewById(R.id.password);
 
         pref= PreferenceManager.getDefaultSharedPreferences(this);
         rememberPass=(CheckBox)findViewById(R.id.remember_pass);
         boolean isRemember=pref.getBoolean("remember_password",false);
-        if (isRemember){
-            //自动填写帐号密码
-            String username=pref.getString("username","");
-            String password=pref.getString("password","");
-            accountEdit.setText(username);
-            passwordEdit.setText(password);
-            rememberPass.setChecked(true);
+        boolean isLogout;
+        //检测是否是因注销而打开的Login Activity
+        try{
+            Intent intent=getIntent();
+            isLogout=intent.getExtras().getBoolean("isLogout");
+        }catch (Exception e){
+            isLogout=false;
         }
+        if (isLogout){
+            //是注销
+            if (isRemember){
+                //自动填写帐号密码
+                String username=pref.getString("username","");
+                String password=pref.getString("password","");
+                accountEdit.setText(username);
+                passwordEdit.setText(password);
+                rememberPass.setChecked(true);
+            }
+        }else {
+            //是正常打开APP 如果之前已经登录则直接跳转List Activity
+            String loginUsername=pref.getString("loginUsername","");
+            if (!loginUsername.equals(""))
+            {
+                Intent intent2=new Intent(Login.this,ListActivity.class);
+                intent2.putExtra("loginUsername",loginUsername);
+                startActivity(intent2);
+                finish();
+            }
+        }
+
         Button login=(Button)findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -70,6 +95,7 @@ public class Login extends AppCompatActivity {
                                 //清除SharedPreferences文件中的数据
                                 editor.clear();
                             }
+                            editor.putString("loginUsername",username);
                             editor.apply();
 
                             //登录跳转
@@ -97,6 +123,7 @@ public class Login extends AppCompatActivity {
                                             //清除SharedPreferences文件中的数据
                                             editor.clear();
                                         }
+                                        editor.putString("loginUsername",username);
                                         editor.apply();
 
                                         Toast.makeText(Login.this,"register success",Toast.LENGTH_SHORT).show();
@@ -120,7 +147,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(Login.this,ListActivity.class);
-                intent.putExtra("user","visitor");
+                intent.putExtra("loginUsername","visitor");
                 startActivity(intent);
                 finish();
             }

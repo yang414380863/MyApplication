@@ -1,4 +1,4 @@
-#Sat Apr 29 13:10:12 GMT+08:00 2017
+#Tue May 02 10:13:04 GMT+08:00 2017
 base.0=D\:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_930b7c6c163ebc10c4414557bdc6d89c94a7f287
 renamed.1=classes.dex
 renamed.0=classes2.dex
