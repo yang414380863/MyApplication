@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:2:1-68:12
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:2:1-80:12
 	package
 		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:3:11-51
 		INJECTED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml
@@ -19,7 +19,7 @@ MERGED from [cn.leancloud.android:avoscloud-sns:v3.16.4] C:\Users\YanGGGGG\.andr
 	android:name
 		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:5:22-64
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:6:5-79
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:6:5-78
 MERGED from [cn.leancloud.android:avoscloud-sns:v3.16.4] C:\Users\YanGGGGG\.android\build-cache\894062c7de316693e631efd9a2dbf420d10492f3\output\AndroidManifest.xml:14:5-79
 	android:name
 		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:6:22-76
@@ -52,7 +52,7 @@ ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\Androi
 	android:name
 		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:16:22-69
 application
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:18:5-66:19
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:18:5-78:19
 MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\YanGGGGG\.android\build-cache\82fc8a4b46124e22019389f7f44a144cb8568261\output\AndroidManifest.xml:9:5-20
 MERGED from [com.android.support:design:25.3.1] C:\Users\YanGGGGG\.android\build-cache\fef5acf8b8ea1eccf3bdb08a5f4995819dda3fa9\output\AndroidManifest.xml:29:5-20
 MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\YanGGGGG\.android\build-cache\a426725992d84ba7bb1b4067127281d1deb7dd5c\output\AndroidManifest.xml:29:5-20
@@ -147,6 +147,20 @@ category#android.intent.category.LAUNCHER
 ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:63:17-76
 	android:name
 		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:63:27-74
+receiver#com.example.yang.myapplication.PushReceiver
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:67:9-77:20
+	android:enabled
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:69:13-35
+	android:exported
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:70:13-37
+	android:name
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:68:13-41
+intent-filter#android.intent.action.BOOT_COMPLETED+android.intent.action.USER_PRESENT+android.net.conn.CONNECTIVITY_CHANGE+com.example.yang.myapplication.UPDATE_STATUS
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:71:13-76:29
+action#com.example.yang.myapplication.UPDATE_STATUS
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:75:17-87
+	android:name
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:75:25-84
 uses-sdk
 INJECTED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [cn.leancloud.android:avoscloud-push:v3.16.4] C:\Users\YanGGGGG\.android\build-cache\3cb96ebd50ceeeffd1c06fe05107f0193da60f06\output\AndroidManifest.xml:7:5-9:41

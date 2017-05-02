@@ -56,7 +56,8 @@ public class ListActivity extends AppCompatActivity {
     //侧滑菜单
     NavigationView navViewRight;
     NavigationView navViewLeft;
-
+    //获取用户
+    private SharedPreferences pref;
 
     final ListAdapter adapter=new ListAdapter(this);
     static int isRefreshing=0;
@@ -68,8 +69,9 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.list);
 
         //用户信息
-        Intent intent=getIntent();
-        String userName=intent.getExtras().getString("loginUsername");
+        pref= PreferenceManager.getDefaultSharedPreferences(this);
+        String loginUsername=pref.getString("loginUsername","");
+
 
 
         RuleAll rulePOOCG=new RuleAll();
