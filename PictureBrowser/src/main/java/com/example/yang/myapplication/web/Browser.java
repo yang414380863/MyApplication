@@ -2,8 +2,11 @@ package com.example.yang.myapplication.web;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.example.yang.myapplication.basic.LogUtil;
 import com.example.yang.myapplication.basic.MyApplication;
 
 import org.jsoup.Jsoup;
@@ -12,6 +15,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -32,10 +36,18 @@ public class Browser {
     public static Website websiteNow;
     public static int sizeThisPage;
     private static String nextPageUrl;
-
+    public  static Date latestUpdate;
 
     public static void sendRequest(final Website website,final String refreshPlace){
         websiteNow =website;
+        Date date = new Date(System.currentTimeMillis());
+        latestUpdate=date;
+        SharedPreferences pref;
+        pref= PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext());
+        SharedPreferences.Editor editor;
+        editor=pref.edit();
+        editor.putString("latestUpdate",date.toString());
+        editor.apply();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -45,7 +57,7 @@ public class Browser {
                     if (refreshPlace=="bottom"){
                         url=websiteNow.getNextPageUrl();
                     }
-                    //Log.d("url"," "+url);
+                    //LogUtil.d("url "+url);
                     final Request request = new Request.Builder()
                             .url(url)
                             .build();
@@ -53,7 +65,7 @@ public class Browser {
                     call.enqueue(new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
-                            Log.d("OkHttpClient","onFailure");
+                            LogUtil.d("onFailure");
                         }
 
                         @Override
@@ -112,25 +124,25 @@ public class Browser {
                 return;
             }
             /*
-            Log.d("ListSize"," "+sizeNow);
-            Log.d("ThisPage"," "+webContentList.size());
-            Log.d("Match"," "+doc.select(websiteNow.getRuleAll().getLinkRule().getSelector()).size());
+            LogUtil.d("ListSize "+sizeNow);
+            LogUtil.d("ThisPage "+webContentList.size());
+            LogUtil.d("Match "+doc.select(websiteNow.getRuleAll().getLinkRule().getSelector()).size());
             */
             webContentList.get(sizeNow).setLink(SelectorAndRegex.get(doc,websiteNow.getRuleAll().getLinkRule(),i));
             webContentList.get(sizeNow).setThumbnail(SelectorAndRegex.get(doc,websiteNow.getRuleAll().getThumbnailRule(),i));
             webContentList.get(sizeNow).setTitle(SelectorAndRegex.get(doc,websiteNow.getRuleAll().getTitleRule(),i));
             /*
-            Log.d("No."+i,"Link:"+webContentList.get(sizeNow).getLink());
-            Log.d("No."+i,"Thumbnail:"+webContentList.get(sizeNow).getThumbnail());
-            Log.d("No."+i,"Title:"+webContentList.get(sizeNow).getTitle());
+            LogUtil.d("No.+i" "Link:"+webContentList.get(sizeNow).getLink());
+            LogUtil.d("No.+i" "Thumbnail:"+webContentList.get(sizeNow).getThumbnail());
+            LogUtil.d("No.+i" "Title:"+webContentList.get(sizeNow).getTitle());
             */
         }
-        Log.d("Finish load "+sizeNow+" item","Next item is No "+sizeNow);
+        LogUtil.d("Finish load "+sizeNow+" item  Next item is No "+sizeNow);
         //解析列表的下一页
         if (websiteNow.getRuleAll().getNextPageRule()!=null){
             nextPageUrl=SelectorAndRegex.get(doc,websiteNow.getRuleAll().getNextPageRule(),0,sizeNow);
         }
-        //Log.d("nextPageUrl"," "+nextPageUrl);
+        //LogUtil.d("nextPageUrl  "+nextPageUrl);
         //发送一个加载完成了的广播
         Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");
         intent.putExtra("websiteName",websiteNow.getWebSiteName());
@@ -157,7 +169,7 @@ public class Browser {
                     call.enqueue(new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
-                            Log.d("OkHttpClient","onFailure");
+                            LogUtil.d("onFailure");
                         }
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
@@ -181,7 +193,7 @@ public class Browser {
         }
         if (websiteNow.getRuleAll().getNextPageDetailRule()!=null) {
             nextPageDetail = SelectorAndRegex.get(doc,websiteNow.getRuleAll().getNextPageDetailRule());
-            //Log.d("nextPageDetail"," "+nextPageDetail);
+            //LogUtil.d("nextPageDetail "+nextPageDetail);
             if (nextPageDetail.equals("")) {
                 //没有下一页
                 //发送一个加载完成了的广播
@@ -191,12 +203,12 @@ public class Browser {
             } else {//继续下一页
                 websiteNow.setNextPageDetailUrl(nextPageDetail);
                 sendRequestDetail(id,"bottom");
-                //Log.d("nextPageDetail","not exist");
+                //LogUtil.d("nextPageDetail not exist");
             }
         } else {//没有下一页的Rule
-            //Log.d("nextPageDetailRule","not exist");
+            //LogUtil.d("nextPageDetailRule not exist");
             //发送一个加载完成了的广播
-            //Log.d("detail"," "+webContentList.get(id).getImg());
+            //LogUtil.d("detail "+webContentList.get(id).getImg());
             Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");
             intent.putExtra("position",id);
             MyApplication.getContext().sendBroadcast(intent);
@@ -208,7 +220,7 @@ public class Browser {
             websiteNow.setNextPageUrl(nextPageUrl);
             sendRequest(websiteNow,"bottom");
         }else {
-            //Log.d("TAG","no more page");
+            //LogUtil.d(no more page");
         }
     }
 }

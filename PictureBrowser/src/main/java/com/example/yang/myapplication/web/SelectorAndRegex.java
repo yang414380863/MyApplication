@@ -1,13 +1,13 @@
 package com.example.yang.myapplication.web;
 
-import android.util.Log;
+
+import com.example.yang.myapplication.basic.LogUtil;
 
 import org.jsoup.nodes.Document;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.example.yang.myapplication.web.Browser.websiteNow;
 
 /**
  * Created by YanGGGGG on 2017/4/13.
@@ -20,7 +20,7 @@ public class SelectorAndRegex {
         //先用选择器
         if (doc.select(rule.getSelector()).size()==0){
             //匹配不到
-            Log.d("Selector","can't find");
+            LogUtil.d("Selector can't find");
             return "";
         }
         if (rule.getMethod().equals("attr")){
@@ -28,7 +28,7 @@ public class SelectorAndRegex {
         }else if (rule.getMethod().equals("text")){
             string=doc.select(rule.getSelector()).get(position).text();
         }
-        //Log.d("Selector"+position," "+string);
+        //LogUtil.d("Selector"+position+" "+string);
         if (rule.getRegex()!=null){
             //用正则
             Pattern pattern=Pattern.compile(rule.getRegex());
@@ -46,10 +46,10 @@ public class SelectorAndRegex {
                             break;
                     }
                 }
-                //Log.d("Regex"+position," "+string);
+                //LogUtil.d("Regex"+position+" "+string);
             }
         }
-        //Log.d("result"," "+string);
+        //LogUtil.d("result "+string);
         return string;
     }
 

@@ -16,17 +16,17 @@ public class LogUtil {
     public static void v(String mess) {
         if (LOGV) { Log.v(getTag(), mess); }
     }
-    public static void d(String mess) {
-        if (LOGD) { Log.d(getTag(), mess); }
+    public static void d(Object mess) {
+        if (LOGD) { Log.d(getTag(), mess.toString()); }
     }
-    public static void i(String mess) {
-        if (LOGI) { Log.i(getTag(), mess); }
+    public static void i(Object mess) {
+        if (LOGI) { Log.i(getTag(), mess.toString()); }
     }
-    public static void w(String mess) {
-        if (LOGW) { Log.w(getTag(), mess); }
+    public static void w(Object mess) {
+        if (LOGW) { Log.w(getTag(), mess.toString()); }
     }
-    public static void e(String mess) {
-        if (LOGE) { Log.e(getTag(), mess); }
+    public static void e(Object mess) {
+        if (LOGE) { Log.e(getTag(), mess.toString()); }
     }
 
     private static String getTag() {

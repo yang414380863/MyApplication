@@ -72,8 +72,6 @@ public class ListActivity extends AppCompatActivity {
         pref= PreferenceManager.getDefaultSharedPreferences(this);
         String loginUsername=pref.getString("loginUsername","");
 
-
-
         RuleAll rulePOOCG=new RuleAll();
         rulePOOCG.setLinkRule(new Rule("div.imgbox > a[href]","attr","href"));
         rulePOOCG.setThumbnailRule(new Rule("div.imgbox > a > img[src]","attr","src"));
@@ -108,9 +106,27 @@ public class ListActivity extends AppCompatActivity {
         //Log.d("JSON", JsonUtils.ObjectToJson(POOCG));
         final Website newWebsite=JsonUtils.JsonToObject(JsonUtils.ObjectToJson(POOCG));
         //Browser.sendRequest(newWebsite,"new");//从JSON格式转换为Website对象
-        Browser.sendRequest(POOCG,"new");//首页 进去先加载这个 以后要改
 
         final Website[] websites=new Website[]{POOCG,DEVIANTART,UNSPLASH};//先暂时这样写WebsiteList 以后再动态生成
+
+        //点击推送通知后跳转的category
+        try{
+            Intent intent=getIntent();
+            String index=intent.getExtras().getString("index");
+            for (int i=0;i<websites.length;i++){
+                for (int j=0;j<websites[i].getCategory().length;j++){
+                    if (websites[i].getCategory()[j].equals(index)){
+                        websiteNow=websites[i];
+                        websiteNow.setIndexUrl(websites[i].getCategory()[j]);
+                        Browser.sendRequest(websiteNow,"new");
+                    }
+                }
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            Browser.sendRequest(POOCG,"new");//首页 进去先加载这个 以后要改
+        }
 
         // 沉浸式
         final View systemBar = findViewById(collapsing_toolbar);
@@ -147,7 +163,7 @@ public class ListActivity extends AppCompatActivity {
         navViewLeft.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                //点击item之后的操作
+                //点击左侧item之后的操作
                 drawerLayout.closeDrawers();
                 int position=0;
                 for (int i=0;i<websites.length;i++){
@@ -167,7 +183,7 @@ public class ListActivity extends AppCompatActivity {
         navViewRight.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                //点击item之后的操作
+                //点击右侧item之后的操作
                 drawerLayout.closeDrawers();
                 int positionOfCategory=0;
                 if (websiteNow.getCategory()!=null){
