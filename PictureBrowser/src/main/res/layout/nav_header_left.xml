@@ -9,16 +9,17 @@
     android:background="?attr/colorPrimary">
 
     <ImageView
-        android:id="@+id/icon_image"
+        android:id="@+id/user_icon"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:src="@mipmap/ic_launcher_round"
         android:layout_centerInParent="true"/>
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/username_show"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="网站"/>
+        android:layout_below="@id/user_icon"
+        android:layout_centerHorizontal="true"
+        android:text="username"/>
 
 </RelativeLayout>

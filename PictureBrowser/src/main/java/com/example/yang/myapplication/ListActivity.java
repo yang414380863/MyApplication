@@ -25,9 +25,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.yang.myapplication.basic.LogUtil;
 import com.example.yang.myapplication.web.Browser;
 import com.example.yang.myapplication.web.JsonUtils;
 import com.example.yang.myapplication.web.Rule;
@@ -48,7 +51,7 @@ public class ListActivity extends AppCompatActivity {
     //广播接收器
     private LoadFinishReceiver receiver;
     //下拉刷新 监听器
-    SwipeRefreshLayout swipeRefreshLayout;
+    static SwipeRefreshLayout swipeRefreshLayout;
     Snackbar snackbar;
     //标题栏
     ImageView imageView;
@@ -63,16 +66,20 @@ public class ListActivity extends AppCompatActivity {
     static int isRefreshing=0;
     static String refreshPlace;
 
+    static RuleAll rulePOOCG=new RuleAll();
+    final static Website POOCG=new Website("Poocg","https://www.poocg.com/works/index/type/new",rulePOOCG);
+    static RuleAll ruleDEVIANTART=new RuleAll();
+    final static Website DEVIANTART=new Website("Deviantart","http://www.deviantart.com/browse/all/?order=67108864",ruleDEVIANTART);
+    static RuleAll ruleUNSPLASH=new RuleAll();
+    final static Website UNSPLASH=new Website("Unsplash","https://unsplash.com/",ruleUNSPLASH);
+
+    final static Website[] websites=new Website[]{POOCG,DEVIANTART,UNSPLASH};//先暂时这样写WebsiteList 以后再动态生成
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list);
 
-        //用户信息
-        pref= PreferenceManager.getDefaultSharedPreferences(this);
-        String loginUsername=pref.getString("loginUsername","");
-
-        RuleAll rulePOOCG=new RuleAll();
         rulePOOCG.setLinkRule(new Rule("div.imgbox > a[href]","attr","href"));
         rulePOOCG.setThumbnailRule(new Rule("div.imgbox > a > img[src]","attr","src"));
         rulePOOCG.setTitleRule(new Rule("div.infobox > p.titles","text"));
@@ -80,52 +87,48 @@ public class ListActivity extends AppCompatActivity {
                 ,"(https:\\/\\/imagescdn\\.poocg\\.me\\/uploadfile\\/photo\\/[0-9]{4}\\/[0-9]{1,2}\\/[a-z|0-9|_]+\\.[a-z]+)",new String[]{""}));
         rulePOOCG.setNextPageRule(new Rule("a#pagenav","attr","href"));
         rulePOOCG.setNextPageDetailRule(new Rule("a[id=pagenav]","attr","href"));
-        final Website POOCG=new Website("Poocg","https://www.poocg.com/works/index/type/new",rulePOOCG);
         POOCG.setCategory(new String[]{"最新","https://www.poocg.com/works/index/type/new","新赞","https://www.poocg.com/works/index/type/love","热门","https://www.poocg.com/works/index/type/hot"
                 ,"精华","https://www.poocg.com/works/index/type/best","推荐","https://www.poocg.com/works/index/type/rem"});
 
-        RuleAll ruleDEVIANTART=new RuleAll();
         ruleDEVIANTART.setLinkRule(new Rule("span[class*=thumb] > a","attr","href"));
         ruleDEVIANTART.setThumbnailRule(new Rule("span[class*=thumb] > a > img[data-sigil=torpedo-img]","attr","src"));
         ruleDEVIANTART.setTitleRule(new Rule("span[class*=thumb] > span.info > span.title-wrap > span.title","text"));
         ruleDEVIANTART.setImgRule(new Rule("div.dev-view-deviation > img[class=dev-content-full]","attr","src"));
         ruleDEVIANTART.setNextPageRule(new Rule("a.selected","attr","href","(http:\\/\\/www\\.deviantart\\.com\\/browse\\/all\\/\\?order=\\d+)()",new String[]{"&offset=","size"}));
-        final Website DEVIANTART=new Website("Deviantart","http://www.deviantart.com/browse/all/?order=67108864",ruleDEVIANTART);
         DEVIANTART.setCategory(new String[]{"Newest","http://www.deviantart.com/browse/all/?order=5","What's Hot","http://www.deviantart.com/browse/all/?order=67108864"
                 ,"Undiscovered","http://www.deviantart.com/browse/all/?order=134217728","Popular 24 hours","http://www.deviantart.com/browse/all/?order=11","Popular All Time","http://www.deviantart.com/browse/all/?order=9"});
 
-        RuleAll ruleUNSPLASH=new RuleAll();
         ruleUNSPLASH.setLinkRule(new Rule("div.y5w1y > a","attr","href","()(\\/\\?photo=[a-z|A-Z|0-9|-]+)",new String[]{"https://unsplash.com",""}));
         ruleUNSPLASH.setThumbnailRule(new Rule("div.y5w1y > a","attr","style","(https:\\/\\/images.unsplash\\.com\\/photo\\-[a-z|0-9|-|-|?|=|&|,]+)",new String[]{""}));
         ruleUNSPLASH.setTitleRule(new Rule("a[class=_3XzpS _3myVE _2zITg]","text","()([a-z|A-Z|\\s]+)",new String[]{"Photo By: ",""}));
         ruleUNSPLASH.setImgRule(new Rule("div.RN0KT","attr","style","(https:\\/\\/images.unsplash\\.com\\/photo\\-[a-z|0-9|-|-|?|=|&]+)\\?",new String[]{""}));
         //ruleUNSPLASH.setNextPageRule(new Rule());没写下一页RULE
-        final Website UNSPLASH=new Website("Unsplash","https://unsplash.com/",ruleUNSPLASH);
 
 
         //Log.d("JSON", JsonUtils.ObjectToJson(POOCG));
         final Website newWebsite=JsonUtils.JsonToObject(JsonUtils.ObjectToJson(POOCG));
         //Browser.sendRequest(newWebsite,"new");//从JSON格式转换为Website对象
 
-        final Website[] websites=new Website[]{POOCG,DEVIANTART,UNSPLASH};//先暂时这样写WebsiteList 以后再动态生成
 
         //点击推送通知后跳转的category
-        try{
+        if (getIntent().hasExtra("index")){
             Intent intent=getIntent();
             String index=intent.getExtras().getString("index");
+            LogUtil.d("index:"+index);
             for (int i=0;i<websites.length;i++){
-                for (int j=0;j<websites[i].getCategory().length;j++){
-                    if (websites[i].getCategory()[j].equals(index)){
+                if (websites[i].getCategory()==null){
+                    continue;
+                }
+                for (int j=0;j<websites[i].getCategory().length;j++,j++){
+                    if (websites[i].getCategory()[j+1].equals(index)){
                         websiteNow=websites[i];
-                        websiteNow.setIndexUrl(websites[i].getCategory()[j]);
+                        websiteNow.setIndexUrl(websites[i].getCategory()[j+1]);
                         Browser.sendRequest(websiteNow,"new");
                     }
                 }
             }
-
-        }catch (Exception e){
-            e.printStackTrace();
-            Browser.sendRequest(POOCG,"new");//首页 进去先加载这个 以后要改
+        }else {
+            Browser.sendRequest(POOCG,"new");//默认首页 无推送时默认打开
         }
 
         // 沉浸式
@@ -142,6 +145,42 @@ public class ListActivity extends AppCompatActivity {
         drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
         navViewLeft=(NavigationView)findViewById(R.id.nav_view_left);
         navViewRight=(NavigationView)findViewById(R.id.nav_view_right);
+        //用户信息
+        View navViewLeftHeader=navViewLeft.getHeaderView(0);
+        TextView usernameShow=(TextView)navViewLeftHeader.findViewById(R.id.username_show);
+        ImageView userIcon=(ImageView)navViewLeftHeader.findViewById(R.id.user_icon);
+        pref= PreferenceManager.getDefaultSharedPreferences(this);
+        final String loginUsername=pref.getString("loginUsername","");
+        if (!loginUsername.equals("")){
+            //已登录
+            usernameShow.setText("Welcome:"+loginUsername);
+            userIcon.setImageResource(R.drawable.ic_account_circle_black_48dp);
+        }else {
+            //未登录
+            usernameShow.setText("Welcome: visitor");
+            userIcon.setImageResource(R.drawable.ic_account_circle_grey600_48dp);
+        }
+
+        userIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(ListActivity.this,Login.class);
+                if (!loginUsername.equals("")){
+                    //点击ICON注销
+                    SharedPreferences.Editor editor;
+                    editor=pref.edit();
+                    editor.putString("loginUsername","");
+                    editor.apply();
+                    intent.putExtra("isLogout",true);
+                    startActivity(intent);
+                    finish();
+                }else {
+                    //点击ICON登录
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
         //ToolBar 用于打开侧滑菜单的按钮
         ActionBar actionBar=getSupportActionBar();
         if (actionBar!=null){
@@ -151,7 +190,7 @@ public class ListActivity extends AppCompatActivity {
         //动态生成侧滑菜单(Left)
         Menu menuLeft=navViewLeft.getMenu();
         menuLeft.clear();
-        if (websites!=null){
+        if (websites.length!=0){
             for (int i=0;i<websites.length;i++){
                 menuLeft.add(group_left,i,i,websites[i].getWebSiteName());
                 menuLeft.findItem(i).setCheckable(true);
@@ -290,7 +329,7 @@ public class ListActivity extends AppCompatActivity {
                         .load(R.mipmap.ic_launcher)
                         .fitCenter()
                         .into(imageView);
-                Log.d("refresh","finish refresh!");
+                LogUtil.d("finish refresh!");
                 adapter.getWebContents().clear();//要重新指向一次才能检测到刷新
                 adapter.getWebContents().addAll(webContentList);
                 if (refreshPlace=="top"){
@@ -338,5 +377,21 @@ public class ListActivity extends AppCompatActivity {
             default:break;
         }
         return true;
+    }
+
+    public static void forPush(String index){
+        for (int i=0;i<websites.length;i++){
+            if (websites[i].getCategory()==null){
+                continue;
+            }
+            for (int j=0;j<websites[i].getCategory().length;j++,j++){
+                if (websites[i].getCategory()[j+1].equals(index)){
+                    websiteNow=websites[i];
+                    websiteNow.setIndexUrl(websites[i].getCategory()[j+1]);
+                    swipeRefreshLayout.setRefreshing(true);
+                    Browser.sendRequest(websiteNow,"new");
+                }
+            }
+        }
     }
 }

@@ -19,8 +19,14 @@ import com.avos.avoscloud.LogInCallback;
 import com.avos.avoscloud.PushService;
 import com.avos.avoscloud.SaveCallback;
 import com.avos.avoscloud.SignUpCallback;
+import com.example.yang.myapplication.basic.LogUtil;
+import com.example.yang.myapplication.web.Browser;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 import static com.example.yang.myapplication.R.id.username;
+import static com.example.yang.myapplication.web.Browser.websiteNow;
 
 
 public class Login extends AppCompatActivity {
@@ -38,9 +44,10 @@ public class Login extends AppCompatActivity {
         accountEdit=(EditText)findViewById(username);
         passwordEdit=(EditText)findViewById(R.id.password);
 
+        //push相关
         final Intent intent=new Intent(Login.this,ListActivity.class);
         // 设置默认打开的 Activity
-        PushService.setDefaultPushCallback(this, Login.class);
+        PushService.setDefaultPushCallback(this, ListActivity.class);
         // 保存 installation 到服务器
         AVInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
             public void done(AVException e) {
@@ -52,8 +59,14 @@ public class Login extends AppCompatActivity {
                     // 保存失败，输出错误信息
                 }
             }
-        });
+       });
 
+        if (getIntent().hasExtra("index")){
+            Intent intent2=getIntent();
+            String index=intent2.getExtras().getString("index");
+            intent.putExtra("index",index);//如果List之前未启动则通过intent获取推送index
+            ListActivity.forPush(index);//否则通过forPush()获取index
+        }
 
         pref= PreferenceManager.getDefaultSharedPreferences(this);
         rememberPass=(CheckBox)findViewById(R.id.remember_pass);
@@ -78,8 +91,12 @@ public class Login extends AppCompatActivity {
             }
         }else {
             //是正常打开APP 如果之前已经登录则直接跳转List Activity
+            /*默认要保存username么???
+            String username=pref.getString("username","");
+            accountEdit.setText(username);
+            */
             String loginUsername=pref.getString("loginUsername","");
-            if (!loginUsername.equals(""))
+            if (!loginUsername.equals(""))//loginUsername=""即未登录
             {
                 startActivity(intent);
                 finish();
