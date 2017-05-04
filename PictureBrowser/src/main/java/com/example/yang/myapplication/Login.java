@@ -20,6 +20,7 @@ import com.avos.avoscloud.PushService;
 import com.avos.avoscloud.SaveCallback;
 import com.avos.avoscloud.SignUpCallback;
 import com.example.yang.myapplication.basic.LogUtil;
+import com.example.yang.myapplication.basic.MyApplication;
 import com.example.yang.myapplication.web.Browser;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
@@ -62,6 +63,9 @@ public class Login extends AppCompatActivity {
        });
 
         if (getIntent().hasExtra("index")){
+            //发送一个点击了推送的广播,使不需要的Activity关闭
+            Intent intent3=new Intent("com.example.yang.myapplication.CLICK_PUSH");
+            MyApplication.getContext().sendBroadcast(intent3);
             Intent intent2=getIntent();
             String index=intent2.getExtras().getString("index");
             intent.putExtra("index",index);//如果List之前未启动则通过intent获取推送index

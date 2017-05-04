@@ -25,16 +25,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.basic.LogUtil;
 import com.example.yang.myapplication.web.Browser;
-import com.example.yang.myapplication.web.JsonUtils;
 import com.example.yang.myapplication.web.Rule;
-import com.example.yang.myapplication.web.RuleAll;
+import com.example.yang.myapplication.web.ItemRule;
 import com.example.yang.myapplication.web.Website;
 
 import static com.example.yang.myapplication.R.id.*;
@@ -66,58 +64,47 @@ public class ListActivity extends AppCompatActivity {
     static int isRefreshing=0;
     static String refreshPlace;
 
-    static RuleAll rulePOOCG=new RuleAll();
+    static ItemRule rulePOOCG=new ItemRule();
     final static Website POOCG=new Website("Poocg","https://www.poocg.com/works/index/type/new",rulePOOCG);
-    static RuleAll ruleDEVIANTART=new RuleAll();
+    static ItemRule ruleDEVIANTART=new ItemRule();
     final static Website DEVIANTART=new Website("Deviantart","http://www.deviantart.com/browse/all/?order=67108864",ruleDEVIANTART);
-    static RuleAll ruleTUCHONG=new RuleAll();
-    final static Website TUCHONG=new Website("图虫","https://tuchong.com/tags/%E9%A3%8E%E5%85%89",ruleTUCHONG);
-    static RuleAll ruleUNSPLASH=new RuleAll();
+    static ItemRule ruleUNSPLASH=new ItemRule();
     final static Website UNSPLASH=new Website("Unsplash","https://unsplash.com/",ruleUNSPLASH);
 
-    final static Website[] websites=new Website[]{POOCG,DEVIANTART,TUCHONG,UNSPLASH};//先暂时这样写WebsiteList 以后再动态生成
+    final static Website[] websites=new Website[]{POOCG,DEVIANTART,UNSPLASH};//先暂时这样写WebsiteList 以后再动态生成
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list);
 
+        POOCG.setItemSelector("li:has(div.imgbox)");
         rulePOOCG.setLinkRule(new Rule("div.imgbox > a[href]","attr","href"));
         rulePOOCG.setThumbnailRule(new Rule("div.imgbox > a > img[src]","attr","src"));
         rulePOOCG.setTitleRule(new Rule("div.infobox > p.titles","text"));
-        rulePOOCG.setImgRule(new Rule("img[style*=max-width]","attr","src"
+        POOCG.setDetailItemSelector("img[style*=max-width]");
+        rulePOOCG.setImgRule(new Rule("*","attr","src"
                 ,"(https:\\/\\/imagescdn\\.poocg\\.me\\/uploadfile\\/photo\\/[0-9]{4}\\/[0-9]{1,2}\\/[a-z|0-9|_]+\\.[a-z]+)",new String[]{""}));
-        rulePOOCG.setNextPageRule(new Rule("a#pagenav","attr","href"));
-        rulePOOCG.setNextPageDetailRule(new Rule("a[id=pagenav]","attr","href"));
+        POOCG.setNextPageRule(new Rule("a#pagenav","attr","href"));
         POOCG.setCategory(new String[]{"最新","https://www.poocg.com/works/index/type/new","新赞","https://www.poocg.com/works/index/type/love","热门","https://www.poocg.com/works/index/type/hot"
                 ,"精华","https://www.poocg.com/works/index/type/best","推荐","https://www.poocg.com/works/index/type/rem"});
 
-        ruleDEVIANTART.setLinkRule(new Rule("span[class*=thumb] > a.torpedo-thumb-link","attr","href"));
-        ruleDEVIANTART.setThumbnailRule(new Rule("span[class*=thumb] > a > img[data-sigil=torpedo-img]","attr","src"));
-        ruleDEVIANTART.setTitleRule(new Rule("span[class*=thumb] > span.info > span.title-wrap > span.title","text"));
-        ruleDEVIANTART.setImgRule(new Rule("div.dev-view-deviation > img[class=dev-content-full]","attr","src"));
-        ruleDEVIANTART.setNextPageRule(new Rule("a.selected","attr","href","(http:\\/\\/www\\.deviantart\\.com\\/browse\\/all\\/\\?order=\\d+)()",new String[]{"&offset=","size"}));
-        DEVIANTART.setCategory(new String[]{"Newest","http://www.deviantart.com/browse/all/?order=5","What's Hot","http://www.deviantart.com/browse/all/?order=67108864"
-                ,"Undiscovered","http://www.deviantart.com/browse/all/?order=134217728","Popular 24 hours","http://www.deviantart.com/browse/all/?order=11","Popular All Time","http://www.deviantart.com/browse/all/?order=9"});
+        DEVIANTART.setItemSelector("span[class*=thumb]:has(img[data-sigil=torpedo-img])");
+        ruleDEVIANTART.setLinkRule(new Rule("a.torpedo-thumb-link","attr","href"));
+        ruleDEVIANTART.setThumbnailRule(new Rule("a.torpedo-thumb-link > img[data-sigil=torpedo-img]","attr","src"));
+        ruleDEVIANTART.setTitleRule(new Rule("span.info > span.title-wrap > span.title","text"));
+        DEVIANTART.setDetailItemSelector("div[class=dev-view-deviation]");
+        ruleDEVIANTART.setImgRule(new Rule("img[class=dev-content-full]","attr","src"));
+        DEVIANTART.setNextPageRule(new Rule("a.selected","attr","href","(http:\\/\\/www\\.deviantart\\.com\\/[a-z|-]+\\/)()",new String[]{"?offset=","size"}));
+        DEVIANTART.setCategory(new String[]{"Newest","http://www.deviantart.com/newest/","What's Hot","http://www.deviantart.com/whats-hot/"
+                ,"Undiscovered","http://www.deviantart.com/undiscovered/","Popular 24 hours","http://www.deviantart.com/popular-24-hours/","Popular All Time","http://www.deviantart.com/popular-all-time/"});
 
-
-
-        ruleTUCHONG.setLinkRule(new Rule("div[class=post-item] > div[class=post-body] > div[class=post-image]","attr","href"));
-        ruleTUCHONG.setThumbnailRule(new Rule("div.post-body > div.post-image","attr","style","photo.tuchong.com\\/\\d+\\/l\\/\\d+.webp",new String[]{""}));
-        ruleTUCHONG.setTitleRule(new Rule("div[class=post-info post-info--multiphoto] > h3.post-title","text"));
-        ruleTUCHONG.setImgRule(new Rule("img[class=multi-photo-image]","attr","src"));
-        ruleTUCHONG.setNextPageRule(new Rule("a[target=_self]","attr","href","()(\\/tags\\/[%|A-Z|0-9]+)()",new String[]{"https://tuchong.com/rest","/posts?page=","page"}));
-        //TUCHONG.setCategory(new String[]{""});
-
-
-
-
-
-
-        ruleUNSPLASH.setLinkRule(new Rule("div.y5w1y > a","attr","href","()(\\/\\?photo=[a-z|A-Z|0-9|-]+)",new String[]{"https://unsplash.com",""}));
-        ruleUNSPLASH.setThumbnailRule(new Rule("div.y5w1y > a","attr","style","(https:\\/\\/images.unsplash\\.com\\/photo\\-[a-z|0-9|-|-|?|=|&|,]+)",new String[]{""}));
+        UNSPLASH.setItemSelector("div.y5w1y");
+        ruleUNSPLASH.setLinkRule(new Rule("a[title]","attr","href","()(\\/\\?photo=[a-z|A-Z|0-9|-]+)",new String[]{"https://unsplash.com",""}));
+        ruleUNSPLASH.setThumbnailRule(new Rule("a[href]","attr","style","(https:\\/\\/images\\.unsplash\\.com\\/[a-z|0-9|-|-|?|=|&|,|\\/]+)",new String[]{""}));
         ruleUNSPLASH.setTitleRule(new Rule("a[class=_3XzpS _3myVE _2zITg]","text","()([a-z|A-Z|\\s]+)",new String[]{"Photo By: ",""}));
-        ruleUNSPLASH.setImgRule(new Rule("div.RN0KT","attr","style","(https:\\/\\/images.unsplash\\.com\\/photo\\-[a-z|0-9|-|-|?|=|&]+)\\?",new String[]{""}));
+        UNSPLASH.setDetailItemSelector("div.RN0KT");
+        ruleUNSPLASH.setImgRule(new Rule("*","attr","style","(https:\\/\\/images\\.unsplash\\.com\\/[a-z|0-9|&||\\/|-]+)",new String[]{""}));
         UNSPLASH.setCategory(new String[]{"home","https://unsplash.com/","New","https://unsplash.com/new","Following","https://unsplash.com/following"});
         //ruleUNSPLASH.setNextPageRule(new Rule());没写下一页RULE
 
@@ -211,10 +198,6 @@ public class ListActivity extends AppCompatActivity {
         if (websites.length!=0){
             for (int i=0;i<websites.length;i++){
                 menuLeft.add(group_left,i,i,websites[i].getWebSiteName());
-                menuLeft.findItem(i).setCheckable(true);
-                if (websites[i].getWebSiteName().equals(websiteNow.getWebSiteName())){
-                    navViewRight.setCheckedItem(menuLeft.findItem(i).getItemId());
-                }
             }
         }
         navViewLeft.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -370,6 +353,19 @@ public class ListActivity extends AppCompatActivity {
                         }
                     }
                 }
+                //设置左侧滑菜单的被选中item
+                Menu menuLeft=navViewLeft.getMenu();
+                menuLeft.clear();
+                if (websites.length!=0){
+                    for (int i=0;i<websites.length;i++){
+                        menuLeft.add(group_left,i,i,websites[i].getWebSiteName());
+                        menuLeft.findItem(i).setCheckable(true);
+                        if (websites[i].getWebSiteName().equals(websiteNow.getWebSiteName())){
+                            navViewLeft.setCheckedItem(menuLeft.findItem(i).getItemId());
+                        }
+                    }
+                }
+
                 swipeRefreshLayout.setRefreshing(false);
                 isRefreshing=0;
             }
@@ -398,6 +394,7 @@ public class ListActivity extends AppCompatActivity {
     }
 
     public static void forPush(String index){
+
         for (int i=0;i<websites.length;i++){
             if (websites[i].getCategory()==null){
                 continue;

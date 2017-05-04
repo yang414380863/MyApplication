@@ -5,15 +5,13 @@ package com.example.yang.myapplication.web;
  * Created by YanGGGGG on 2017/4/6.
  */
 
-public class RuleAll {
+public class ItemRule {
 
     private Rule thumbnailRule;
     private Rule titleRule;
     private Rule linkRule;
     private Rule imgRule;
     private Rule detailRule;
-    private Rule nextPageRule;//List页面下一页
-    private Rule nextPageDetailRule;//Detail页面下一页
 
 
     public Rule getThumbnailRule() {
@@ -56,19 +54,5 @@ public class RuleAll {
         this.detailRule = detailRule;
     }
 
-    public Rule getNextPageRule() {
-        return nextPageRule;
-    }
 
-    public void setNextPageRule(Rule nextPageRule) {
-        this.nextPageRule = nextPageRule;
-    }
-
-    public Rule getNextPageDetailRule() {
-        return nextPageDetailRule;
-    }
-
-    public void setNextPageDetailRule(Rule nextPageDetailRule) {
-        this.nextPageDetailRule = nextPageDetailRule;
-    }
 }

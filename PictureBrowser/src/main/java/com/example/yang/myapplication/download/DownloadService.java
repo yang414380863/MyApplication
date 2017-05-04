@@ -12,7 +12,7 @@ import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
-import com.example.yang.myapplication.MainActivity;
+import com.example.yang.myapplication.Login;
 import com.example.yang.myapplication.R;
 
 import java.io.File;
@@ -113,7 +113,7 @@ public class DownloadService extends Service {
     }
 
     private Notification getNotification(String title, int progress) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, Login.class);
         PendingIntent pi = PendingIntent.getActivity(this, 0, intent, 0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setSmallIcon(R.mipmap.ic_launcher);

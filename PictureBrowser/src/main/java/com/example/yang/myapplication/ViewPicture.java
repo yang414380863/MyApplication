@@ -1,8 +1,11 @@
 package com.example.yang.myapplication;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.IBinder;
@@ -20,9 +23,17 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.yang.myapplication.download.DownloadService;
+import com.example.yang.myapplication.web.WebContent;
 import com.github.chrisbanes.photoview.PhotoView;
 
+import static com.example.yang.myapplication.DetailActivity.positionNow;
+import static com.example.yang.myapplication.ListActivity.swipeRefreshLayout;
+import static com.example.yang.myapplication.web.Browser.webContentList;
+
 public class ViewPicture extends AppCompatActivity implements View.OnClickListener {
+
+    //广播接收器
+    private Receiver receiver;
 
     private DownloadService.DownloadBinder downloadBinder;
     private ServiceConnection connection=new ServiceConnection() {
@@ -47,6 +58,11 @@ public class ViewPicture extends AppCompatActivity implements View.OnClickListen
         startDownload.setOnClickListener(this);
         pauseDownload.setOnClickListener(this);
         cancelDownload.setOnClickListener(this);
+
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("com.example.yang.myapplication.CLICK_PUSH");
+        receiver=new Receiver();
+        registerReceiver(receiver,intentFilter);
 
         FloatingActionButton fab=(FloatingActionButton)findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -107,5 +123,17 @@ public class ViewPicture extends AppCompatActivity implements View.OnClickListen
     protected void onDestroy() {
         super.onDestroy();
         unbindService(connection);
+        if (receiver!=null){
+            unregisterReceiver(receiver);
+        }
+    }
+    class Receiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("com.example.yang.myapplication.CLICK_PUSH")){
+                finish();
+            }
+        }
     }
 }

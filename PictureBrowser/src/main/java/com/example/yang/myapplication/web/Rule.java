@@ -13,6 +13,10 @@ public class Rule {
     private String regex; //正则表达式
     private String[] replace;//替换式
 
+    //item的Rule只做Selector
+    public Rule(String selector){
+        this.selector=selector;
+    }
     //如method=text时不需要attribute
     public Rule(String selector,String method){
         this.selector=selector;

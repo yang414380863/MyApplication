@@ -16,19 +16,89 @@ import java.util.regex.Pattern;
 public class SelectorAndRegex {
     private static String string;
 
-    public static String get(Document doc,Rule rule,int position,int sizeNow,int pageNow){
+    public static String getItemData(Document doc,Website website,String ruleString,int position){
+        //判断是哪个Rule
+        Rule rule;
+        switch (ruleString){
+            case "Link":{
+                rule=website.getItemRule().getLinkRule();
+                break;
+            }
+            case "Title":{
+                rule=website.getItemRule().getTitleRule();
+                break;
+            }
+            case "Thumbnail":{
+                rule=website.getItemRule().getThumbnailRule();
+                break;
+            }
+            case "Img":{
+                rule=website.getItemRule().getImgRule();
+                break;
+            }
+            case "Detail":{
+                rule=website.getItemRule().getDetailRule();
+                break;
+            }
+            default:
+                rule=website.getItemRule().getLinkRule();//肯定不触发
+                break;
+        }
         //先用选择器
-        if (doc.select(rule.getSelector()).size()==0){
+        if (doc.select(website.getItemSelector()).size()==0){
             //匹配不到
-            LogUtil.d("Selector can't find");
+LogUtil.d(ruleString+" Selector can't find");
             return "";
         }
         if (rule.getMethod().equals("attr")){
-            string=doc.select(rule.getSelector()).get(position).attr(rule.getAttribute());
+            string=doc.select(website.getItemSelector()).get(position).select(rule.getSelector()).attr(rule.getAttribute());
         }else if (rule.getMethod().equals("text")){
-            string=doc.select(rule.getSelector()).get(position).text();
+            string=doc.select(website.getItemSelector()).get(position).select(rule.getSelector()).text();
         }
-        //LogUtil.d("Selector"+position+" "+string);
+LogUtil.d(ruleString+" Selector"+position+" "+string);
+        if (rule.getRegex()!=null){
+            //用正则
+            Pattern pattern=Pattern.compile(rule.getRegex());
+            Matcher matcher=pattern.matcher(string);
+            string="";
+            if (matcher.find()){
+                for (int i=0;i<matcher.groupCount();i++){
+                    string+=matcher.group(i+1)+rule.getReplace()[i];
+LogUtil.d(ruleString+" Regex"+i+" "+string);
+                }
+            }
+        }
+LogUtil.d(ruleString+" result "+position+": "+string);
+        return string;
+    }
+
+    public static String getOtherData(Document doc,Website website,String ruleString){
+        return getOtherData(doc,website,ruleString,0,0);
+    }
+    public static String getOtherData(Document doc,Website website,String ruleString,int sizeNow,int pageNow){
+        //判断是哪个Rule
+        Rule rule;
+        switch (ruleString){
+            case "NextPage":{
+                rule=website.getNextPageRule();
+                break;
+            }
+            case "NextPageDetail":{
+                rule=website.getNextPageDetailRule();
+                break;
+            }
+            default:
+                rule=website.getNextPageRule();//肯定不触发
+                break;
+        }
+        //先用选择器
+        if (doc.select(rule.getSelector()).size()==0){
+            //匹配不到
+LogUtil.d(ruleString+" Selector can't find");
+            return "";
+        }
+        string=doc.select(rule.getSelector()).attr(rule.getAttribute());
+LogUtil.d(ruleString+" Selector "+string);
         if (rule.getRegex()!=null){
             //用正则
             Pattern pattern=Pattern.compile(rule.getRegex());
@@ -49,34 +119,61 @@ public class SelectorAndRegex {
                             string+=matcher.group(i+1)+rule.getReplace()[i];
                             break;
                     }
+LogUtil.d(ruleString+" Regex"+i+" "+string);
                 }
-                //LogUtil.d("Regex"+position+" "+string);
             }
         }
-        LogUtil.d("result "+position+" "+string);
+LogUtil.d(ruleString+" result : "+string);
         return string;
     }
-    public static String get(Document doc,Rule rule,int position, int sizeNow){
-        return get(doc,rule,position,sizeNow,0);
-    }
-    public static String get(Document doc,Rule rule,int position){
-        return get(doc,rule,position,0);
-    }
-    public static String get(Document doc,Rule rule){
 
-        return get(doc,rule,0);
-    }
-    public static int count(Document doc,RuleAll ruleAll){
-        int sizeThispage;
-        if (doc.select(ruleAll.getThumbnailRule().getSelector()).size()>=
-                doc.select(ruleAll.getLinkRule().getSelector()).size()){
-            sizeThispage=doc.select(ruleAll.getLinkRule().getSelector()).size();
-        }else {
-            sizeThispage=doc.select(ruleAll.getThumbnailRule().getSelector()).size();
+    public static String getDetailData(Document doc,Website website,String ruleString,int position){
+        //判断是哪个Rule
+        Rule rule;
+        switch (ruleString){
+            case "Img":{
+                rule=website.getItemRule().getImgRule();
+                break;
+            }
+            case "Detail":{
+                rule=website.getItemRule().getDetailRule();
+                break;
+            }
+            default:
+                rule=website.getItemRule().getImgRule();//肯定不触发
+                break;
         }
-        LogUtil.d("sizeLink="+doc.select(ruleAll.getLinkRule().getSelector()).size());
-        LogUtil.d("sizeThumbnail="+doc.select(ruleAll.getThumbnailRule().getSelector()).size());
-        LogUtil.d("sizeImg="+doc.select(ruleAll.getImgRule().getSelector()).size());
-        return sizeThispage;
+        //先用选择器
+        if (doc.select(website.getDetailItemSelector()).size()==0){
+            //匹配不到
+LogUtil.d(ruleString+" Selector can't find");
+            return "";
+        }
+        if (rule.getMethod().equals("attr")){
+            string=doc.select(website.getDetailItemSelector()).get(position).select(rule.getSelector()).attr(rule.getAttribute());
+        }else if (rule.getMethod().equals("text")){
+            string=doc.select(website.getDetailItemSelector()).get(position).select(rule.getSelector()).text();
+        }
+LogUtil.d(ruleString+" Selector"+position+" "+string);
+        if (rule.getRegex()!=null){
+            //用正则
+            Pattern pattern=Pattern.compile(rule.getRegex());
+            Matcher matcher=pattern.matcher(string);
+            string="";
+            if (matcher.find()){
+                for (int i=0;i<matcher.groupCount();i++){
+                    string+=matcher.group(i+1)+rule.getReplace()[i];
+LogUtil.d(ruleString+" Regex"+i+" "+string);
+                }
+            }
+        }
+LogUtil.d(ruleString+" result "+position+" "+string);
+        return string;
+    }
+
+    public static int getItemcount(Document doc,Website website){
+        int itemcount=doc.select(website.getItemSelector()).size();
+LogUtil.d("itemcount="+itemcount);
+        return itemcount;
     }
 }
