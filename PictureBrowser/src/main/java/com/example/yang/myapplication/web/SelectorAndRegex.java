@@ -36,13 +36,16 @@ public class SelectorAndRegex {
                 rule=website.getItemRule().getImgRule();
                 break;
             }
-            case "Detail":{
-                rule=website.getItemRule().getDetailRule();
+            case "Article":{
+                rule=website.getItemRule().getArticleRule();
                 break;
             }
             default:
                 rule=website.getItemRule().getLinkRule();//肯定不触发
                 break;
+        }
+        if (rule==null){
+            return "";
         }
         //先用选择器
         if (doc.select(website.getItemSelector()).size()==0){
@@ -135,13 +138,16 @@ LogUtil.d(ruleString+" result : "+string);
                 rule=website.getItemRule().getImgRule();
                 break;
             }
-            case "Detail":{
-                rule=website.getItemRule().getDetailRule();
+            case "Article":{
+                rule=website.getItemRule().getArticleRule();
                 break;
             }
             default:
                 rule=website.getItemRule().getImgRule();//肯定不触发
                 break;
+        }
+        if (rule==null){
+            return "";
         }
         //先用选择器
         if (doc.select(website.getDetailItemSelector()).size()==0){

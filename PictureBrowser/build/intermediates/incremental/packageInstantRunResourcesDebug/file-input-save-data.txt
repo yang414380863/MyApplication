@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Thu May 04 17:09:31 GMT+08:00 2017
+#Thu May 04 22:12:17 GMT+08:00 2017
 210.set=ANDROID_RESOURCE
 14.set=ANDROID_RESOURCE
 180.file=D\:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\resources-debug.ap_\\res\\drawable-v21\\abc_btn_colored_material.xml

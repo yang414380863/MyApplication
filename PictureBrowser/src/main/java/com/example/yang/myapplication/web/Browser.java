@@ -31,7 +31,7 @@ import okhttp3.Response;
 
 public class Browser {
 
-    public static ArrayList<WebContent> webContentList=new ArrayList<>();
+    public static ArrayList<WebItem> webContentList=new ArrayList<>();
     public static Website websiteNow;
     public static int sizeThisPage;
     private static String nextPageUrl;
@@ -86,6 +86,7 @@ public class Browser {
     public static void analysis(Document doc,String refreshPlace){
 
         Elements list = doc.select(websiteNow.getItemSelector());
+LogUtil.d(list);
         sizeThisPage=list.size();
         int sizeNow=webContentList.size();//sizeNow=已经加载的item数量
         //如果是相同的一个页面 就覆盖原来的,且不增加长度  否则就加在后面
@@ -95,7 +96,7 @@ public class Browser {
                 //为空(首次加载)
                 webContentList.clear();
                 for (int i=0;i<sizeThisPage;i++){
-                    webContentList.add(new WebContent());
+                    webContentList.add(new WebItem());
                 }
                 sizeNow=0;
                 pageNext =2;
@@ -106,7 +107,7 @@ public class Browser {
             {
                 //是同一页面(顶部下拉刷新)刷新后可能数组过小
                 for (int i=sizeNow;i<sizeThisPage;i++){
-                    webContentList.add(new WebContent());
+                    webContentList.add(new WebItem());
                 }
                 sizeNow=0;
                 break;
@@ -114,7 +115,7 @@ public class Browser {
             case ("bottom"):{
                 //不是同一页面(底部上拉刷新)
                 for (int i=0;i<sizeThisPage;i++){
-                    webContentList.add(new WebContent());
+                    webContentList.add(new WebItem());
                 }
                 break;
             }
@@ -126,9 +127,9 @@ public class Browser {
             if (webContentList.size()==0){
                 return;
             }
-            webContentList.get(sizeNow).setLink(SelectorAndRegex.getItemData(Jsoup.parse(list.toString()),websiteNow,"Link",i));
-            webContentList.get(sizeNow).setThumbnail(SelectorAndRegex.getItemData(Jsoup.parse(list.toString()),websiteNow,"Thumbnail",i));
-            webContentList.get(sizeNow).setTitle(SelectorAndRegex.getItemData(Jsoup.parse(list.toString()),websiteNow,"Title",i));
+            webContentList.get(sizeNow).setLink(SelectorAndRegex.getItemData(doc,websiteNow,"Link",i));
+            webContentList.get(sizeNow).setThumbnail(SelectorAndRegex.getItemData(doc,websiteNow,"Thumbnail",i));
+            webContentList.get(sizeNow).setTitle(SelectorAndRegex.getItemData(doc,websiteNow,"Title",i));
 /*
             LogUtil.d("No.+i Link:"+webContentList.get(sizeNow).getLink());
             LogUtil.d("No.+i Thumbnail:"+webContentList.get(sizeNow).getThumbnail());
@@ -153,6 +154,7 @@ public class Browser {
             public void run() {
                 if (refreshPlace=="new"){
                     webContentList.get(id).setImg(new ArrayList<String>());
+                    webContentList.get(id).setArticle(new ArrayList<String>());
                 }else if (refreshPlace=="top"){
                     webContentList.get(id).getImg().clear();
                 }else if (refreshPlace=="bottom"){
@@ -187,14 +189,16 @@ public class Browser {
         Elements list = doc.select(websiteNow.getDetailItemSelector());
         for (int i = 0; i < list.size(); i++) {
             webContentList.get(id).getImg().add("");
-            webContentList.get(id).getImg().set(webContentList.get(id).getImg().size()-1,SelectorAndRegex.getDetailData(Jsoup.parse(list.toString()),websiteNow,"Img",i));
+            webContentList.get(id).getArticle().add("");
+            webContentList.get(id).getImg().set(webContentList.get(id).getImg().size()-1,SelectorAndRegex.getDetailData(doc,websiteNow,"Img",i));
+            webContentList.get(id).getArticle().set(webContentList.get(id).getArticle().size()-1,SelectorAndRegex.getDetailData(doc,websiteNow,"Article",i));
         }
         if (websiteNow.getNextPageDetailRule()!=null) {
             nextPageDetail = SelectorAndRegex.getOtherData(doc,websiteNow,"NextPageDetail");
             //LogUtil.d("nextPageDetail "+nextPageDetail);
             if (nextPageDetail.equals("")) {
                 //没有下一页
-                LogUtil.d("detail "+webContentList.get(id).getImg());
+//LogUtil.d("detail "+webContentList.get(id).getImg());
                 //发送一个加载完成了的广播
                 Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH_DETAIL");
                 intent.putExtra("position",id);
@@ -205,7 +209,7 @@ public class Browser {
                 LogUtil.d("nextPageDetail not exist");
             }
         } else {//没有下一页的Rule
-            LogUtil.d("detail "+webContentList.get(id).getImg());
+//LogUtil.d("detail "+webContentList.get(id).getImg());
             //发送一个加载完成了的广播
             Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH_DETAIL");
             intent.putExtra("position",id);

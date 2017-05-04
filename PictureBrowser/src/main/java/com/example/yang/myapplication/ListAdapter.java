@@ -4,7 +4,6 @@ package com.example.yang.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.web.Browser;
-import com.example.yang.myapplication.web.WebContent;
+import com.example.yang.myapplication.web.WebItem;
 
 import java.util.ArrayList;
 
@@ -28,7 +27,7 @@ import static com.example.yang.myapplication.web.Browser.websiteNow;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>implements View.OnClickListener {
 
-    private ArrayList<WebContent> webContents=new ArrayList<>();
+    private ArrayList<WebItem> webContents=new ArrayList<>();
     private Context context;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -38,7 +37,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>imp
         public ViewHolder(View view){
             super(view);
             image=(ImageView)view.findViewById(R.id.image);
-            name=(TextView)view.findViewById(R.id.name);
+            name=(TextView)view.findViewById(R.id.textview);
         }
     }
 
@@ -58,7 +57,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>imp
 
     @Override
     public void onBindViewHolder(ViewHolder holder,int position){
-        WebContent webContent= webContentList.get(position);
+        WebItem webContent= webContentList.get(position);
         holder.name.setText(webContent.getTitle());
         Glide
                 .with(context)
@@ -78,7 +77,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>imp
         return webContents.size();
     }
 
-    public ArrayList<WebContent> getWebContents(){
+    public ArrayList<WebItem> getWebContents(){
         return webContents;
     }
 

@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.basic.LogUtil;
 import com.example.yang.myapplication.web.Browser;
-import com.example.yang.myapplication.web.WebContent;
+import com.example.yang.myapplication.web.WebItem;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 import static com.bumptech.glide.Glide.with;
@@ -45,7 +45,7 @@ public class DetailActivity extends SwipeBackActivity {
         //标题栏
         imageView=(ImageView)findViewById(R.id.image_view);
         collapsingToolbarLayout=(CollapsingToolbarLayout)findViewById(collapsing_toolbar);
-        //获取具体是哪一张图片
+        //获取具体是哪一个item
         Intent intent=getIntent();
         positionNow=intent.getExtras().getInt("position");
         //瀑布流
@@ -79,7 +79,6 @@ public class DetailActivity extends SwipeBackActivity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        webContentList.get(positionNow).getImg().clear();
         if (receiver!=null){
             unregisterReceiver(receiver);
         }
@@ -90,17 +89,23 @@ public class DetailActivity extends SwipeBackActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("com.example.yang.myapplication.LOAD_FINISH_DETAIL")){
                 if (intent.getExtras().getInt("position")==positionNow){
-                    WebContent webContent= webContentList.get(positionNow);
+                    WebItem webContent= webContentList.get(positionNow);
                     collapsingToolbarLayout.setTitle(webContent.getTitle());
-                    Glide
-                            .with(DetailActivity.this)
-                            .load(webContent.getImg().get(0))
-                            .fitCenter()
-                            .into(imageView);
-                    imageView.setImageAlpha(150);
+                    for (int i=0;i<webContent.getImg().size();i++){
+                        if (!webContent.getImg().get(i).equals("")){
+                            Glide
+                                    .with(DetailActivity.this)
+                                    .load(webContent.getImg().get(i))
+                                    .fitCenter()
+                                    .into(imageView);
+                            imageView.setImageAlpha(150);
+                        }
+                    }
                     Log.d("refresh","finish refresh!");
                     adapter.getUrls().clear();//要重新指向一次才能检测到刷新
                     adapter.getUrls().addAll(webContentList.get(positionNow).getImg());
+                    adapter.getTexts().clear();//要重新指向一次才能检测到刷新
+                    adapter.getTexts().addAll(webContentList.get(positionNow).getArticle());
                     adapter.notifyDataSetChanged();
                     swipeRefreshLayout.setRefreshing(false);
                     isRefreshing=0;
@@ -108,9 +113,6 @@ public class DetailActivity extends SwipeBackActivity {
             }
             if (intent.getAction().equals("com.example.yang.myapplication.CLICK_PUSH")){
                 LogUtil.d("DetailActivity finish");
-                if (receiver!=null){
-                    unregisterReceiver(receiver);
-                }
                 finish();
             }
 

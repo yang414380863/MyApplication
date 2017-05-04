@@ -6,29 +6,22 @@ import java.util.ArrayList;
  * Created by YanGGGGG on 2017/4/5.
  */
 
-public class WebContent {
+public class WebItem {
 
     private String webSiteName;//网站名
     private String thumbnail;//配图/缩略图
     private String title;//标题
     private String link;//点击之后要进去的网页URL
     private ArrayList<String> img;//原图链接
-    private String detail;//详细文字内容
+    private ArrayList<String> article;//详细文字内容
 
 
-    public boolean haveThumbnail(){
-        if (thumbnail!=null){
-            return true;
-        }
-        return false;
+    public ArrayList<String> getArticle() {
+        return article;
     }
 
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
+    public void setArticle(ArrayList<String> article) {
+        this.article = article;
     }
 
     public ArrayList<String> getImg() {

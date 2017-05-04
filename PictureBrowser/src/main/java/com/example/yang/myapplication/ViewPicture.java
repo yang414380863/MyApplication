@@ -15,7 +15,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -23,12 +22,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.yang.myapplication.download.DownloadService;
-import com.example.yang.myapplication.web.WebContent;
 import com.github.chrisbanes.photoview.PhotoView;
-
-import static com.example.yang.myapplication.DetailActivity.positionNow;
-import static com.example.yang.myapplication.ListActivity.swipeRefreshLayout;
-import static com.example.yang.myapplication.web.Browser.webContentList;
 
 public class ViewPicture extends AppCompatActivity implements View.OnClickListener {
 

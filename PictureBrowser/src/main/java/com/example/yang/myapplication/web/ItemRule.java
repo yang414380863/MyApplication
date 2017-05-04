@@ -11,7 +11,7 @@ public class ItemRule {
     private Rule titleRule;
     private Rule linkRule;
     private Rule imgRule;
-    private Rule detailRule;
+    private Rule articleRule;
 
 
     public Rule getThumbnailRule() {
@@ -46,12 +46,12 @@ public class ItemRule {
         this.imgRule = imgRule;
     }
 
-    public Rule getDetailRule() {
-        return detailRule;
+    public Rule getArticleRule() {
+        return articleRule;
     }
 
-    public void setDetailRule(Rule detailRule) {
-        this.detailRule = detailRule;
+    public void setArticleRule(Rule articleRule) {
+        this.articleRule = articleRule;
     }
 
 

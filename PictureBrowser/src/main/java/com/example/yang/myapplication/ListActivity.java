@@ -70,8 +70,10 @@ public class ListActivity extends AppCompatActivity {
     final static Website DEVIANTART=new Website("Deviantart","http://www.deviantart.com/browse/all/?order=67108864",ruleDEVIANTART);
     static ItemRule ruleUNSPLASH=new ItemRule();
     final static Website UNSPLASH=new Website("Unsplash","https://unsplash.com/",ruleUNSPLASH);
+    static ItemRule ruleLEIFENG=new ItemRule();
+    final static Website LEIFENG=new Website("雷锋网","http://www.leiphone.com/category/sponsor",ruleLEIFENG);
 
-    final static Website[] websites=new Website[]{POOCG,DEVIANTART,UNSPLASH};//先暂时这样写WebsiteList 以后再动态生成
+    final static Website[] websites=new Website[]{POOCG,DEVIANTART,UNSPLASH,LEIFENG};//先暂时这样写WebsiteList 以后再动态生成
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +110,17 @@ public class ListActivity extends AppCompatActivity {
         UNSPLASH.setCategory(new String[]{"home","https://unsplash.com/","New","https://unsplash.com/new","Following","https://unsplash.com/following"});
         //ruleUNSPLASH.setNextPageRule(new Rule());没写下一页RULE
 
+        LEIFENG.setItemSelector("li > div.box:has(div.img)");
+        ruleLEIFENG.setLinkRule(new Rule("div.img > a[target]","attr","href"));
+        ruleLEIFENG.setThumbnailRule(new Rule("div.img > a[target] > img.lazy","attr","data-original"));
+        ruleLEIFENG.setTitleRule(new Rule("div.img > a[target] > img.lazy","attr","title"));
+        LEIFENG.setDetailItemSelector("div[class=lph-article-comView] > p");
+        ruleLEIFENG.setImgRule(new Rule("p > img[alt]","attr","src"));
+        ruleLEIFENG.setArticleRule(new Rule("p","text"));
+        LEIFENG.setNextPageRule(new Rule("div.lph-page > a.next","attr","href"));
+        LEIFENG.setCategory(new String[]{"人工智能","http://www.leiphone.com/category/ai","智能驾驶","http://www.leiphone.com/category/transportation","网络安全","http://www.leiphone.com/category/letshome"
+                ,"AR/VR","http://www.leiphone.com/category/arvr","机器人","http://www.leiphone.com/category/robot","Fintect","http://www.leiphone.com/category/fintech","物联网","http://www.leiphone.com/category/iot"
+                ,"未来医疗","http://www.leiphone.com/category/aihealth","只能硬件","http://www.leiphone.com/category/weiwu","AI+","http://www.leiphone.com/category/aijuejinzhi"});
 
         //Log.d("JSON", JsonUtils.ObjectToJson(POOCG));
         //Log.d("JSON", JsonUtils.ObjectToJson(DEVIANTART));

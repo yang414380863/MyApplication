@@ -3429,7 +3429,6 @@ containing a value of this type.
         public static final int middle=0x7f0d0040;
         public static final int mini=0x7f0d003e;
         public static final int multiply=0x7f0d0027;
-        public static final int name=0x7f0d00c7;
         public static final int nav_view_left=0x7f0d00a6;
         public static final int nav_view_right=0x7f0d00a7;
         public static final int navigation_header_container=0x7f0d0099;
@@ -3503,6 +3502,7 @@ containing a value of this type.
         public static final int text_input_password_toggle=0x7f0d009e;
         public static final int textinput_counter=0x7f0d0009;
         public static final int textinput_error=0x7f0d000a;
+        public static final int textview=0x7f0d00c7;
         public static final int time=0x7f0d00b6;
         public static final int title=0x7f0d0051;
         public static final int titleDividerNoCustom=0x7f0d0060;
