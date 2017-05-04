@@ -4,7 +4,6 @@ package com.example.yang.myapplication.web;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.example.yang.myapplication.basic.LogUtil;
 import com.example.yang.myapplication.basic.MyApplication;
@@ -36,6 +35,7 @@ public class Browser {
     public static Website websiteNow;
     public static int sizeThisPage;
     private static String nextPageUrl;
+    private static int pageNext;
     public  static Date latestUpdate;
 
     public static void sendRequest(final Website website,final String refreshPlace){
@@ -56,6 +56,7 @@ public class Browser {
                     OkHttpClient client = new OkHttpClient();
                     if (refreshPlace=="bottom"){
                         url=websiteNow.getNextPageUrl();
+                        pageNext++;
                     }
                     //LogUtil.d("url "+url);
                     final Request request = new Request.Builder()
@@ -84,8 +85,7 @@ public class Browser {
 
     public static void analysis(Document doc,String refreshPlace){
 
-
-        sizeThisPage=doc.select(websiteNow.getRuleAll().getThumbnailRule().getSelector()).size();
+        sizeThisPage=SelectorAndRegex.count(doc,websiteNow.getRuleAll());
         int sizeNow=webContentList.size();//sizeNow=已经加载的item数量
         //如果是相同的一个页面 就覆盖原来的,且不增加长度  否则就加在后面
         switch (refreshPlace){
@@ -97,6 +97,7 @@ public class Browser {
                     webContentList.add(new WebContent());
                 }
                 sizeNow=0;
+                pageNext =2;
                 break;
             }
             case ("top"):
@@ -131,16 +132,16 @@ public class Browser {
             webContentList.get(sizeNow).setLink(SelectorAndRegex.get(doc,websiteNow.getRuleAll().getLinkRule(),i));
             webContentList.get(sizeNow).setThumbnail(SelectorAndRegex.get(doc,websiteNow.getRuleAll().getThumbnailRule(),i));
             webContentList.get(sizeNow).setTitle(SelectorAndRegex.get(doc,websiteNow.getRuleAll().getTitleRule(),i));
-            /*
-            LogUtil.d("No.+i" "Link:"+webContentList.get(sizeNow).getLink());
-            LogUtil.d("No.+i" "Thumbnail:"+webContentList.get(sizeNow).getThumbnail());
-            LogUtil.d("No.+i" "Title:"+webContentList.get(sizeNow).getTitle());
-            */
+/*
+            LogUtil.d("No.+i Link:"+webContentList.get(sizeNow).getLink());
+            LogUtil.d("No.+i Thumbnail:"+webContentList.get(sizeNow).getThumbnail());
+            LogUtil.d("No.+i Title:"+webContentList.get(sizeNow).getTitle());
+*/
         }
         LogUtil.d("Finish load "+sizeNow+" item  Next item is No "+sizeNow);
         //解析列表的下一页
         if (websiteNow.getRuleAll().getNextPageRule()!=null){
-            nextPageUrl=SelectorAndRegex.get(doc,websiteNow.getRuleAll().getNextPageRule(),0,sizeNow);
+            nextPageUrl=SelectorAndRegex.get(doc,websiteNow.getRuleAll().getNextPageRule(),0,sizeNow, pageNext);
         }
         //LogUtil.d("nextPageUrl  "+nextPageUrl);
         //发送一个加载完成了的广播

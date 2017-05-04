@@ -18,6 +18,7 @@ import com.avos.avoscloud.AVOSCloud;
 import com.example.yang.myapplication.basic.LogUtil;
 import com.example.yang.myapplication.basic.MyApplication;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -49,9 +50,14 @@ public class PushReceiver extends BroadcastReceiver {
 
                 //时间判断
                 Date pushDate=new Date(json.getString("date"));
+                Calendar pushDateCorrect = Calendar.getInstance();
+                pushDateCorrect.setTime(pushDate);
+                pushDateCorrect.add(Calendar.HOUR_OF_DAY,-14);
+                LogUtil.d("pushDate:"+pushDate);
                 pref= PreferenceManager.getDefaultSharedPreferences(context);
                 String string=pref.getString("latestUpdate","");
                 Date latestUpdate=new Date(string);
+                LogUtil.d("latestUpdate"+latestUpdate);
                 if (pushDate.after(latestUpdate)){
                     Intent resultIntent = new Intent(context, Login.class);
                     resultIntent.putExtra("index",json.getString("index"));
@@ -61,7 +67,7 @@ public class PushReceiver extends BroadcastReceiver {
                     Notification notification = new NotificationCompat.Builder(context)
                             .setContentTitle(json.getString("index"))//标题
                             .setContentText(json.getString("date"))//正文
-                            .setWhen(new Date(json.getString("date")).getTime())//通知发生的时间为服务器更新时间
+                            .setWhen(pushDateCorrect.getTime().getTime())//通知发生的时间为服务器更新时间
                             .setContentIntent(pendingIntent)//点击跳转intent
                             .setAutoCancel(true)//点击之后自动消失
                             .setSmallIcon(R.mipmap.ic_launcher_round)   //若没有设置largeicon，此为左边的大icon，设置了largeicon，则为右下角的小icon，无论怎样，都影响Notifications area显示的图标

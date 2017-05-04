@@ -70,10 +70,12 @@ public class ListActivity extends AppCompatActivity {
     final static Website POOCG=new Website("Poocg","https://www.poocg.com/works/index/type/new",rulePOOCG);
     static RuleAll ruleDEVIANTART=new RuleAll();
     final static Website DEVIANTART=new Website("Deviantart","http://www.deviantart.com/browse/all/?order=67108864",ruleDEVIANTART);
+    static RuleAll ruleTUCHONG=new RuleAll();
+    final static Website TUCHONG=new Website("图虫","https://tuchong.com/tags/%E9%A3%8E%E5%85%89",ruleTUCHONG);
     static RuleAll ruleUNSPLASH=new RuleAll();
     final static Website UNSPLASH=new Website("Unsplash","https://unsplash.com/",ruleUNSPLASH);
 
-    final static Website[] websites=new Website[]{POOCG,DEVIANTART,UNSPLASH};//先暂时这样写WebsiteList 以后再动态生成
+    final static Website[] websites=new Website[]{POOCG,DEVIANTART,TUCHONG,UNSPLASH};//先暂时这样写WebsiteList 以后再动态生成
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +92,7 @@ public class ListActivity extends AppCompatActivity {
         POOCG.setCategory(new String[]{"最新","https://www.poocg.com/works/index/type/new","新赞","https://www.poocg.com/works/index/type/love","热门","https://www.poocg.com/works/index/type/hot"
                 ,"精华","https://www.poocg.com/works/index/type/best","推荐","https://www.poocg.com/works/index/type/rem"});
 
-        ruleDEVIANTART.setLinkRule(new Rule("span[class*=thumb] > a","attr","href"));
+        ruleDEVIANTART.setLinkRule(new Rule("span[class*=thumb] > a.torpedo-thumb-link","attr","href"));
         ruleDEVIANTART.setThumbnailRule(new Rule("span[class*=thumb] > a > img[data-sigil=torpedo-img]","attr","src"));
         ruleDEVIANTART.setTitleRule(new Rule("span[class*=thumb] > span.info > span.title-wrap > span.title","text"));
         ruleDEVIANTART.setImgRule(new Rule("div.dev-view-deviation > img[class=dev-content-full]","attr","src"));
@@ -98,15 +100,31 @@ public class ListActivity extends AppCompatActivity {
         DEVIANTART.setCategory(new String[]{"Newest","http://www.deviantart.com/browse/all/?order=5","What's Hot","http://www.deviantart.com/browse/all/?order=67108864"
                 ,"Undiscovered","http://www.deviantart.com/browse/all/?order=134217728","Popular 24 hours","http://www.deviantart.com/browse/all/?order=11","Popular All Time","http://www.deviantart.com/browse/all/?order=9"});
 
+
+
+        ruleTUCHONG.setLinkRule(new Rule("div[class=post-item] > div[class=post-body] > div[class=post-image]","attr","href"));
+        ruleTUCHONG.setThumbnailRule(new Rule("div.post-body > div.post-image","attr","style","photo.tuchong.com\\/\\d+\\/l\\/\\d+.webp",new String[]{""}));
+        ruleTUCHONG.setTitleRule(new Rule("div[class=post-info post-info--multiphoto] > h3.post-title","text"));
+        ruleTUCHONG.setImgRule(new Rule("img[class=multi-photo-image]","attr","src"));
+        ruleTUCHONG.setNextPageRule(new Rule("a[target=_self]","attr","href","()(\\/tags\\/[%|A-Z|0-9]+)()",new String[]{"https://tuchong.com/rest","/posts?page=","page"}));
+        //TUCHONG.setCategory(new String[]{""});
+
+
+
+
+
+
         ruleUNSPLASH.setLinkRule(new Rule("div.y5w1y > a","attr","href","()(\\/\\?photo=[a-z|A-Z|0-9|-]+)",new String[]{"https://unsplash.com",""}));
         ruleUNSPLASH.setThumbnailRule(new Rule("div.y5w1y > a","attr","style","(https:\\/\\/images.unsplash\\.com\\/photo\\-[a-z|0-9|-|-|?|=|&|,]+)",new String[]{""}));
         ruleUNSPLASH.setTitleRule(new Rule("a[class=_3XzpS _3myVE _2zITg]","text","()([a-z|A-Z|\\s]+)",new String[]{"Photo By: ",""}));
         ruleUNSPLASH.setImgRule(new Rule("div.RN0KT","attr","style","(https:\\/\\/images.unsplash\\.com\\/photo\\-[a-z|0-9|-|-|?|=|&]+)\\?",new String[]{""}));
+        UNSPLASH.setCategory(new String[]{"home","https://unsplash.com/","New","https://unsplash.com/new","Following","https://unsplash.com/following"});
         //ruleUNSPLASH.setNextPageRule(new Rule());没写下一页RULE
 
 
         //Log.d("JSON", JsonUtils.ObjectToJson(POOCG));
-        final Website newWebsite=JsonUtils.JsonToObject(JsonUtils.ObjectToJson(POOCG));
+        //Log.d("JSON", JsonUtils.ObjectToJson(DEVIANTART));
+        //final Website newWebsite=JsonUtils.JsonToObject(JsonUtils.ObjectToJson(POOCG));
         //Browser.sendRequest(newWebsite,"new");//从JSON格式转换为Website对象
 
 
