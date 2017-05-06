@@ -49,7 +49,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 .inflate(R.layout.web_content_item, parent, false);
         final ViewHolder holder = new ViewHolder(view);
         view.setElevation(0);
-        view.findViewById(R.id.image).setOnClickListener(this);
+        view.setOnClickListener(this);
         return holder;
     }
 
@@ -71,7 +71,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     .dontAnimate()//无载入动画
                     //.crossFade() //设置淡入淡出效果，默认300ms，可以传参 会导致图片变形 先不用
                     .into(holder.image);
-            holder.itemView.findViewById(R.id.image).setTag(position);
+            holder.itemView.setTag(position);
         }
     }
 
@@ -89,10 +89,12 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     @Override
     public void onClick(View view){
         //点击->获取链接->显示图片/目录
-        int position=(int)view.findViewById(R.id.image).getTag();
-        Intent intent=new Intent(context,ViewPicture.class);
-        intent.putExtra("url",urls.get(position));
-        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+        int position=(int)view.getTag();
+        if(!urls.get(position).equals("")){
+            Intent intent=new Intent(context,ViewPicture.class);
+            intent.putExtra("url",urls.get(position));
+            //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        }
     }
 }

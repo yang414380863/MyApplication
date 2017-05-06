@@ -67,7 +67,7 @@ public class ListActivity extends AppCompatActivity {
     static ItemRule rulePOOCG=new ItemRule();
     final static Website POOCG=new Website("Poocg","https://www.poocg.com/works/index/type/new",rulePOOCG);
     static ItemRule ruleDEVIANTART=new ItemRule();
-    final static Website DEVIANTART=new Website("Deviantart","http://www.deviantart.com/browse/all/?order=67108864",ruleDEVIANTART);
+    final static Website DEVIANTART=new Website("Deviantart","http://www.deviantart.com/whats-hot/",ruleDEVIANTART);
     static ItemRule ruleUNSPLASH=new ItemRule();
     final static Website UNSPLASH=new Website("Unsplash","https://unsplash.com/",ruleUNSPLASH);
     static ItemRule ruleLEIFENG=new ItemRule();
@@ -104,10 +104,10 @@ public class ListActivity extends AppCompatActivity {
         UNSPLASH.setItemSelector("div.y5w1y");
         ruleUNSPLASH.setLinkRule(new Rule("a[title]","attr","href","()(\\/\\?photo=[a-z|A-Z|0-9|-]+)",new String[]{"https://unsplash.com",""}));
         ruleUNSPLASH.setThumbnailRule(new Rule("a[href]","attr","style","(https:\\/\\/images\\.unsplash\\.com\\/[a-z|0-9|-|-|?|=|&|,|\\/]+)",new String[]{""}));
-        ruleUNSPLASH.setTitleRule(new Rule("a[class=_3XzpS _3myVE _2zITg]","text","()([a-z|A-Z|\\s]+)",new String[]{"Photo By: ",""}));
+        ruleUNSPLASH.setTitleRule(new Rule("a[class=cV68d]","attr","title"));
         UNSPLASH.setDetailItemSelector("div.RN0KT");
         ruleUNSPLASH.setImgRule(new Rule("*","attr","style","(https:\\/\\/images\\.unsplash\\.com\\/[a-z|0-9|&||\\/|-]+)",new String[]{""}));
-        UNSPLASH.setCategory(new String[]{"home","https://unsplash.com/","New","https://unsplash.com/new","Following","https://unsplash.com/following"});
+        UNSPLASH.setCategory(new String[]{"home","https://unsplash.com/","New","https://unsplash.com/new"});
         //ruleUNSPLASH.setNextPageRule(new Rule());没写下一页RULE
 
         LEIFENG.setItemSelector("li > div.box:has(div.img)");
@@ -121,6 +121,9 @@ public class ListActivity extends AppCompatActivity {
         LEIFENG.setCategory(new String[]{"人工智能","http://www.leiphone.com/category/ai","智能驾驶","http://www.leiphone.com/category/transportation","网络安全","http://www.leiphone.com/category/letshome"
                 ,"AR/VR","http://www.leiphone.com/category/arvr","机器人","http://www.leiphone.com/category/robot","Fintect","http://www.leiphone.com/category/fintech","物联网","http://www.leiphone.com/category/iot"
                 ,"未来医疗","http://www.leiphone.com/category/aihealth","只能硬件","http://www.leiphone.com/category/weiwu","AI+","http://www.leiphone.com/category/aijuejinzhi"});
+
+
+
 
         //Log.d("JSON", JsonUtils.ObjectToJson(POOCG));
         //Log.d("JSON", JsonUtils.ObjectToJson(DEVIANTART));
@@ -217,6 +220,8 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 //点击左侧item之后的操作
+                adapter.getWebContents().clear();//要重新指向一次才能检测到刷新
+                adapter.notifyDataSetChanged();
                 drawerLayout.closeDrawers();
                 int position=0;
                 for (int i=0;i<websites.length;i++){
@@ -237,6 +242,8 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 //点击右侧item之后的操作
+                adapter.getWebContents().clear();//要重新指向一次才能检测到刷新
+                adapter.notifyDataSetChanged();
                 drawerLayout.closeDrawers();
                 int positionOfCategory=0;
                 if (websiteNow.getCategory()!=null){
@@ -412,7 +419,7 @@ public class ListActivity extends AppCompatActivity {
             if (websites[i].getCategory()==null){
                 continue;
             }
-            for (int j=0;j<websites[i].getCategory().length;j++,j++){
+            for (int j=0;j<websites[i].getCategory().length;j+=2){
                 if (websites[i].getCategory()[j+1].equals(index)){
                     websiteNow=websites[i];
                     websiteNow.setIndexUrl(websites[i].getCategory()[j+1]);

@@ -72,8 +72,8 @@ public class PushReceiver extends BroadcastReceiver {
                             .setAutoCancel(true)//点击之后自动消失
                             .setSmallIcon(R.mipmap.ic_launcher_round)   //若没有设置largeicon，此为左边的大icon，设置了largeicon，则为右下角的小icon，无论怎样，都影响Notifications area显示的图标
                             .setLargeIcon(BitmapFactory.decodeResource(MyApplication.getContext().getResources(),R.mipmap.ic_launcher))//largeicon，
-                            .setVibrate(new long[]{0,100,300,100}) //设置震动，此震动数组为：long vT[]={300,100,300,100}; 还可以设置灯光.setLights(argb, onMs, offMs)
-                            .setLights(Color.GREEN,1000,1000)//设置LED灯
+                            .setVibrate(new long[]{0,100}) //设置震动，此震动数组为：long vT[]={300,100,300,100}
+                            .setLights(Color.GREEN,1000,1000)//设置LED灯 .setLights(argb, onMs, offMs)
                             .build();
                     manager.notify(0,notification);
                 }

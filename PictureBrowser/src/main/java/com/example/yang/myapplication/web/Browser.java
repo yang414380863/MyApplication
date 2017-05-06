@@ -4,6 +4,7 @@ package com.example.yang.myapplication.web;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 import com.example.yang.myapplication.basic.LogUtil;
 import com.example.yang.myapplication.basic.MyApplication;
@@ -22,6 +23,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 
 /**
@@ -67,6 +69,11 @@ public class Browser {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             LogUtil.d("onFailure");
+                            Toast.makeText(MyApplication.getContext(),"Network connection failure",Toast.LENGTH_SHORT).show();
+                            //发送一个加载完成了的广播
+                            Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");
+                            intent.putExtra("websiteName",websiteNow.getWebSiteName());
+                            MyApplication.getContext().sendBroadcast(intent);
                         }
 
                         @Override
@@ -86,7 +93,6 @@ public class Browser {
     public static void analysis(Document doc,String refreshPlace){
 
         Elements list = doc.select(websiteNow.getItemSelector());
-LogUtil.d(list);
         sizeThisPage=list.size();
         int sizeNow=webContentList.size();//sizeNow=已经加载的item数量
         //如果是相同的一个页面 就覆盖原来的,且不增加长度  否则就加在后面
@@ -170,6 +176,11 @@ LogUtil.d(list);
                         @Override
                         public void onFailure(Call call, IOException e) {
                             LogUtil.d("onFailure");
+                            Toast.makeText(MyApplication.getContext(),"Network connection failure",Toast.LENGTH_SHORT).show();
+                            //发送一个加载完成了的广播
+                            Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");
+                            intent.putExtra("websiteName",websiteNow.getWebSiteName());
+                            MyApplication.getContext().sendBroadcast(intent);
                         }
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
