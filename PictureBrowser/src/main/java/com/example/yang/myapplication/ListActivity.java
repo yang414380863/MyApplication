@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.basic.LogUtil;
+import com.example.yang.myapplication.basic.MyApplication;
 import com.example.yang.myapplication.web.Browser;
 import com.example.yang.myapplication.web.Rule;
 import com.example.yang.myapplication.web.ItemRule;
@@ -343,7 +344,7 @@ public class ListActivity extends AppCompatActivity {
     class LoadFinishReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getExtras().getString("websiteName")!=null&&intent.getExtras().getString("websiteName").equals(websiteNow.getWebSiteName())){
+            if (intent.getExtras().getString("websiteIndex")!=null&&intent.getExtras().getString("websiteIndex").equals(websiteNow.getIndexUrl())){
                 collapsingToolbarLayout.setTitle(websiteNow.getWebSiteName());
                 Glide
                         .with(ListActivity.this)
@@ -415,6 +416,10 @@ public class ListActivity extends AppCompatActivity {
 
     public static void forPush(String index){
 
+        //发送一个加载完成了的广播
+        Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");
+        intent.putExtra("websiteIndex",websiteNow.getIndexUrl());
+        MyApplication.getContext().sendBroadcast(intent);
         for (int i=0;i<websites.length;i++){
             if (websites[i].getCategory()==null){
                 continue;

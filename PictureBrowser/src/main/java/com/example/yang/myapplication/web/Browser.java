@@ -72,7 +72,7 @@ public class Browser {
                             Toast.makeText(MyApplication.getContext(),"Network connection failure",Toast.LENGTH_SHORT).show();
                             //发送一个加载完成了的广播
                             Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");
-                            intent.putExtra("websiteName",websiteNow.getWebSiteName());
+                            intent.putExtra("websiteIndex",websiteNow.getIndexUrl());
                             MyApplication.getContext().sendBroadcast(intent);
                         }
 
@@ -150,7 +150,7 @@ public class Browser {
         LogUtil.d("nextPageUrl "+nextPageUrl);
         //发送一个加载完成了的广播
         Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");
-        intent.putExtra("websiteName",websiteNow.getWebSiteName());
+        intent.putExtra("websiteIndex",websiteNow.getIndexUrl());
         MyApplication.getContext().sendBroadcast(intent);
     }
 
@@ -179,7 +179,7 @@ public class Browser {
                             Toast.makeText(MyApplication.getContext(),"Network connection failure",Toast.LENGTH_SHORT).show();
                             //发送一个加载完成了的广播
                             Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");
-                            intent.putExtra("websiteName",websiteNow.getWebSiteName());
+                            intent.putExtra("websiteIndex",websiteNow.getIndexUrl());
                             MyApplication.getContext().sendBroadcast(intent);
                         }
                         @Override
