@@ -50,7 +50,7 @@ public class SelectorAndRegex {
         //先用选择器
         if (doc.select(website.getItemSelector()).size()==0){
             //匹配不到
-LogUtil.d(ruleString+" Selector can't find");
+//LogUtil.d(ruleString+" Selector can't find");
             return "";
         }
         if (rule.getMethod().equals("attr")){
@@ -58,7 +58,7 @@ LogUtil.d(ruleString+" Selector can't find");
         }else if (rule.getMethod().equals("text")){
             string=doc.select(website.getItemSelector()).get(position).select(rule.getSelector()).text();
         }
-LogUtil.d(ruleString+" Selector"+position+" "+string);
+//LogUtil.d(ruleString+" Selector"+position+" "+string);
         if (rule.getRegex()!=null){
             //用正则
             Pattern pattern=Pattern.compile(rule.getRegex());
@@ -67,11 +67,11 @@ LogUtil.d(ruleString+" Selector"+position+" "+string);
             if (matcher.find()){
                 for (int i=0;i<matcher.groupCount();i++){
                     string+=matcher.group(i+1)+rule.getReplace()[i];
-LogUtil.d(ruleString+" Regex"+i+" "+string);
+//LogUtil.d(ruleString+" Regex"+i+" "+string);
                 }
             }
         }
-LogUtil.d(ruleString+" result "+position+": "+string);
+//LogUtil.d(ruleString+" result "+position+": "+string);
         return string;
     }
 
@@ -97,11 +97,11 @@ LogUtil.d(ruleString+" result "+position+": "+string);
         //先用选择器
         if (doc.select(rule.getSelector()).size()==0){
             //匹配不到
-LogUtil.d(ruleString+" Selector can't find");
+//LogUtil.d(ruleString+" Selector can't find");
             return "";
         }
         string=doc.select(rule.getSelector()).attr(rule.getAttribute());
-LogUtil.d(ruleString+" Selector "+string);
+//LogUtil.d(ruleString+" Selector "+string);
         if (rule.getRegex()!=null){
             //用正则
             Pattern pattern=Pattern.compile(rule.getRegex());
@@ -122,11 +122,11 @@ LogUtil.d(ruleString+" Selector "+string);
                             string+=matcher.group(i+1)+rule.getReplace()[i];
                             break;
                     }
-LogUtil.d(ruleString+" Regex"+i+" "+string);
+//LogUtil.d(ruleString+" Regex"+i+" "+string);
                 }
             }
         }
-LogUtil.d(ruleString+" result : "+string);
+//LogUtil.d(ruleString+" result : "+string);
         return string;
     }
 
@@ -152,7 +152,7 @@ LogUtil.d(ruleString+" result : "+string);
         //先用选择器
         if (doc.select(website.getDetailItemSelector()).size()==0){
             //匹配不到
-LogUtil.d(ruleString+" Selector can't find");
+//LogUtil.d(ruleString+" Selector can't find");
             return "";
         }
         if (rule.getMethod().equals("attr")){
@@ -160,7 +160,7 @@ LogUtil.d(ruleString+" Selector can't find");
         }else if (rule.getMethod().equals("text")){
             string=doc.select(website.getDetailItemSelector()).get(position).select(rule.getSelector()).text();
         }
-LogUtil.d(ruleString+" Selector"+position+" "+string);
+//LogUtil.d(ruleString+" Selector"+position+" "+string);
         if (rule.getRegex()!=null){
             //用正则
             Pattern pattern=Pattern.compile(rule.getRegex());
@@ -169,17 +169,17 @@ LogUtil.d(ruleString+" Selector"+position+" "+string);
             if (matcher.find()){
                 for (int i=0;i<matcher.groupCount();i++){
                     string+=matcher.group(i+1)+rule.getReplace()[i];
-LogUtil.d(ruleString+" Regex"+i+" "+string);
+//LogUtil.d(ruleString+" Regex"+i+" "+string);
                 }
             }
         }
-LogUtil.d(ruleString+" result "+position+" "+string);
+//LogUtil.d(ruleString+" result "+position+" "+string);
         return string;
     }
 
     public static int getItemcount(Document doc,Website website){
         int itemcount=doc.select(website.getItemSelector()).size();
-LogUtil.d("itemcount="+itemcount);
+//LogUtil.d("itemcount="+itemcount);
         return itemcount;
     }
 }

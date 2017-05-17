@@ -62,6 +62,7 @@ public class ListActivity extends AppCompatActivity {
     private SharedPreferences pref;
 
     final ListAdapter adapter=new ListAdapter(this);
+    static ListAdapter adapter2;
     static int isRefreshing=0;
     static String refreshPlace;
 
@@ -73,6 +74,8 @@ public class ListActivity extends AppCompatActivity {
     final static Website UNSPLASH=new Website("Unsplash","https://unsplash.com/",ruleUNSPLASH);
     static ItemRule ruleLEIFENG=new ItemRule();
     final static Website LEIFENG=new Website("雷锋网","http://www.leiphone.com/category/sponsor",ruleLEIFENG);
+    static ItemRule ruleHAOQIXIN=new ItemRule();
+    final static Website HAOQIXIN=new Website("雷锋网","http://www.leiphone.com/category/sponsor",ruleHAOQIXIN);
 
     final static Website[] websites=new Website[]{POOCG,DEVIANTART,UNSPLASH,LEIFENG};//先暂时这样写WebsiteList 以后再动态生成
 
@@ -116,7 +119,7 @@ public class ListActivity extends AppCompatActivity {
         ruleLEIFENG.setThumbnailRule(new Rule("div.img > a[target] > img.lazy","attr","data-original"));
         ruleLEIFENG.setTitleRule(new Rule("div.img > a[target] > img.lazy","attr","title"));
         LEIFENG.setDetailItemSelector("div[class=lph-article-comView] > p");
-        ruleLEIFENG.setImgRule(new Rule("p > img[alt]","attr","src"));
+        ruleLEIFENG.setImgRule(new Rule("p img[alt]","attr","src"));
         ruleLEIFENG.setArticleRule(new Rule("p","text"));
         LEIFENG.setNextPageRule(new Rule("div.lph-page > a.next","attr","href"));
         LEIFENG.setCategory(new String[]{"人工智能","http://www.leiphone.com/category/ai","智能驾驶","http://www.leiphone.com/category/transportation","网络安全","http://www.leiphone.com/category/letshome"
@@ -131,6 +134,7 @@ public class ListActivity extends AppCompatActivity {
         //final Website newWebsite=JsonUtils.JsonToObject(JsonUtils.ObjectToJson(POOCG));
         //Browser.sendRequest(newWebsite,"new");//从JSON格式转换为Website对象
 
+        adapter2=adapter;
 
         //点击推送通知后跳转的category
         if (getIntent().hasExtra("index")){
@@ -275,6 +279,7 @@ public class ListActivity extends AppCompatActivity {
         StaggeredGridLayoutManager layoutManager=new
                 StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);//列数2
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
         //设置loading颜色 最多4个
         //swipeRefreshLayout.setColorSchemeColors();
@@ -415,11 +420,9 @@ public class ListActivity extends AppCompatActivity {
     }
 
     public static void forPush(String index){
+        adapter2.getWebContents().clear();//要重新指向一次才能检测到刷新
+        adapter2.notifyDataSetChanged();
 
-        //发送一个加载完成了的广播
-        Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");
-        intent.putExtra("websiteIndex",websiteNow.getIndexUrl());
-        MyApplication.getContext().sendBroadcast(intent);
         for (int i=0;i<websites.length;i++){
             if (websites[i].getCategory()==null){
                 continue;

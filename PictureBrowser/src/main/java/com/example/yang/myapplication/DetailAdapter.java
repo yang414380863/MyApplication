@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.yang.myapplication.basic.LogUtil;
 
 import java.util.ArrayList;
 
@@ -55,24 +56,26 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder,int position){
-        if (urls.get(position).equals("")){
-            holder.image.setVisibility(View.GONE);//隐藏image
-            holder.textView.setText(texts.get(position));
-
-        }else {
-            holder.textView.setVisibility(View.GONE);//textView
+        holder.image.setVisibility(View.GONE);//隐藏image
+        holder.textView.setVisibility(View.GONE);//隐藏textView
+        if (!urls.get(position).equals("")){
+            holder.image.setVisibility(View.VISIBLE);
             Glide
                     .with(context)
                     .load(urls.get(position))
-                    //.thumbnail(Glide.with(context).load(R.drawable.loading1))
+                    .thumbnail(Glide.with(context).load(R.drawable.loading1))
                     .placeholder(R.drawable.white)
                     .error(R.drawable.error)
                     .fitCenter()
                     .dontAnimate()//无载入动画
                     //.crossFade() //设置淡入淡出效果，默认300ms，可以传参 会导致图片变形 先不用
                     .into(holder.image);
-            holder.itemView.setTag(position);
         }
+        if (!texts.get(position).equals("")){
+            holder.textView.setVisibility(View.VISIBLE);
+            holder.textView.setText(texts.get(position));
+        }
+        holder.itemView.setTag(position);
     }
 
     @Override

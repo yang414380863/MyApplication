@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,13 +20,9 @@ import com.avos.avoscloud.SaveCallback;
 import com.avos.avoscloud.SignUpCallback;
 import com.example.yang.myapplication.basic.LogUtil;
 import com.example.yang.myapplication.basic.MyApplication;
-import com.example.yang.myapplication.web.Browser;
 
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
+import static com.example.yang.myapplication.ListActivity.forPush;
 import static com.example.yang.myapplication.R.id.username;
-import static com.example.yang.myapplication.web.Browser.websiteNow;
 
 
 public class Login extends AppCompatActivity {
@@ -69,7 +64,7 @@ public class Login extends AppCompatActivity {
             Intent intent2=getIntent();
             String index=intent2.getExtras().getString("index");
             intent.putExtra("index",index);//如果List之前未启动则通过intent获取推送index
-            ListActivity.forPush(index);//否则通过forPush()获取index
+            forPush(index);//否则通过forPush()获取index
         }
 
         pref= PreferenceManager.getDefaultSharedPreferences(this);

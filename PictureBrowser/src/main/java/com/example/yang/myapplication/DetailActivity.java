@@ -53,6 +53,7 @@ public class DetailActivity extends SwipeBackActivity {
         StaggeredGridLayoutManager layoutManager=new
                 StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
         //广播接收器
         IntentFilter intentFilter=new IntentFilter();

@@ -78,11 +78,18 @@ public class Browser {
 
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
-                            Document doc=Jsoup.parse(response.body().string());
-                            analysis(doc,refreshPlace);
+                            try{
+                                if (!website.isJsonIndex()){
+                                    Document doc=Jsoup.parse(response.body().string());
+                                    analysis(doc,refreshPlace);
+                                }else {
+
+                                }
+                            }catch (Exception e){
+                                //发送一个加载出错的广播
+                            }
                         }
                     });
-
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -184,8 +191,12 @@ public class Browser {
                         }
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
-                            Document doc=Jsoup.parse(response.body().string());
-                            analysisDetail(id,doc);
+                            try{
+                                Document doc=Jsoup.parse(response.body().string());
+                                analysisDetail(id,doc);
+                            }catch (Exception e){
+                                //发送一个加载出错的广播
+                            }
                         }
                     });
                 }catch (Exception e){
