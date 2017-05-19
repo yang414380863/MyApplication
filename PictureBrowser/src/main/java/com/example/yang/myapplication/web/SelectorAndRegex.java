@@ -5,6 +5,7 @@ import com.example.yang.myapplication.basic.LogUtil;
 
 import org.jsoup.nodes.Document;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,28 +51,34 @@ public class SelectorAndRegex {
         //先用选择器
         if (doc.select(website.getItemSelector()).size()==0){
             //匹配不到
-//LogUtil.d(ruleString+" Selector can't find");
+LogUtil.d(ruleString+" Selector can't find");
             return "";
         }
         if (rule.getMethod().equals("attr")){
             string=doc.select(website.getItemSelector()).get(position).select(rule.getSelector()).attr(rule.getAttribute());
         }else if (rule.getMethod().equals("text")){
             string=doc.select(website.getItemSelector()).get(position).select(rule.getSelector()).text();
+        }else if (rule.getMethod().equals("html")){
+            string=doc.select(website.getDetailItemSelector()).get(position).select(rule.getSelector()).html();
         }
-//LogUtil.d(ruleString+" Selector"+position+" "+string);
+LogUtil.d(ruleString+" Selector"+position+" "+string);
         if (rule.getRegex()!=null){
             //用正则
             Pattern pattern=Pattern.compile(rule.getRegex());
             Matcher matcher=pattern.matcher(string);
-            string="";
+            ArrayList<String> strings=new ArrayList<>();
             if (matcher.find()){
                 for (int i=0;i<matcher.groupCount();i++){
-                    string+=matcher.group(i+1)+rule.getReplace()[i];
-//LogUtil.d(ruleString+" Regex"+i+" "+string);
+                    strings.add("");
+                    strings.set(i,matcher.group(i+1));
                 }
             }
+            string=rule.getReplace();
+            for (int i=1;i-1<strings.size();i++){
+                string=string.replace("$"+i,strings.get(i-1));
+            }
         }
-//LogUtil.d(ruleString+" result "+position+": "+string);
+LogUtil.d(ruleString+" result "+position+": "+string);
         return string;
     }
 
@@ -97,36 +104,34 @@ public class SelectorAndRegex {
         //先用选择器
         if (doc.select(rule.getSelector()).size()==0){
             //匹配不到
-//LogUtil.d(ruleString+" Selector can't find");
+LogUtil.d(ruleString+" Selector can't find");
             return "";
         }
-        string=doc.select(rule.getSelector()).attr(rule.getAttribute());
-//LogUtil.d(ruleString+" Selector "+string);
+        if (rule.getMethod().equals("html")){
+            string=doc.select(rule.getSelector()).html();
+        }else {
+            string=doc.select(rule.getSelector()).attr(rule.getAttribute());
+        }
+LogUtil.d(ruleString+" Selector "+string);
         if (rule.getRegex()!=null){
             //用正则
             Pattern pattern=Pattern.compile(rule.getRegex());
             Matcher matcher=pattern.matcher(string);
-            string="";
+            ArrayList<String> strings=new ArrayList<>();
             if (matcher.find()){
                 for (int i=0;i<matcher.groupCount();i++){
-                    switch(rule.getReplace()[i]){
-                        case "size":{
-                            string+=matcher.group(i+1)+sizeNow;
-                            break;
-                        }
-                        case "page":{
-                            string+=matcher.group(i+1)+pageNow;
-                            break;
-                        }
-                        default:
-                            string+=matcher.group(i+1)+rule.getReplace()[i];
-                            break;
-                    }
-//LogUtil.d(ruleString+" Regex"+i+" "+string);
+                    strings.add("");
+                    strings.set(i,matcher.group(i+1));
                 }
             }
+            string=rule.getReplace();
+            for (int i=1;i-1<strings.size();i++){
+                string=string.replace("$"+i,strings.get(i-1));
+            }
+            string=string.replace("!size",String.valueOf(sizeNow));
+            string=string.replace("!page",String.valueOf(pageNow));
         }
-//LogUtil.d(ruleString+" result : "+string);
+LogUtil.d(ruleString+" result : "+string);
         return string;
     }
 
@@ -152,28 +157,34 @@ public class SelectorAndRegex {
         //先用选择器
         if (doc.select(website.getDetailItemSelector()).size()==0){
             //匹配不到
-//LogUtil.d(ruleString+" Selector can't find");
+LogUtil.d(ruleString+" Selector can't find");
             return "";
         }
         if (rule.getMethod().equals("attr")){
             string=doc.select(website.getDetailItemSelector()).get(position).select(rule.getSelector()).attr(rule.getAttribute());
         }else if (rule.getMethod().equals("text")){
             string=doc.select(website.getDetailItemSelector()).get(position).select(rule.getSelector()).text();
+        }else if (rule.getMethod().equals("html")){
+            string=doc.select(website.getDetailItemSelector()).get(position).select(rule.getSelector()).html();
         }
-//LogUtil.d(ruleString+" Selector"+position+" "+string);
+LogUtil.d(ruleString+" Selector"+position+" "+string);
         if (rule.getRegex()!=null){
             //用正则
             Pattern pattern=Pattern.compile(rule.getRegex());
             Matcher matcher=pattern.matcher(string);
-            string="";
+            ArrayList<String> strings=new ArrayList<>();
             if (matcher.find()){
                 for (int i=0;i<matcher.groupCount();i++){
-                    string+=matcher.group(i+1)+rule.getReplace()[i];
-//LogUtil.d(ruleString+" Regex"+i+" "+string);
+                    strings.add("");
+                    strings.set(i,matcher.group(i+1));
                 }
             }
+            string=rule.getReplace();
+            for (int i=1;i-1<strings.size();i++){
+                string=string.replace("$"+i,strings.get(i-1));
+            }
         }
-//LogUtil.d(ruleString+" result "+position+" "+string);
+LogUtil.d(ruleString+" result "+position+" "+string);
         return string;
     }
 

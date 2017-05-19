@@ -75,9 +75,9 @@ public class ListActivity extends AppCompatActivity {
     static ItemRule ruleLEIFENG=new ItemRule();
     final static Website LEIFENG=new Website("雷锋网","http://www.leiphone.com/category/sponsor",ruleLEIFENG);
     static ItemRule ruleHAOQIXIN=new ItemRule();
-    final static Website HAOQIXIN=new Website("雷锋网","http://www.leiphone.com/category/sponsor",ruleHAOQIXIN);
+    final static Website HAOQIXIN=new Website("好奇心日报","http://www.qdaily.com/tags/1068.html",ruleHAOQIXIN,0,1);
 
-    final static Website[] websites=new Website[]{POOCG,DEVIANTART,UNSPLASH,LEIFENG};//先暂时这样写WebsiteList 以后再动态生成
+    final static Website[] websites=new Website[]{POOCG,DEVIANTART,UNSPLASH,LEIFENG,HAOQIXIN};//先暂时这样写WebsiteList 以后再动态生成
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +90,7 @@ public class ListActivity extends AppCompatActivity {
         rulePOOCG.setTitleRule(new Rule("div.infobox > p.titles","text"));
         POOCG.setDetailItemSelector("img[style*=max-width]");
         rulePOOCG.setImgRule(new Rule("*","attr","src"
-                ,"(https:\\/\\/imagescdn\\.poocg\\.me\\/uploadfile\\/photo\\/[0-9]{4}\\/[0-9]{1,2}\\/[a-z|0-9|_]+\\.[a-z]+)",new String[]{""}));
+                ,"(https:\\/\\/imagescdn\\.poocg\\.me\\/uploadfile\\/photo\\/[0-9]{4}\\/[0-9]{1,2}\\/[a-z|0-9]+\\.[a-z]+)","$1"));
         POOCG.setNextPageRule(new Rule("a#pagenav","attr","href"));
         POOCG.setCategory(new String[]{"最新","https://www.poocg.com/works/index/type/new","新赞","https://www.poocg.com/works/index/type/love","热门","https://www.poocg.com/works/index/type/hot"
                 ,"精华","https://www.poocg.com/works/index/type/best","推荐","https://www.poocg.com/works/index/type/rem"});
@@ -101,16 +101,16 @@ public class ListActivity extends AppCompatActivity {
         ruleDEVIANTART.setTitleRule(new Rule("span.info > span.title-wrap > span.title","text"));
         DEVIANTART.setDetailItemSelector("div[class=dev-view-deviation]");
         ruleDEVIANTART.setImgRule(new Rule("img[class=dev-content-full]","attr","src"));
-        DEVIANTART.setNextPageRule(new Rule("a.selected","attr","href","(http:\\/\\/www\\.deviantart\\.com\\/[a-z|-]+\\/)()",new String[]{"?offset=","size"}));
+        DEVIANTART.setNextPageRule(new Rule("a.selected","attr","href","(http:\\/\\/www\\.deviantart\\.com\\/[a-z|-]+\\/)","$1?offset=!size"));
         DEVIANTART.setCategory(new String[]{"Newest","http://www.deviantart.com/newest/","What's Hot","http://www.deviantart.com/whats-hot/"
                 ,"Undiscovered","http://www.deviantart.com/undiscovered/","Popular 24 hours","http://www.deviantart.com/popular-24-hours/","Popular All Time","http://www.deviantart.com/popular-all-time/"});
 
         UNSPLASH.setItemSelector("div.y5w1y");
-        ruleUNSPLASH.setLinkRule(new Rule("a[title]","attr","href","()(\\/\\?photo=[a-z|A-Z|0-9|-]+)",new String[]{"https://unsplash.com",""}));
-        ruleUNSPLASH.setThumbnailRule(new Rule("a[href]","attr","style","(https:\\/\\/images\\.unsplash\\.com\\/[a-z|0-9|-|-|?|=|&|,|\\/]+)",new String[]{""}));
+        ruleUNSPLASH.setLinkRule(new Rule("a[title]","attr","href","()(\\/\\?photo=[a-z|A-Z|0-9|-]+)","https://unsplash.com$1"));
+        ruleUNSPLASH.setThumbnailRule(new Rule("a[href]","attr","style","(https:\\/\\/images\\.unsplash\\.com\\/[a-z|0-9|-|-|?|=|&|,|\\/]+)","$1"));
         ruleUNSPLASH.setTitleRule(new Rule("a[class=cV68d]","attr","title"));
         UNSPLASH.setDetailItemSelector("div.RN0KT");
-        ruleUNSPLASH.setImgRule(new Rule("*","attr","style","(https:\\/\\/images\\.unsplash\\.com\\/[a-z|0-9|&||\\/|-]+)",new String[]{""}));
+        ruleUNSPLASH.setImgRule(new Rule("*","attr","style","(https:\\/\\/images\\.unsplash\\.com\\/[a-z|0-9|&||\\/|-]+)","$1"));
         UNSPLASH.setCategory(new String[]{"home","https://unsplash.com/","New","https://unsplash.com/new"});
         //ruleUNSPLASH.setNextPageRule(new Rule());没写下一页RULE
 
@@ -124,8 +124,19 @@ public class ListActivity extends AppCompatActivity {
         LEIFENG.setNextPageRule(new Rule("div.lph-page > a.next","attr","href"));
         LEIFENG.setCategory(new String[]{"人工智能","http://www.leiphone.com/category/ai","智能驾驶","http://www.leiphone.com/category/transportation","网络安全","http://www.leiphone.com/category/letshome"
                 ,"AR/VR","http://www.leiphone.com/category/arvr","机器人","http://www.leiphone.com/category/robot","Fintect","http://www.leiphone.com/category/fintech","物联网","http://www.leiphone.com/category/iot"
-                ,"未来医疗","http://www.leiphone.com/category/aihealth","只能硬件","http://www.leiphone.com/category/weiwu","AI+","http://www.leiphone.com/category/aijuejinzhi"});
+                ,"未来医疗","http://www.leiphone.com/category/aihealth","智能硬件","http://www.leiphone.com/category/weiwu","AI+","http://www.leiphone.com/category/aijuejinzhi"});
 
+        HAOQIXIN.setItemSelector("div[class*=packery-item] > a[href]");
+        ruleHAOQIXIN.setLinkRule(new Rule("a[href]","attr","href","(.*)","http://www.qdaily.com$1"));
+        ruleHAOQIXIN.setThumbnailRule(new Rule("div[class*=hd] > div >img","attr","data-src"));
+        ruleHAOQIXIN.setTitleRule(new Rule("div[class*=hd] > div >img","attr","alt"));
+        HAOQIXIN.setDetailItemSelector("div.detail > p,div.detail > div[class*=images]");
+        ruleHAOQIXIN.setImgRule(new Rule("figure > img[data-ratio]","attr","data-src"));
+        ruleHAOQIXIN.setArticleRule(new Rule("p","text"));
+        HAOQIXIN.setNextPageRule(new Rule("div[class=page-content]","html","data-lastkey\\=\"([0-9]+)\" data-tagid\\=\"([0-9]+)\"","http://www.qdaily.com/tags/tagmore/$2/$1"));
+        HAOQIXIN.setCategory(new String[]{"长文章","http://www.qdaily.com/tags/1068.html","10个图","http://www.qdaily.com/tags/1615.html","TOP15","http://www.qdaily.com/tags/29.html"
+                ,"商业","http://www.qdaily.com/categories/18.html","智能","http://www.qdaily.com/categories/4.html","设计","http://www.qdaily.com/categories/17.html","时尚","http://www.qdaily.com/categories/19.html"
+                ,"娱乐","http://www.qdaily.com/categories/3.html","城市","http://www.qdaily.com/categories/5.html","游戏","http://www.qdaily.com/categories/54.html"});
 
 
 

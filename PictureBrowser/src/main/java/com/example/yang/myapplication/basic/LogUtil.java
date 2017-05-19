@@ -14,16 +14,16 @@ public class LogUtil {
     private static boolean LOGE = true;
 
     public static void v(String mess) {
-        if (LOGV) { Log.v(getTag(), mess); }
+        if (LOGV) { Log.v(getTag()," "+ mess); }
     }
     public static void d(Object mess) {
-        if (LOGD) { Log.d(getTag(), mess.toString()); }
+        if (LOGD) { Log.d(getTag()," "+ mess.toString()); }
     }
     public static void i(Object mess) {
-        if (LOGI) { Log.i(getTag(), mess.toString()); }
+        if (LOGI) { Log.i(getTag()," "+ mess.toString()); }
     }
     public static void w(Object mess) {
-        if (LOGW) { Log.w(getTag(), mess.toString()); }
+        if (LOGW) { Log.w(getTag()," "+ mess.toString()); }
     }
     public static void e(Object mess) {
         if (LOGE) { Log.e(getTag(), mess.toString()); }

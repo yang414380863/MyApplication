@@ -6,8 +6,11 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.example.yang.myapplication.basic.LogUtil;
 import com.example.yang.myapplication.basic.MyApplication;
+
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,7 +26,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 
 /**
@@ -80,13 +82,18 @@ public class Browser {
                         public void onResponse(Call call, Response response) throws IOException {
                             try{
                                 if (!website.isJsonIndex()){
+                                    //解析HTML
                                     Document doc=Jsoup.parse(response.body().string());
                                     analysis(doc,refreshPlace);
                                 }else {
-
+                                    //解析JSON
+                                    String s=response.body().string();
+                                    JSONObject jsonObject=JSON.parseObject(response.body().string());
+                                    analysisJSON(jsonObject,refreshPlace);
                                 }
                             }catch (Exception e){
                                 //发送一个加载出错的广播
+                                e.printStackTrace();
                             }
                         }
                     });
@@ -161,6 +168,10 @@ public class Browser {
         MyApplication.getContext().sendBroadcast(intent);
     }
 
+    public static void analysisJSON(JSONObject jsonObject,String refreshPlace){
+        LogUtil.d("1"+jsonObject);
+    }
+
     public  static void sendRequestDetail(final int id,final String refreshPlace){
         new Thread(new Runnable() {
             @Override
@@ -196,6 +207,7 @@ public class Browser {
                                 analysisDetail(id,doc);
                             }catch (Exception e){
                                 //发送一个加载出错的广播
+                                e.printStackTrace();
                             }
                         }
                     });

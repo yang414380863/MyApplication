@@ -16,6 +16,7 @@ public class Website {
     private Rule nextPageDetailRule;//Detail页面下一页Rule
     private String[] category;//分类
     private int JsonIndex=0;
+    private int JsonNext=0;
 
     private ItemRule itemRule;
     private String itemSelector;
@@ -29,13 +30,22 @@ public class Website {
         detailItemSelector="*";
     }
 
-    public Website(String webSiteName,String indexUrl,ItemRule itemRule,int JsonIndex){
+    public Website(String webSiteName,String indexUrl,ItemRule itemRule,int JsonIndex,int JsonNext){
         this(webSiteName,indexUrl,itemRule);
         this.JsonIndex=JsonIndex;
+        this.JsonNext=JsonNext;
     }
 
     public boolean isJsonIndex(){
         if (this.JsonIndex==1){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public boolean isJsonNext(){
+        if (this.JsonNext==1){
             return true;
         }else {
             return false;

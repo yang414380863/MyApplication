@@ -11,19 +11,19 @@ public class Rule {
     private String method;
     private String attribute;//要提取的属性
     private String regex; //正则表达式
-    private String[] replace;//替换式
+    private String replace;//替换式
 
     //item的Rule只做Selector
     public Rule(String selector){
         this.selector=selector;
     }
-    //如method=text时不需要attribute
+    //如method=text/html时不需要attribute
     public Rule(String selector,String method){
         this.selector=selector;
         this.method=method;
     }
-    //选择器(method=text)+正则
-    public Rule(String selector,String method,String regex,String[] replace){
+    //选择器(method=text/html)+正则
+    public Rule(String selector,String method,String regex,String replace){
         this(selector,method);
         this.regex=regex;
         this.replace=replace;
@@ -35,7 +35,7 @@ public class Rule {
         this.method=method;
     }
     //选择器+正则
-    public Rule(String selector,String method,String attribute,String regex,String[] replace){
+    public Rule(String selector,String method,String attribute,String regex,String replace){
         this(selector,method,attribute);
         this.regex=regex;
         this.replace=replace;
@@ -74,11 +74,11 @@ public class Rule {
         this.regex = regex;
     }
 
-    public String[] getReplace() {
+    public String getReplace() {
         return replace;
     }
 
-    public void setReplace(String[] replace) {
+    public void setReplace(String replace) {
         this.replace = replace;
     }
 }

@@ -100,6 +100,7 @@ public class DetailActivity extends SwipeBackActivity {
                                     .fitCenter()
                                     .into(imageView);
                             imageView.setImageAlpha(150);
+                            break;
                         }
                     }
                     Log.d("refresh","finish refresh!");
