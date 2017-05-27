@@ -3391,7 +3391,6 @@ containing a value of this type.
         public static final int design_menu_item_text=0x7f0d009b;
         public static final int design_navigation_view=0x7f0d009a;
         public static final int disableHome=0x7f0d001b;
-        public static final int download=0x7f0d00cc;
         public static final int drawer_layout=0x7f0d00a5;
         public static final int edit_query=0x7f0d006d;
         public static final int end=0x7f0d0032;
@@ -3471,7 +3470,6 @@ containing a value of this type.
         public static final int search_src_text=0x7f0d0074;
         public static final int search_voice_btn=0x7f0d0078;
         public static final int select_dialog_listview=0x7f0d0079;
-        public static final int setting=0x7f0d00cd;
         public static final int shortcut=0x7f0d0063;
         public static final int showCustom=0x7f0d001d;
         public static final int showHome=0x7f0d001e;
@@ -3492,6 +3490,7 @@ containing a value of this type.
         public static final int status_bar_latest_event_content=0x7f0d00b0;
         public static final int submenuarrow=0x7f0d0065;
         public static final int submit_area=0x7f0d0076;
+        public static final int subscribe=0x7f0d00cc;
         public static final int swipe=0x7f0d00c1;
         public static final int swipe_refresh_layout=0x7f0d00a3;
         public static final int tabMode=0x7f0d001a;

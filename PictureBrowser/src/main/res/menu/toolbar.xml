@@ -3,13 +3,8 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/download"
+        android:id="@+id/subscribe"
         android:icon="@mipmap/ic_launcher_round"
-        android:title="download"
+        android:title="subscribe"
         app:showAsAction="always"/>
-    <item
-        android:id="@+id/setting"
-        android:icon="@mipmap/ic_launcher_round"
-        android:title="setting"
-        app:showAsAction="never"/>
 </menu>

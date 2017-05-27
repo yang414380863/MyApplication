@@ -24,10 +24,15 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.FindCallback;
 import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.basic.LogUtil;
 import com.example.yang.myapplication.basic.MyApplication;
@@ -35,6 +40,9 @@ import com.example.yang.myapplication.web.Browser;
 import com.example.yang.myapplication.web.Rule;
 import com.example.yang.myapplication.web.ItemRule;
 import com.example.yang.myapplication.web.Website;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.yang.myapplication.R.id.*;
 import static com.example.yang.myapplication.web.Browser.sizeThisPage;
@@ -47,6 +55,8 @@ public class ListActivity extends AppCompatActivity {
 
     //侧滑菜单
     private DrawerLayout drawerLayout;
+    NavigationView navViewRight;
+    NavigationView navViewLeft;
     //广播接收器
     private LoadFinishReceiver receiver;
     //下拉刷新 监听器
@@ -55,11 +65,12 @@ public class ListActivity extends AppCompatActivity {
     //标题栏
     ImageView imageView;
     CollapsingToolbarLayout collapsingToolbarLayout;
-    //侧滑菜单
-    NavigationView navViewRight;
-    NavigationView navViewLeft;
+    //toolbar
+    Toolbar toolbar;
     //获取用户
     private SharedPreferences pref;
+    //写入订阅
+    private SharedPreferences.Editor editor;
 
     final ListAdapter adapter=new ListAdapter(this);
     static ListAdapter adapter2;
@@ -176,7 +187,8 @@ public class ListActivity extends AppCompatActivity {
         collapsingToolbarLayout.setTitle("Loading...");
         refreshPlace="top";
         //ToolBar
-        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
+        toolbar=(Toolbar)findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
         //侧滑菜单
         drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
@@ -378,7 +390,7 @@ public class ListActivity extends AppCompatActivity {
                     snackbar.show();
                     adapter.notifyItemRangeInserted(webContentList.size(),webContentList.size()+sizeThisPage);
                 }
-                //动态生成侧滑菜单(Right)
+                //动态生成侧滑菜单(Right)设置被选中item
                 Menu menuRight=navViewRight.getMenu();
                 menuRight.clear();
                 if (websiteNow.getCategory()!=null){
@@ -390,7 +402,7 @@ public class ListActivity extends AppCompatActivity {
                         }
                     }
                 }
-                //设置左侧滑菜单的被选中item
+                //动态生成侧滑菜单(left)设置被选中item
                 Menu menuLeft=navViewLeft.getMenu();
                 menuLeft.clear();
                 if (websites.length!=0){
@@ -402,7 +414,13 @@ public class ListActivity extends AppCompatActivity {
                         }
                     }
                 }
-
+                //设置toolbar
+                Menu toolbarMenu= toolbar.getMenu();
+                if (isSubscribe(websiteNow.getIndexUrl())){
+                    toolbarMenu.getItem(0).setIcon(R.mipmap.ic_launcher);//换成已订阅的图标
+                }else{
+                    toolbarMenu.getItem(0).setIcon(R.mipmap.ic_launcher_round);//换成未订阅的图标
+                }
                 swipeRefreshLayout.setRefreshing(false);
                 isRefreshing=0;
             }
@@ -415,19 +433,82 @@ public class ListActivity extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Menu toolbarMenu= toolbar.getMenu();
         switch (item.getItemId()){
             case android.R.id.home:
                 drawerLayout.openDrawer(Gravity.START);
                 break;
-            case R.id.setting:
-                Toast.makeText(this,"Click Setting Button",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.download:
-                Toast.makeText(this,"Click Download Button",Toast.LENGTH_SHORT).show();
+            case R.id.subscribe:
+                subscribe(pref.getString("loginUsername",""),websiteNow.getIndexUrl());//执行订阅/取消订阅操作
+                if (isSubscribe(websiteNow.getIndexUrl())){
+                    toolbarMenu.getItem(0).setIcon(R.mipmap.ic_launcher);//换成已订阅的图标
+                    Toast.makeText(this,"Subscribe Successful",Toast.LENGTH_SHORT).show();
+                }else{
+                    toolbarMenu.getItem(0).setIcon(R.mipmap.ic_launcher_round);//换成未订阅的图标
+                    Toast.makeText(this,"Unsubscribe Successful",Toast.LENGTH_SHORT).show();
+                }
                 break;
             default:break;
         }
         return true;
+    }
+
+    public void subscribe(String username,String websiteIndex){
+        int hasMark=0;
+        String[] strings=pref.getString("mark","").split(",");
+        ArrayList<String> mark=new ArrayList<>();
+        for (int i=0;i<strings.length;i++){
+            if (strings[i].equals(websiteIndex)){
+                //如果已经mark订阅过了 则将其从订阅中删除
+                hasMark=1;
+                continue;
+            }
+            mark.add(strings[i]);
+        }
+        if (hasMark==0){
+            //没有mark过,添加
+            mark.add(websiteIndex);
+        }
+        String[] newStrings=mark.toArray(new String[mark.size()]);
+        String newString=strings[0];
+        for (int i=1;i<newStrings.length;i++){
+            if (newString.equals("")){
+                newString=newStrings[i];
+            }else {
+                newString=newString+","+newStrings[i];
+            }
+        }
+        LogUtil.d(mark.size());
+        editor=pref.edit();
+        editor.putString("mark",newString);
+        editor.apply();
+        //上传服务器
+        final String s=newString;
+        final AVQuery<AVObject> query = new AVQuery<>("_User");
+        query.whereEqualTo("username", username);
+        query.findInBackground(new FindCallback<AVObject>() {
+            @Override
+            public void done(List<AVObject> list, AVException e) {
+                for (AVObject item : list) {
+                    item.put("mark", s);
+                    item.saveInBackground();
+                }
+            }
+        });
+        LogUtil.d("mark "+newString);
+    }
+
+    public boolean isSubscribe(String websiteIndex){
+        boolean hasMark=false;
+        String[] strings=pref.getString("mark","").split(",");
+        for (int i=0;i<strings.length;i++){
+            if (strings[i].equals(websiteIndex)){
+                //如果已经mark订阅过了 则将其从订阅中删除
+                hasMark=true;
+                continue;
+            }
+        }
+        return hasMark;
     }
 
     public static void forPush(String index){
