@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVInstallation;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
@@ -44,6 +45,7 @@ import com.example.yang.myapplication.web.Website;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.avos.avoscloud.Messages.OpType.query;
 import static com.example.yang.myapplication.R.id.*;
 import static com.example.yang.myapplication.web.Browser.sizeThisPage;
 import static com.example.yang.myapplication.web.Browser.webContentList;
@@ -204,10 +206,45 @@ public class ListActivity extends AppCompatActivity {
             //已登录
             usernameShow.setText("Welcome:"+loginUsername);
             userIcon.setImageResource(R.drawable.ic_account_circle_black_48dp);
+            //同步云端订阅 _User->_Installation
+            final AVQuery<AVObject> query1 = new AVQuery<>("_User");
+            query1.whereEqualTo("username", loginUsername);
+            query1.findInBackground(new FindCallback<AVObject>() {
+                @Override
+                public void done(List<AVObject> list, AVException e) {
+                    for (AVObject item : list) {
+                        editor=pref.edit();
+                        editor.putString("mark",item.get("mark").toString());
+                        editor.apply();
+                    }
+                }
+            });
+            final AVQuery<AVObject> query2 = new AVQuery<>("_Installation");
+            query2.whereEqualTo("installationId", AVInstallation.getCurrentInstallation().getInstallationId());
+            query2.findInBackground(new FindCallback<AVObject>() {
+                @Override
+                public void done(List<AVObject> list, AVException e) {
+                    for (AVObject item : list) {
+                        item.put("mark", pref.getString("mark",""));
+                        item.saveInBackground();
+                    }
+                }
+            });
         }else {
             //未登录
             usernameShow.setText("Welcome: visitor");
             userIcon.setImageResource(R.drawable.ic_account_circle_grey600_48dp);
+            final AVQuery<AVObject> query2 = new AVQuery<>("_Installation");
+            query2.whereEqualTo("installationId", AVInstallation.getCurrentInstallation().getInstallationId());
+            query2.findInBackground(new FindCallback<AVObject>() {
+                @Override
+                public void done(List<AVObject> list, AVException e) {
+                    for (AVObject item : list) {
+                        item.put("mark", "");
+                        item.saveInBackground();
+                    }
+                }
+            });
         }
 
         userIcon.setOnClickListener(new View.OnClickListener() {
@@ -458,6 +495,9 @@ public class ListActivity extends AppCompatActivity {
         String[] strings=pref.getString("mark","").split(",");
         ArrayList<String> mark=new ArrayList<>();
         for (int i=0;i<strings.length;i++){
+            if(strings[0].equals("")){
+                break;
+            }
             if (strings[i].equals(websiteIndex)){
                 //如果已经mark订阅过了 则将其从订阅中删除
                 hasMark=1;
@@ -470,8 +510,8 @@ public class ListActivity extends AppCompatActivity {
             mark.add(websiteIndex);
         }
         String[] newStrings=mark.toArray(new String[mark.size()]);
-        String newString=strings[0];
-        for (int i=1;i<newStrings.length;i++){
+        String newString="";
+        for (int i=0;i<newStrings.length;i++){
             if (newString.equals("")){
                 newString=newStrings[i];
             }else {
@@ -484,9 +524,9 @@ public class ListActivity extends AppCompatActivity {
         editor.apply();
         //上传服务器
         final String s=newString;
-        final AVQuery<AVObject> query = new AVQuery<>("_User");
-        query.whereEqualTo("username", username);
-        query.findInBackground(new FindCallback<AVObject>() {
+        final AVQuery<AVObject> query1 = new AVQuery<>("_User");
+        query1.whereEqualTo("username", username);
+        query1.findInBackground(new FindCallback<AVObject>() {
             @Override
             public void done(List<AVObject> list, AVException e) {
                 for (AVObject item : list) {
@@ -495,6 +535,18 @@ public class ListActivity extends AppCompatActivity {
                 }
             }
         });
+        final AVQuery<AVObject> query2 = new AVQuery<>("_Installation");
+        query2.whereEqualTo("installationId", AVInstallation.getCurrentInstallation().getInstallationId());
+        query2.findInBackground(new FindCallback<AVObject>() {
+            @Override
+            public void done(List<AVObject> list, AVException e) {
+                for (AVObject item : list) {
+                    item.put("mark", s);
+                    item.saveInBackground();
+                }
+            }
+        });
+
         LogUtil.d("mark "+newString);
     }
 

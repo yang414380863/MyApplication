@@ -13,13 +13,18 @@ import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVInstallation;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.LogInCallback;
 import com.avos.avoscloud.PushService;
 import com.avos.avoscloud.SaveCallback;
 import com.avos.avoscloud.SignUpCallback;
 import com.example.yang.myapplication.basic.LogUtil;
 import com.example.yang.myapplication.basic.MyApplication;
+
+import java.util.List;
 
 import static com.example.yang.myapplication.ListActivity.forPush;
 import static com.example.yang.myapplication.R.id.username;
@@ -80,6 +85,20 @@ public class Login extends AppCompatActivity {
         }
         if (isLogout){
             //是注销
+            //清空订阅
+
+            final AVQuery<AVObject> query2 = new AVQuery<>("_Installation");
+            query2.whereEqualTo("installationId", AVInstallation.getCurrentInstallation().getInstallationId());
+            query2.findInBackground(new FindCallback<AVObject>() {
+                @Override
+                public void done(List<AVObject> list, AVException e) {
+                    for (AVObject item : list) {
+                        item.put("mark", "");
+                        item.saveInBackground();
+                    }
+                }
+            });
+
             if (isRemember){
                 //自动填写帐号密码
                 String username=pref.getString("username","");
