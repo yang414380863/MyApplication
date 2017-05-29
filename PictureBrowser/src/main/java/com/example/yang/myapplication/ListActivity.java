@@ -206,16 +206,18 @@ public class ListActivity extends AppCompatActivity {
             //已登录
             usernameShow.setText("Welcome:"+loginUsername);
             userIcon.setImageResource(R.drawable.ic_account_circle_black_48dp);
-            //同步云端订阅 _User->_Installation
+            //同步云端订阅 _User->pref->_Installation
             final AVQuery<AVObject> query1 = new AVQuery<>("_User");
             query1.whereEqualTo("username", loginUsername);
             query1.findInBackground(new FindCallback<AVObject>() {
                 @Override
                 public void done(List<AVObject> list, AVException e) {
                     for (AVObject item : list) {
-                        editor=pref.edit();
-                        editor.putString("mark",item.get("mark").toString());
-                        editor.apply();
+                        if (item.get("mark")!=null){
+                            editor=pref.edit();
+                            editor.putString("mark",item.get("mark").toString());
+                            editor.apply();
+                        }
                     }
                 }
             });
