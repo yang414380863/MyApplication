@@ -42,13 +42,18 @@ dependencies {
     // 目前新浪微博官方只提供 jar 包的集成方式
     // 请手动下载新浪微博 SDK 的 jar 包，将其放在 libs 目录下进行集成
     // LeanCloud 应用内搜索包
+    
+
+    //compile 'com.alibaba:fastjson:1.2.9'
+    compile('com.jayway.jsonpath:json-path:2.2.0') {
+        exclude group: 'org.ow2.asm'
+    }
     compile 'cn.leancloud.android:avoscloud-sdk:v3.+'
     compile 'cn.leancloud.android:avoscloud-statistics:v3.+'
     compile 'cn.leancloud.android:avoscloud-feedback:v3.+@aar'
     compile 'cn.leancloud.android:avoscloud-sns:v3.+@aar'
     compile 'cn.leancloud.android:qq-sdk:1.6.1-leancloud'
     compile 'cn.leancloud.android:avoscloud-search:v3.+@aar'
-
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:25.3.1'
@@ -62,9 +67,5 @@ dependencies {
     compile 'me.imid.swipebacklayout.lib:library:1.0.0'
     compile 'org.jsoup:jsoup:1.10.2'
     compile 'com.google.code.gson:gson:2.8.0'
-    //compile 'com.alibaba:fastjson:1.2.9'
-    compile('com.jayway.jsonpath:json-path:2.2.0') {
-        exclude group: 'org.ow2.asm'
-    }
     testCompile 'junit:junit:4.12'
 }

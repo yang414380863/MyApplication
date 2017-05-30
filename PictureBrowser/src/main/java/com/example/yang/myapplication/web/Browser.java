@@ -40,7 +40,7 @@ public class Browser {
     public static int sizeThisPage;
     private static String nextPageUrl;
     private static int pageNext;
-    public  static Date latestUpdate;
+    static Date latestUpdate;
 
     public static void sendRequest(final Website website,final String refreshPlace){
         websiteNow =website;
@@ -104,7 +104,7 @@ public class Browser {
         }).start();
     }
 
-    public static void analysis(Document doc,String refreshPlace){
+    static void analysis(Document doc,String refreshPlace){
 
         Elements list = doc.select(websiteNow.getItemSelector());
         sizeThisPage=list.size();
@@ -168,7 +168,7 @@ public class Browser {
         MyApplication.getContext().sendBroadcast(intent);
     }
 
-    public static void analysisJSON(JSONObject jsonObject,String refreshPlace){
+    static void analysisJSON(JSONObject jsonObject,String refreshPlace){
         LogUtil.d("1"+jsonObject);
     }
 
@@ -218,7 +218,7 @@ public class Browser {
         }).start();
     }
 
-    public static void analysisDetail(final int id,Document doc) {
+    static void analysisDetail(final int id,Document doc) {
         String nextPageDetail;
         Elements list = doc.select(websiteNow.getDetailItemSelector());
         for (int i = 0; i < list.size(); i++) {

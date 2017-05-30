@@ -24,7 +24,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,8 +36,8 @@ import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
 import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.basic.LogUtil;
-import com.example.yang.myapplication.basic.MyApplication;
 import com.example.yang.myapplication.web.Browser;
+import com.example.yang.myapplication.web.GetToolBarImg;
 import com.example.yang.myapplication.web.Rule;
 import com.example.yang.myapplication.web.ItemRule;
 import com.example.yang.myapplication.web.Website;
@@ -45,11 +45,8 @@ import com.example.yang.myapplication.web.Website;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.avos.avoscloud.Messages.OpType.query;
 import static com.example.yang.myapplication.R.id.*;
-import static com.example.yang.myapplication.web.Browser.sizeThisPage;
-import static com.example.yang.myapplication.web.Browser.webContentList;
-import static com.example.yang.myapplication.web.Browser.websiteNow;
+import static com.example.yang.myapplication.web.Browser.*;
 
 
 //列表所在Activity
@@ -151,7 +148,7 @@ public class ListActivity extends AppCompatActivity {
                 ,"商业","http://www.qdaily.com/categories/18.html","智能","http://www.qdaily.com/categories/4.html","设计","http://www.qdaily.com/categories/17.html","时尚","http://www.qdaily.com/categories/19.html"
                 ,"娱乐","http://www.qdaily.com/categories/3.html","城市","http://www.qdaily.com/categories/5.html","游戏","http://www.qdaily.com/categories/54.html"});
 
-
+        GetToolBarImg.sendRequest();
 
         //Log.d("JSON", JsonUtils.ObjectToJson(POOCG));
         //Log.d("JSON", JsonUtils.ObjectToJson(DEVIANTART));
@@ -196,8 +193,9 @@ public class ListActivity extends AppCompatActivity {
         drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
         navViewLeft=(NavigationView)findViewById(R.id.nav_view_left);
         navViewRight=(NavigationView)findViewById(R.id.nav_view_right);
+
         //用户信息
-        View navViewLeftHeader=navViewLeft.getHeaderView(0);
+        final View navViewLeftHeader=navViewLeft.getHeaderView(0);
         TextView usernameShow=(TextView)navViewLeftHeader.findViewById(R.id.username_show);
         ImageView userIcon=(ImageView)navViewLeftHeader.findViewById(R.id.user_icon);
         pref= PreferenceManager.getDefaultSharedPreferences(this);
@@ -275,6 +273,14 @@ public class ListActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             //actionBar.setHomeAsUpIndicator(R.mipmap.ic_launcher_round);
         }
+        final ImageButton addWebsite=(ImageButton)navViewLeftHeader.findViewById(R.id.add_website);
+        addWebsite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(ListActivity.this,addWebsite.class);
+                startActivity(intent);
+            }
+        });
         //动态生成侧滑菜单(Left)
         Menu menuLeft=navViewLeft.getMenu();
         menuLeft.clear();
@@ -333,6 +339,7 @@ public class ListActivity extends AppCompatActivity {
         //广播接收器
         IntentFilter intentFilter=new IntentFilter();
         intentFilter.addAction("com.example.yang.myapplication.LOAD_FINISH");
+        intentFilter.addAction("com.example.yang.myapplication.TOOL_BAR_LOAD_FINISH");
         receiver=new LoadFinishReceiver();
         registerReceiver(receiver,intentFilter);
         swipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
@@ -411,57 +418,60 @@ public class ListActivity extends AppCompatActivity {
     class LoadFinishReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getExtras().getString("websiteIndex")!=null&&intent.getExtras().getString("websiteIndex").equals(websiteNow.getIndexUrl())){
-                collapsingToolbarLayout.setTitle(websiteNow.getWebSiteName());
+            if (intent.getAction().equals("com.example.yang.myapplication.TOOL_BAR_LOAD_FINISH")){
                 Glide
                         .with(ListActivity.this)
-                        .load(R.mipmap.ic_launcher)
+                        .load(GetToolBarImg.imgSrc)
                         .fitCenter()
                         .into(imageView);
-                LogUtil.d("finish refresh!");
-                adapter.getWebContents().clear();//要重新指向一次才能检测到刷新
-                adapter.getWebContents().addAll(webContentList);
-                if (refreshPlace=="top"){
-                    adapter.notifyDataSetChanged();
-                }else if (refreshPlace=="bottom"){
-                    snackbar.setText("Finish Loading");
-                    snackbar.setDuration(Snackbar.LENGTH_SHORT);
-                    snackbar.show();
-                    adapter.notifyItemRangeInserted(webContentList.size(),webContentList.size()+sizeThisPage);
-                }
-                //动态生成侧滑菜单(Right)设置被选中item
-                Menu menuRight=navViewRight.getMenu();
-                menuRight.clear();
-                if (websiteNow.getCategory()!=null){
-                    for (int i=0;i<websiteNow.getCategory().length/2;i++){
-                        menuRight.add(group_right,i,i,websiteNow.getCategory()[2*i]);
-                        menuRight.findItem(i).setCheckable(true);
-                        if (websiteNow.getCategory()[2*i+1].equals(websiteNow.getIndexUrl())){
-                            navViewRight.setCheckedItem(menuRight.findItem(i).getItemId());
+            }else if (intent.getAction().equals("com.example.yang.myapplication.LOAD_FINISH")){
+                if (intent.getExtras().getString("websiteIndex")!=null&&intent.getExtras().getString("websiteIndex").equals(websiteNow.getIndexUrl())){
+                    collapsingToolbarLayout.setTitle(websiteNow.getWebSiteName());
+                    LogUtil.d("finish refresh!");
+                    adapter.getWebContents().clear();//要重新指向一次才能检测到刷新
+                    adapter.getWebContents().addAll(webContentList);
+                    if (refreshPlace=="top"){
+                        adapter.notifyDataSetChanged();
+                    }else if (refreshPlace=="bottom"){
+                        snackbar.setText("Finish Loading");
+                        snackbar.setDuration(Snackbar.LENGTH_SHORT);
+                        snackbar.show();
+                        adapter.notifyItemRangeInserted(webContentList.size(),webContentList.size()+sizeThisPage);
+                    }
+                    //动态生成侧滑菜单(Right)设置被选中item
+                    Menu menuRight=navViewRight.getMenu();
+                    menuRight.clear();
+                    if (websiteNow.getCategory()!=null){
+                        for (int i=0;i<websiteNow.getCategory().length/2;i++){
+                            menuRight.add(group_right,i,i,websiteNow.getCategory()[2*i]);
+                            menuRight.findItem(i).setCheckable(true);
+                            if (websiteNow.getCategory()[2*i+1].equals(websiteNow.getIndexUrl())){
+                                navViewRight.setCheckedItem(menuRight.findItem(i).getItemId());
+                            }
                         }
                     }
-                }
-                //动态生成侧滑菜单(left)设置被选中item
-                Menu menuLeft=navViewLeft.getMenu();
-                menuLeft.clear();
-                if (websites.length!=0){
-                    for (int i=0;i<websites.length;i++){
-                        menuLeft.add(group_left,i,i,websites[i].getWebSiteName());
-                        menuLeft.findItem(i).setCheckable(true);
-                        if (websites[i].getWebSiteName().equals(websiteNow.getWebSiteName())){
-                            navViewLeft.setCheckedItem(menuLeft.findItem(i).getItemId());
+                    //动态生成侧滑菜单(left)设置被选中item
+                    Menu menuLeft=navViewLeft.getMenu();
+                    menuLeft.clear();
+                    if (websites.length!=0){
+                        for (int i=0;i<websites.length;i++){
+                            menuLeft.add(group_left,i,i,websites[i].getWebSiteName());
+                            menuLeft.findItem(i).setCheckable(true);
+                            if (websites[i].getWebSiteName().equals(websiteNow.getWebSiteName())){
+                                navViewLeft.setCheckedItem(menuLeft.findItem(i).getItemId());
+                            }
                         }
                     }
+                    //设置toolbar
+                    Menu toolbarMenu= toolbar.getMenu();
+                    if (isSubscribe(websiteNow.getIndexUrl())){
+                        toolbarMenu.getItem(0).setIcon(R.mipmap.ic_launcher);//换成已订阅的图标
+                    }else{
+                        toolbarMenu.getItem(0).setIcon(R.mipmap.ic_launcher_round);//换成未订阅的图标
+                    }
+                    swipeRefreshLayout.setRefreshing(false);
+                    isRefreshing=0;
                 }
-                //设置toolbar
-                Menu toolbarMenu= toolbar.getMenu();
-                if (isSubscribe(websiteNow.getIndexUrl())){
-                    toolbarMenu.getItem(0).setIcon(R.mipmap.ic_launcher);//换成已订阅的图标
-                }else{
-                    toolbarMenu.getItem(0).setIcon(R.mipmap.ic_launcher_round);//换成未订阅的图标
-                }
-                swipeRefreshLayout.setRefreshing(false);
-                isRefreshing=0;
             }
         }
     }

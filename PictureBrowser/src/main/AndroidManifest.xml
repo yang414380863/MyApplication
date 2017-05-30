@@ -23,8 +23,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme2">
-        <activity android:name=".ListActivity"
-                  android:launchMode="singleTask">
+        <activity
+            android:name=".ListActivity"
+            android:launchMode="singleTask">
         </activity>
         <activity android:name=".DetailActivity">
         </activity>
@@ -68,12 +69,15 @@
             android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <action android:name="com.example.yang.myapplication.UPDATE_STATUS" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.USER_PRESENT"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="com.example.yang.myapplication.UPDATE_STATUS"/>
             </intent-filter>
         </receiver>
+
+        <activity android:name=".addWebsite">
+        </activity>
     </application>
 
 </manifest>
