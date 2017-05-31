@@ -63,7 +63,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             Glide
                     .with(context)
                     .load(urls.get(position))
-                    .thumbnail(Glide.with(context).load(R.drawable.loading1))
+                    .thumbnail(Glide.with(context).load(R.drawable.loading2))
                     .placeholder(R.drawable.white)
                     .error(R.drawable.error)
                     .fitCenter()

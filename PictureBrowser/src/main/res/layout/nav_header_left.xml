@@ -5,8 +5,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="220dp"
-    android:padding="10dp"
-    android:background="?attr/colorPrimary">
+    android:background="?attr/colorPrimary"
+    >
+
+    <ImageView
+        android:id="@+id/left_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <ImageView
         android:id="@+id/user_icon"
@@ -18,14 +23,25 @@
         android:id="@+id/username_show"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#ffffff"
         android:layout_below="@id/user_icon"
         android:layout_centerHorizontal="true"
         android:text="username"/>
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:id="@+id/add_website"
         android:layout_alignParentBottom="true"
-        android:background="@mipmap/ic_launcher_round"/>
+        android:background="@drawable/ic_add_box_white_48dp"/>
+    <TextView
+        android:id="@+id/add_website_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:textSize="30dp"
+        android:textColor="#ffffff"
+        android:text="Add website"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/add_website"/>
 </RelativeLayout>

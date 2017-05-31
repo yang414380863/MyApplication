@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -21,6 +23,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -196,6 +199,18 @@ public class ListActivity extends AppCompatActivity {
 
         //用户信息
         final View navViewLeftHeader=navViewLeft.getHeaderView(0);
+        ImageView leftBackground=(ImageView)navViewLeftHeader.findViewById(R.id.left_background);
+        Glide
+                .with(this)
+                .load(R.drawable.leftheader)
+                .centerCrop()
+                .into(leftBackground);
+        ImageView rightBackground=(ImageView)navViewRight.getHeaderView(0).findViewById(R.id.right_background);
+        Glide
+                .with(this)
+                .load(R.drawable.rightheader)
+                .centerCrop()
+                .into(rightBackground);
         TextView usernameShow=(TextView)navViewLeftHeader.findViewById(R.id.username_show);
         ImageView userIcon=(ImageView)navViewLeftHeader.findViewById(R.id.user_icon);
         pref= PreferenceManager.getDefaultSharedPreferences(this);
@@ -203,7 +218,7 @@ public class ListActivity extends AppCompatActivity {
         if (!loginUsername.equals("")){
             //已登录
             usernameShow.setText("Welcome:"+loginUsername);
-            userIcon.setImageResource(R.drawable.ic_account_circle_black_48dp);
+            userIcon.setImageResource(R.drawable.ic_power_settings_new_black_48dp);
             //同步云端订阅 _User->pref->_Installation
             final AVQuery<AVObject> query1 = new AVQuery<>("_User");
             query1.whereEqualTo("username", loginUsername);
@@ -233,7 +248,7 @@ public class ListActivity extends AppCompatActivity {
         }else {
             //未登录
             usernameShow.setText("Welcome: visitor");
-            userIcon.setImageResource(R.drawable.ic_account_circle_grey600_48dp);
+            userIcon.setImageResource(R.drawable.ic_account_circle_black_48dp);
             final AVQuery<AVObject> query2 = new AVQuery<>("_Installation");
             query2.whereEqualTo("installationId", AVInstallation.getCurrentInstallation().getInstallationId());
             query2.findInBackground(new FindCallback<AVObject>() {
@@ -275,6 +290,14 @@ public class ListActivity extends AppCompatActivity {
         }
         final ImageButton addWebsite=(ImageButton)navViewLeftHeader.findViewById(R.id.add_website);
         addWebsite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(ListActivity.this,addWebsite.class);
+                startActivity(intent);
+            }
+        });
+        final TextView addWebsiteText=(TextView)navViewLeftHeader.findViewById(R.id.add_website_text);
+        addWebsiteText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(ListActivity.this,addWebsite.class);
@@ -422,6 +445,7 @@ public class ListActivity extends AppCompatActivity {
                 Glide
                         .with(ListActivity.this)
                         .load(GetToolBarImg.imgSrc)
+                        .error(R.drawable.toolbar)
                         .fitCenter()
                         .into(imageView);
             }else if (intent.getAction().equals("com.example.yang.myapplication.LOAD_FINISH")){
@@ -470,9 +494,9 @@ public class ListActivity extends AppCompatActivity {
                     //设置toolbar
                     Menu toolbarMenu= toolbar.getMenu();
                     if (isSubscribe(websiteNow.getIndexUrl())){
-                        toolbarMenu.getItem(0).setIcon(R.mipmap.ic_launcher);//换成已订阅的图标
+                        toolbarMenu.getItem(0).setIcon(R.drawable.ic_star_white_48dp);//换成已订阅的图标
                     }else{
-                        toolbarMenu.getItem(0).setIcon(R.mipmap.ic_launcher_round);//换成未订阅的图标
+                        toolbarMenu.getItem(0).setIcon(R.drawable.ic_star_border_white_48dp);//换成未订阅的图标
                     }
                     swipeRefreshLayout.setRefreshing(false);
                     isRefreshing=0;
@@ -495,10 +519,10 @@ public class ListActivity extends AppCompatActivity {
             case R.id.subscribe:
                 subscribe(pref.getString("loginUsername",""),websiteNow.getIndexUrl());//执行订阅/取消订阅操作
                 if (isSubscribe(websiteNow.getIndexUrl())){
-                    toolbarMenu.getItem(0).setIcon(R.mipmap.ic_launcher);//换成已订阅的图标
+                    toolbarMenu.getItem(0).setIcon(R.drawable.ic_star_white_48dp);//换成已订阅的图标
                     Toast.makeText(this,"Subscribe Successful",Toast.LENGTH_SHORT).show();
                 }else{
-                    toolbarMenu.getItem(0).setIcon(R.mipmap.ic_launcher_round);//换成未订阅的图标
+                    toolbarMenu.getItem(0).setIcon(R.drawable.ic_star_border_white_48dp);//换成未订阅的图标
                     Toast.makeText(this,"Unsubscribe Successful",Toast.LENGTH_SHORT).show();
                 }
                 break;
@@ -597,4 +621,38 @@ public class ListActivity extends AppCompatActivity {
             }
         }
     }
+
+    //双击返回退出
+    //定义一个变量，来标识是否退出
+    private static boolean isExit = false;
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            isExit = false;
+        }
+    };
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void exit() {
+        if (!isExit) {
+            isExit = true;
+            Toast.makeText(getApplicationContext(), "Press Back Again To Exit", Toast.LENGTH_SHORT).show();
+            // 利用handler延迟发送更改状态信息
+            mHandler.sendEmptyMessageDelayed(0, 2000);
+        } else {
+            finish();
+            System.exit(0);
+        }
+    }
+
+
 }

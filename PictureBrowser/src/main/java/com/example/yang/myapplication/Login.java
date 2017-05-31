@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
@@ -21,11 +22,14 @@ import com.avos.avoscloud.LogInCallback;
 import com.avos.avoscloud.PushService;
 import com.avos.avoscloud.SaveCallback;
 import com.avos.avoscloud.SignUpCallback;
+import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.basic.LogUtil;
 import com.example.yang.myapplication.basic.MyApplication;
 
 import java.util.List;
 
+import static android.view.KeyCharacterMap.load;
+import static com.bumptech.glide.Glide.with;
 import static com.example.yang.myapplication.ListActivity.forPush;
 import static com.example.yang.myapplication.R.id.username;
 
@@ -61,6 +65,13 @@ public class Login extends AppCompatActivity {
                 }
             }
        });
+
+        ImageView loginBackground=(ImageView)findViewById(R.id.login_background);
+        Glide
+                .with(this)
+                .load(R.drawable.login)
+                .centerCrop()
+                .into(loginBackground);
 
         if (getIntent().hasExtra("index")){
             //发送一个点击了推送的广播,使不需要的Activity关闭
