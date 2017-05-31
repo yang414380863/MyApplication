@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:2:1-83:12
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:2:1-84:12
 	package
 		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:3:11-51
 		INJECTED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml
@@ -57,7 +57,7 @@ ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\Androi
 	android:name
 		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:16:22-69
 application
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:18:5-81:19
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:18:5-82:19
 MERGED from [cn.leancloud.android:avoscloud-search:v3.16.4] C:\Users\YanGGGGG\.android\build-cache\3efcb411f9261474548a437af3f8b2ce754d1e78\output\AndroidManifest.xml:11:5-14:19
 MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\YanGGGGG\.android\build-cache\82fc8a4b46124e22019389f7f44a144cb8568261\output\AndroidManifest.xml:9:5-20
 MERGED from [com.android.support:design:25.3.1] C:\Users\YanGGGGG\.android\build-cache\fef5acf8b8ea1eccf3bdb08a5f4995819dda3fa9\output\AndroidManifest.xml:29:5-20
@@ -67,6 +67,7 @@ MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\YanGGG
 MERGED from [com.android.support:transition:25.3.1] C:\Users\YanGGGGG\.android\build-cache\93538dd0fb7110055a05aa2691f8bbcc8bd0ac8f\output\AndroidManifest.xml:26:5-20
 MERGED from [com.android.support:cardview-v7:25.3.1] C:\Users\YanGGGGG\.android\build-cache\eef3876ea64ec58a5fa232efec4438186a0b02e5\output\AndroidManifest.xml:26:5-20
 MERGED from [de.hdodenhof:circleimageview:2.1.0] C:\Users\YanGGGGG\.android\build-cache\b52f2141743454845ba97bb81545783e79a7830c\output\AndroidManifest.xml:9:5-20
+MERGED from [com.github.bumptech.glide:okhttp3-integration:1.5.0] C:\Users\YanGGGGG\.android\build-cache\4f82f56844cfccc23779f3284f2b99ef13f0b871\output\AndroidManifest.xml:10:5-14:19
 MERGED from [me.imid.swipebacklayout.lib:library:1.0.0] C:\Users\YanGGGGG\.android\build-cache\f5a92656cc7e5db828eac2ee212e87eec1155c03\output\AndroidManifest.xml:11:5-20
 MERGED from [com.android.support:support-v4:25.3.1] C:\Users\YanGGGGG\.android\build-cache\a20ce93b74c21b427dfdd00fb17eab7396710661\output\AndroidManifest.xml:29:5-20
 MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\YanGGGGG\.android\build-cache\d9cd4473e76413de95d6d4b5cd0e2f975a31cb80\output\AndroidManifest.xml:29:5-20
@@ -89,85 +90,85 @@ MERGED from [com.android.support:support-compat:25.3.1] C:\Users\YanGGGGG\.andro
 	android:name
 		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:19:9-44
 activity#com.example.yang.myapplication.ListActivity
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:26:9-29:20
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:27:9-30:20
 	android:launchMode
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:28:13-44
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:29:13-44
 	android:name
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:27:13-41
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:28:13-41
 activity#com.example.yang.myapplication.DetailActivity
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:30:9-31:20
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:31:9-32:20
 	android:name
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:30:19-49
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:31:19-49
 activity#com.example.yang.myapplication.ViewPicture
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:32:9-33:20
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:33:9-34:20
 	android:name
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:32:19-46
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:33:19-46
 service#com.example.yang.myapplication.download.DownloadService
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:35:9-39:19
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:36:9-40:19
 	android:enabled
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:37:13-35
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:38:13-35
 	android:exported
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:38:13-36
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:39:13-36
 	android:name
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:36:13-53
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:37:13-53
 service#com.avos.avoscloud.PushService
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:43:9-65
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:44:9-65
 	android:name
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:43:18-63
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:44:18-63
 receiver#com.avos.avoscloud.AVBroadcastReceiver
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:45:9-51:20
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:46:9-52:20
 	android:name
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:45:19-72
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:46:19-72
 intent-filter#android.intent.action.BOOT_COMPLETED+android.intent.action.USER_PRESENT+android.net.conn.CONNECTIVITY_CHANGE
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:46:13-50:29
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:47:13-51:29
 action#android.intent.action.BOOT_COMPLETED
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:47:17-78
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:48:17-78
 	android:name
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:47:25-76
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:48:25-76
 action#android.intent.action.USER_PRESENT
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:48:17-76
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:49:17-76
 	android:name
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:48:25-74
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:49:25-74
 action#android.net.conn.CONNECTIVITY_CHANGE
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:49:17-78
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:50:17-78
 	android:name
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:49:25-76
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:50:25-76
 activity#com.avos.avoscloud.feedback.ThreadActivity
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:56:9-57:20
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:57:9-58:20
 	android:name
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:56:19-76
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:57:19-76
 activity#com.example.yang.myapplication.Login
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:59:9-65:20
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:60:9-66:20
 	android:name
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:59:19-40
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:60:19-40
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:60:13-64:29
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:61:13-65:29
 action#android.intent.action.MAIN
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:61:17-68
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:62:17-68
 	android:name
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:61:25-66
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:62:25-66
 category#android.intent.category.LAUNCHER
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:63:17-76
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:64:17-76
 	android:name
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:63:27-74
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:64:27-74
 receiver#com.example.yang.myapplication.PushReceiver
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:67:9-77:20
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:68:9-78:20
 	android:enabled
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:69:13-35
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:70:13-35
 	android:exported
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:70:13-37
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:71:13-37
 	android:name
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:68:13-41
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:69:13-41
 intent-filter#android.intent.action.BOOT_COMPLETED+android.intent.action.USER_PRESENT+android.net.conn.CONNECTIVITY_CHANGE+com.example.yang.myapplication.UPDATE_STATUS
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:71:13-76:29
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:72:13-77:29
 action#com.example.yang.myapplication.UPDATE_STATUS
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:75:17-86
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:76:17-86
 	android:name
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:75:25-84
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:76:25-84
 activity#com.example.yang.myapplication.addWebsite
-ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:79:9-80:20
+ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:80:9-81:20
 	android:name
-		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:79:19-45
+		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:80:19-45
 uses-sdk
 INJECTED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [cn.leancloud.android:avoscloud-push:v3.16.4] C:\Users\YanGGGGG\.android\build-cache\3cb96ebd50ceeeffd1c06fe05107f0193da60f06\output\AndroidManifest.xml:7:5-9:41
@@ -183,6 +184,7 @@ MERGED from [com.android.support:transition:25.3.1] C:\Users\YanGGGGG\.android\b
 MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\YanGGGGG\.android\build-cache\5de00fd249a28ff5e8fd25f0a87a55e0d8ed0aed\output\AndroidManifest.xml:20:5-43
 MERGED from [com.android.support:cardview-v7:25.3.1] C:\Users\YanGGGGG\.android\build-cache\eef3876ea64ec58a5fa232efec4438186a0b02e5\output\AndroidManifest.xml:20:5-43
 MERGED from [de.hdodenhof:circleimageview:2.1.0] C:\Users\YanGGGGG\.android\build-cache\b52f2141743454845ba97bb81545783e79a7830c\output\AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.bumptech.glide:okhttp3-integration:1.5.0] C:\Users\YanGGGGG\.android\build-cache\4f82f56844cfccc23779f3284f2b99ef13f0b871\output\AndroidManifest.xml:6:5-8:41
 MERGED from [com.github.chrisbanes:PhotoView:2.0.0] C:\Users\YanGGGGG\.android\build-cache\604cdaaa7e919697724038d058fb1c85bf92c727\output\AndroidManifest.xml:8:5-10:41
 MERGED from [me.imid.swipebacklayout.lib:library:1.0.0] C:\Users\YanGGGGG\.android\build-cache\f5a92656cc7e5db828eac2ee212e87eec1155c03\output\AndroidManifest.xml:7:5-9:41
 MERGED from [com.android.support:support-v4:25.3.1] C:\Users\YanGGGGG\.android\build-cache\a20ce93b74c21b427dfdd00fb17eab7396710661\output\AndroidManifest.xml:21:5-23:54
@@ -225,3 +227,9 @@ MERGED from [com.android.support:support-compat:25.3.1] C:\Users\YanGGGGG\.andro
 		ADDED from [com.android.support:design:25.3.1] C:\Users\YanGGGGG\.android\build-cache\fef5acf8b8ea1eccf3bdb08a5f4995819dda3fa9\output\AndroidManifest.xml:27:9-31
 	android:name
 		ADDED from [com.android.support:design:25.3.1] C:\Users\YanGGGGG\.android\build-cache\fef5acf8b8ea1eccf3bdb08a5f4995819dda3fa9\output\AndroidManifest.xml:26:9-47
+meta-data#com.bumptech.glide.integration.okhttp3.OkHttpGlideModule
+ADDED from [com.github.bumptech.glide:okhttp3-integration:1.5.0] C:\Users\YanGGGGG\.android\build-cache\4f82f56844cfccc23779f3284f2b99ef13f0b871\output\AndroidManifest.xml:11:9-13:43
+	android:value
+		ADDED from [com.github.bumptech.glide:okhttp3-integration:1.5.0] C:\Users\YanGGGGG\.android\build-cache\4f82f56844cfccc23779f3284f2b99ef13f0b871\output\AndroidManifest.xml:13:13-40
+	android:name
+		ADDED from [com.github.bumptech.glide:okhttp3-integration:1.5.0] C:\Users\YanGGGGG\.android\build-cache\4f82f56844cfccc23779f3284f2b99ef13f0b871\output\AndroidManifest.xml:12:13-84

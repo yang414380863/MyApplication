@@ -58,7 +58,7 @@ public class Browser {
                 try{
                     String url=websiteNow.getIndexUrl();
                     OkHttpClient client = new OkHttpClient();
-                    if (refreshPlace=="bottom"){
+                    if (refreshPlace.equals("bottom")){
                         url=websiteNow.getNextPageUrl();
                         pageNext++;
                     }
@@ -104,7 +104,7 @@ public class Browser {
         }).start();
     }
 
-    static void analysis(Document doc,String refreshPlace){
+    private static void analysis(Document doc,String refreshPlace){
 
         Elements list = doc.select(websiteNow.getItemSelector());
         sizeThisPage=list.size();
@@ -168,7 +168,7 @@ public class Browser {
         MyApplication.getContext().sendBroadcast(intent);
     }
 
-    static void analysisJSON(JSONObject jsonObject,String refreshPlace){
+    private static void analysisJSON(JSONObject jsonObject,String refreshPlace){
         LogUtil.d("1"+jsonObject);
     }
 
@@ -176,12 +176,12 @@ public class Browser {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (refreshPlace=="new"){
+                if (refreshPlace.equals("new")){
                     webContentList.get(id).setImg(new ArrayList<String>());
                     webContentList.get(id).setArticle(new ArrayList<String>());
-                }else if (refreshPlace=="top"){
+                }else if (refreshPlace.equals("top")){
                     webContentList.get(id).getImg().clear();
-                }else if (refreshPlace=="bottom"){
+                }else if (refreshPlace.equals("bottom")){
 
                 }
                 try{
@@ -218,7 +218,7 @@ public class Browser {
         }).start();
     }
 
-    static void analysisDetail(final int id,Document doc) {
+    private static void analysisDetail(final int id,Document doc) {
         String nextPageDetail;
         Elements list = doc.select(websiteNow.getDetailItemSelector());
         for (int i = 0; i < list.size(); i++) {

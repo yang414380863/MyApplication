@@ -91,6 +91,10 @@
         </activity>
         <activity android:name="com.avos.avoscloud.search.SearchActivity" >
         </activity>
+
+        <meta-data
+            android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
+            android:value="GlideModule" />
     </application>
 
 </manifest>

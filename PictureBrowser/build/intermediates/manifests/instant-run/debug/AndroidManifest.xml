@@ -92,6 +92,10 @@
         <activity android:name="com.avos.avoscloud.search.SearchActivity" >
         </activity>
 
+        <meta-data
+            android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
+            android:value="GlideModule" />
+
         <provider
             android:name="com.android.tools.fd.runtime.InstantRunContentProvider"
             android:authorities="com.example.yang.myapplication.com.android.tools.fd.runtime.InstantRunContentProvider"

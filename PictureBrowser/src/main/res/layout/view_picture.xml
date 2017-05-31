@@ -26,16 +26,19 @@
         android:layout_height="wrap_content">
 
         <Button
+            android:visibility="gone"
             android:id="@+id/start_download"
             android:text="start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <Button
+            android:visibility="gone"
             android:id="@+id/pause_download"
             android:text="pause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <Button
+            android:visibility="gone"
             android:id="@+id/cancel_download"
             android:text="cancel"
             android:layout_width="wrap_content"

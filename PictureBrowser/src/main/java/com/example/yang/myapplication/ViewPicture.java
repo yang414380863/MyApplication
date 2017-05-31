@@ -63,6 +63,7 @@ public class ViewPicture extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onClick(View v) {
                 //点击事件
+                downloadBinder.startDownload(url);
             }
         });
 

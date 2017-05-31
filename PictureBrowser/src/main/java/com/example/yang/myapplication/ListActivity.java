@@ -430,9 +430,14 @@ public class ListActivity extends AppCompatActivity {
                     LogUtil.d("finish refresh!");
                     adapter.getWebContents().clear();//要重新指向一次才能检测到刷新
                     adapter.getWebContents().addAll(webContentList);
-                    if (refreshPlace=="top"){
+                    if (refreshPlace.equals("top")){
                         adapter.notifyDataSetChanged();
-                    }else if (refreshPlace=="bottom"){
+                        snackbar = Snackbar.make(collapsingToolbarLayout, "Loading", Snackbar.LENGTH_INDEFINITE);
+                        snackbar.getView().getBackground().setAlpha(100);
+                        snackbar.setText("Finish Loading");
+                        snackbar.setDuration(Snackbar.LENGTH_SHORT);
+                        snackbar.show();
+                    }else if (refreshPlace.equals("bottom")){
                         snackbar.setText("Finish Loading");
                         snackbar.setDuration(Snackbar.LENGTH_SHORT);
                         snackbar.show();
@@ -569,7 +574,6 @@ public class ListActivity extends AppCompatActivity {
             if (strings[i].equals(websiteIndex)){
                 //如果已经mark订阅过了 则将其从订阅中删除
                 hasMark=true;
-                continue;
             }
         }
         return hasMark;
