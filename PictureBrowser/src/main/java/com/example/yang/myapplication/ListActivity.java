@@ -632,7 +632,6 @@ public class ListActivity extends AppCompatActivity {
             isExit = false;
         }
     };
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
