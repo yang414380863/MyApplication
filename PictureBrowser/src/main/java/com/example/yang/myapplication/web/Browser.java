@@ -19,6 +19,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -71,7 +72,7 @@ public class Browser {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             LogUtil.d("onFailure");
-                            Toast.makeText(MyApplication.getContext(),"Network connection failure",Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(MyApplication.getContext(),"Network connection failure",Toast.LENGTH_SHORT).show();
                             //发送一个加载完成了的广播
                             Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");
                             intent.putExtra("websiteIndex",websiteNow.getIndexUrl());

@@ -41,6 +41,7 @@ import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.basic.LogUtil;
 import com.example.yang.myapplication.web.Browser;
 import com.example.yang.myapplication.web.GetToolBarImg;
+import com.example.yang.myapplication.web.JsonUtils;
 import com.example.yang.myapplication.web.Rule;
 import com.example.yang.myapplication.web.ItemRule;
 import com.example.yang.myapplication.web.Website;
@@ -153,7 +154,7 @@ public class ListActivity extends AppCompatActivity {
 
         GetToolBarImg.sendRequest();
 
-        //Log.d("JSON", JsonUtils.ObjectToJson(POOCG));
+        //Log.d("JSON_________________", JsonUtils.ObjectToJson(POOCG));
         //Log.d("JSON", JsonUtils.ObjectToJson(DEVIANTART));
         //final Website newWebsite=JsonUtils.JsonToObject(JsonUtils.ObjectToJson(POOCG));
         //Browser.sendRequest(newWebsite,"new");//从JSON格式转换为Website对象
@@ -190,7 +191,6 @@ public class ListActivity extends AppCompatActivity {
         refreshPlace="top";
         //ToolBar
         toolbar=(Toolbar)findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
         //侧滑菜单
         drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
@@ -271,6 +271,7 @@ public class ListActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor;
                     editor=pref.edit();
                     editor.putString("loginUsername","");
+                    editor.putString("mark","");
                     editor.apply();
                     intent.putExtra("isLogout",true);
                     startActivity(intent);

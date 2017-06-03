@@ -739,12 +739,14 @@
         <item name="android:windowExitAnimation">@anim/design_bottom_sheet_slide_out</item>
     </style>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-    
+    <!-- Customize your theme here. -->
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimary</item>
     <item name="colorAccent">@color/colorAccent</item>
     <item name="android:navigationBarColor">@color/colorPrimary</item>
-    <item name="android:windowIsTranslucent">true</item>
+    <!--<item name="android:windowIsTranslucent">true</item>窗口透明-->
+    <item name="android:actionMenuTextColor">#ffffff</item>
+
 </style>
     <style name="AppTheme2" parent="AppTheme">
 </style>

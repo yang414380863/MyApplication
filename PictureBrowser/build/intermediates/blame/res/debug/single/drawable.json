@@ -24,6 +24,10 @@
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\drawable\\notification_icon_background.xml"
     },
     {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_plus_one_black_48dp.png",
+        "source": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\src\\main\\res\\drawable\\ic_plus_one_black_48dp.png"
+    },
+    {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_item_background_holo_light.xml",
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\drawable\\abc_item_background_holo_light.xml"
     },
@@ -78,6 +82,10 @@
     {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\toolbar.jpg",
         "source": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\src\\main\\res\\drawable\\toolbar.jpg"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_plus_one_white_48dp.png",
+        "source": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\src\\main\\res\\drawable\\ic_plus_one_white_48dp.png"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_spinner_textfield_background_material.xml",

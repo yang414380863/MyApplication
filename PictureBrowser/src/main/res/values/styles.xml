@@ -7,7 +7,8 @@
     <item name="colorPrimaryDark">@color/colorPrimary</item>
     <item name="colorAccent">@color/colorAccent</item>
     <item name="android:navigationBarColor">@color/colorPrimary</item>
-    <item name="android:windowIsTranslucent">true</item><!--窗口透明-->
+    <!--<item name="android:windowIsTranslucent">true</item>窗口透明-->
+
 </style>
 <style name="AppTheme2" parent="AppTheme">
 </style>

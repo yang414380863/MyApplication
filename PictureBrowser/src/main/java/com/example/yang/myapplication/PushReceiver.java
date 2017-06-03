@@ -65,14 +65,14 @@ public class PushReceiver extends BroadcastReceiver {
                     PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, resultIntent, FLAG_UPDATE_CURRENT);
                     NotificationManager manager=(NotificationManager) MyApplication.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
                     Notification notification = new NotificationCompat.Builder(context)
-                            .setContentTitle(json.getString("index"))//标题
-                            .setContentText(json.getString("date"))//正文
+                            .setContentTitle("New Update")//标题
+                            .setContentText("From: "+json.getString("index"))//正文
                             .setWhen(pushDateCorrect.getTime().getTime())//通知发生的时间为服务器更新时间
                             .setContentIntent(pendingIntent)//点击跳转intent
                             .setAutoCancel(true)//点击之后自动消失
-                            .setSmallIcon(R.mipmap.ic_launcher_round)   //若没有设置largeicon，此为左边的大icon，设置了largeicon，则为右下角的小icon，无论怎样，都影响Notifications area显示的图标
-                            .setLargeIcon(BitmapFactory.decodeResource(MyApplication.getContext().getResources(),R.mipmap.ic_launcher))//largeicon，
-                            .setVibrate(new long[]{0,100}) //设置震动，此震动数组为：long vT[]={300,100,300,100}
+                            .setSmallIcon(R.drawable.ic_plus_one_black_48dp)   //若没有设置largeicon，此为左边的大icon，设置了largeicon，则为右下角的小icon，无论怎样，都影响Notifications area显示的图标
+                            //.setLargeIcon(BitmapFactory.decodeResource(MyApplication.getContext().getResources(),R.drawable.ic_cloud_circle_white_48dp))//largeicon，
+                            .setVibrate(new long[]{0,300}) //设置震动，此震动数组为：long vT[]={300,100,300,100}
                             .setLights(Color.GREEN,1000,1000)//设置LED灯 .setLights(argb, onMs, offMs)
                             .build();
                     manager.notify(0,notification);

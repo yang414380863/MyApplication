@@ -8,23 +8,31 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.basic.LogUtil;
 import com.example.yang.myapplication.web.Browser;
 import com.example.yang.myapplication.web.WebItem;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
-import static com.bumptech.glide.Glide.with;
 import static com.example.yang.myapplication.R.id.collapsing_toolbar;
+import static com.example.yang.myapplication.R.id.toolbar2;
 import static com.example.yang.myapplication.web.Browser.webContentList;
+import static com.example.yang.myapplication.web.Browser.websiteNow;
 
 
 //详情所在Activity
-public class DetailActivity extends SwipeBackActivity {
+public class DetailActivity extends AppCompatActivity {
 
     //广播接收器
     private Receiver receiver;
@@ -37,6 +45,8 @@ public class DetailActivity extends SwipeBackActivity {
     //标题栏
     ImageView imageView;
     CollapsingToolbarLayout collapsingToolbarLayout;
+    //toolbar
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +55,10 @@ public class DetailActivity extends SwipeBackActivity {
         //标题栏
         imageView=(ImageView)findViewById(R.id.image_view);
         collapsingToolbarLayout=(CollapsingToolbarLayout)findViewById(collapsing_toolbar);
+        //ToolBar
+        toolbar=(Toolbar)findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+
         //获取具体是哪一个item
         Intent intent=getIntent();
         positionNow=intent.getExtras().getInt("position");
@@ -76,6 +90,8 @@ public class DetailActivity extends SwipeBackActivity {
                 }
             }
         });
+
+
     }
     @Override
     protected void onDestroy(){
@@ -119,5 +135,29 @@ public class DetailActivity extends SwipeBackActivity {
             }
 
         }
+    }
+    //ToolBar
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.toolbar2,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.share:{
+
+                break;
+            }
+            case R.id.open_in_browser:{
+                break;
+            }
+            case R.id.copy_link:{
+                break;
+            }
+
+            default:break;
+        }
+        return true;
     }
 }
