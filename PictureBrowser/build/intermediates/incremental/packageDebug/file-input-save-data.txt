@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Sat Jun 03 19:44:30 GMT+08:00 2017
+#Sat Jun 03 19:59:02 GMT+08:00 2017
 210.set=ANDROID_RESOURCE
 282.file=D\:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\resources-debug.ap_\\res\\drawable\\navigation_empty_icon.xml
 14.set=ANDROID_RESOURCE

@@ -2,9 +2,11 @@ package com.example.yang.myapplication;
 
 
 import android.content.BroadcastReceiver;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -146,13 +148,25 @@ public class DetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.share:{
-
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Share URL: "+webContentList.get(positionNow).getLink());
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
                 break;
             }
             case R.id.open_in_browser:{
+                Intent intent = new Intent();
+                intent.setAction("android.intent.action.VIEW");
+                Uri content_url = Uri.parse(webContentList.get(positionNow).getLink());
+                intent.setData(content_url);
+                startActivity(intent);
                 break;
             }
             case R.id.copy_link:{
+                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                cm.setText(webContentList.get(positionNow).getLink());
+                Toast.makeText(this,"Copy successful",Toast.LENGTH_SHORT).show();
                 break;
             }
 

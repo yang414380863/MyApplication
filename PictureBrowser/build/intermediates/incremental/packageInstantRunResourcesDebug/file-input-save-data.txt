@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Sat Jun 03 19:44:29 GMT+08:00 2017
+#Sat Jun 03 19:58:59 GMT+08:00 2017
 210.set=ANDROID_RESOURCE
 282.file=D\:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\resources-debug.ap_\\res\\drawable\\loading2.gif
 14.set=ANDROID_RESOURCE

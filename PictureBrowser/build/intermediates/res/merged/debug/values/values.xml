@@ -745,7 +745,6 @@
     <item name="colorAccent">@color/colorAccent</item>
     <item name="android:navigationBarColor">@color/colorPrimary</item>
     <!--<item name="android:windowIsTranslucent">true</item>窗口透明-->
-    <item name="android:actionMenuTextColor">#ffffff</item>
 
 </style>
     <style name="AppTheme2" parent="AppTheme">
