@@ -150,7 +150,7 @@ public class DetailActivity extends AppCompatActivity {
             case R.id.share:{
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Share URL: "+webContentList.get(positionNow).getLink());
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Share Title: "+webContentList.get(positionNow).getTitle()+"\nURL: "+webContentList.get(positionNow).getLink());
                 sendIntent.setType("text/plain");
                 startActivity(sendIntent);
                 break;
