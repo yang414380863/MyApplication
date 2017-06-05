@@ -1,7 +1,7 @@
 [
     {
-        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\activity_login.xml",
-        "source": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\src\\main\\res\\layout\\activity_login.xml"
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\add_category.xml",
+        "source": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\src\\main\\res\\layout\\add_category.xml"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_radio.xml",
@@ -92,6 +92,10 @@
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\layout\\notification_template_lines_media.xml"
     },
     {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\add_website.xml",
+        "source": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\src\\main\\res\\layout\\add_website.xml"
+    },
+    {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_singlechoice_material.xml",
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\layout\\select_dialog_singlechoice_material.xml"
     },
@@ -172,8 +176,8 @@
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\fef5acf8b8ea1eccf3bdb08a5f4995819dda3fa9\\output\\res\\layout\\design_layout_tab_icon.xml"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\activity_add_website.xml",
-        "source": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\src\\main\\res\\layout\\activity_add_website.xml"
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\login.xml",
+        "source": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\src\\main\\res\\layout\\login.xml"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_part_time.xml",
@@ -238,6 +242,10 @@
     {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_button_bar_material.xml",
         "source": "C:\\Users\\YanGGGGG\\.android\\build-cache\\a426725992d84ba7bb1b4067127281d1deb7dd5c\\output\\res\\layout\\abc_alert_dialog_button_bar_material.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\add_item_rule.xml",
+        "source": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\src\\main\\res\\layout\\add_item_rule.xml"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\MyApplication\\PictureBrowser\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_icon.xml",

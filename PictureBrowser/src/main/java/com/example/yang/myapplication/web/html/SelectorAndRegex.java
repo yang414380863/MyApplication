@@ -1,7 +1,8 @@
-package com.example.yang.myapplication.web;
+package com.example.yang.myapplication.web.html;
 
 
 import com.example.yang.myapplication.basic.LogUtil;
+import com.example.yang.myapplication.web.Website;
 
 import org.jsoup.nodes.Document;
 
@@ -17,7 +18,7 @@ import java.util.regex.Pattern;
 public class SelectorAndRegex {
     private static String string;
 
-    public static String getItemData(Document doc,Website website,String ruleString,int position){
+    public static String getItemData(Document doc, Website website, String ruleString, int position){
         //判断是哪个Rule
         Rule rule;
         switch (ruleString){
@@ -55,6 +56,7 @@ LogUtil.d(ruleString+" Selector can't find");
             return "";
         }
         if (rule.getMethod().equals("attr")){
+            //属性值=选择出所有Item                       .get(第i个)   .选择这个Item中的对应元素    .获取属性值
             string=doc.select(website.getItemSelector()).get(position).select(rule.getSelector()).attr(rule.getAttribute());
         }else if (rule.getMethod().equals("text")){
             string=doc.select(website.getItemSelector()).get(position).select(rule.getSelector()).text();
@@ -95,6 +97,10 @@ LogUtil.d(ruleString+" result "+position+": "+string);
             }
             case "NextPageDetail":{
                 rule=website.getNextPageDetailRule();
+                break;
+            }
+            case "Category":{
+                rule=website.getCategoryRule();
                 break;
             }
             default:

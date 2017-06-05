@@ -165,7 +165,7 @@ action#com.example.yang.myapplication.UPDATE_STATUS
 ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:76:17-86
 	android:name
 		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:76:25-84
-activity#com.example.yang.myapplication.addWebsite
+activity#com.example.yang.myapplication.AddWebsite
 ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:80:9-81:20
 	android:name
 		ADDED from D:\AndroidStudioProjects\MyApplication\PictureBrowser\src\main\AndroidManifest.xml:80:19-45

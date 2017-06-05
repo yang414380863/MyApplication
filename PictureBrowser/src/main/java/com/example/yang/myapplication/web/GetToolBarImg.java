@@ -4,6 +4,9 @@ import android.content.Intent;
 
 import com.example.yang.myapplication.basic.LogUtil;
 import com.example.yang.myapplication.basic.MyApplication;
+import com.example.yang.myapplication.web.html.ItemRule;
+import com.example.yang.myapplication.web.html.Rule;
+import com.example.yang.myapplication.web.html.SelectorAndRegex;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -53,7 +56,7 @@ public class GetToolBarImg {
                                 //解析HTML
                                 Document doc= Jsoup.parse(response.body().string());
 
-                                imgSrc=SelectorAndRegex.getItemData(doc,websiteNow,"Thumbnail",1);
+                                imgSrc= SelectorAndRegex.getItemData(doc,websiteNow,"Thumbnail",1);
                                 LogUtil.d("Bing Today Img:"+imgSrc);
                                 //发送一个加载完成了的广播
                                 Intent intent=new Intent("com.example.yang.myapplication.TOOL_BAR_LOAD_FINISH");

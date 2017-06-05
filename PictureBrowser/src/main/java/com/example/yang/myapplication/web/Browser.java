@@ -4,12 +4,15 @@ package com.example.yang.myapplication.web;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.yang.myapplication.basic.LogUtil;
 import com.example.yang.myapplication.basic.MyApplication;
+import com.example.yang.myapplication.web.html.SelectorAndRegex;
+import com.jayway.jsonpath.JsonPath;
 
 
 import org.jsoup.Jsoup;
@@ -19,7 +22,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -27,6 +30,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static com.example.yang.myapplication.ListActivity.ruleSspai;
 
 
 /**
@@ -41,7 +45,9 @@ public class Browser {
     public static int sizeThisPage;
     private static String nextPageUrl;
     private static int pageNext;
+    private static int isNext;
     static Date latestUpdate;
+    static String categoryNow;
 
     public static void sendRequest(final Website website,final String refreshPlace){
         websiteNow =website;
@@ -61,6 +67,7 @@ public class Browser {
                     OkHttpClient client = new OkHttpClient();
                     if (refreshPlace.equals("bottom")){
                         url=websiteNow.getNextPageUrl();
+                        isNext=1;
                         pageNext++;
                     }
                     //LogUtil.d("url "+url);
@@ -82,15 +89,28 @@ public class Browser {
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
                             try{
-                                if (!website.isJsonIndex()){
-                                    //解析HTML
-                                    Document doc=Jsoup.parse(response.body().string());
-                                    analysis(doc,refreshPlace);
+                                if (isNext==1){
+                                    if (!website.isJsonNext()){
+                                        //解析HTML
+                                        Document doc=Jsoup.parse(response.body().string());
+                                        analysis(doc,refreshPlace);
+                                    }else {
+                                        //解析JSON
+                                        String s=response.body().string();
+                                        //JSONObject jsonObject=JSON.parseObject(response.body().string());
+                                        analysisJSON(s,refreshPlace);
+                                    }
                                 }else {
-                                    //解析JSON
-                                    String s=response.body().string();
-                                    JSONObject jsonObject=JSON.parseObject(response.body().string());
-                                    analysisJSON(jsonObject,refreshPlace);
+                                    if (!website.isJsonIndex()){
+                                        //解析HTML
+                                        Document doc=Jsoup.parse(response.body().string());
+                                        analysis(doc,refreshPlace);
+                                    }else {
+                                        //解析JSON
+                                        String s=response.body().string();
+                                        //JSONObject jsonObject=JSON.parseObject(response.body().string());
+                                        analysisJSON(s,refreshPlace);
+                                    }
                                 }
                             }catch (Exception e){
                                 //发送一个加载出错的广播
@@ -106,6 +126,7 @@ public class Browser {
     }
 
     private static void analysis(Document doc,String refreshPlace){
+
 
         Elements list = doc.select(websiteNow.getItemSelector());
         sizeThisPage=list.size();
@@ -158,6 +179,10 @@ public class Browser {
 */
         }
         LogUtil.d("Finish load "+sizeNow+" item  Next item is No "+sizeNow);
+
+        if (websiteNow.getCategoryRule()!=null){
+            categoryNow=SelectorAndRegex.getOtherData(doc,websiteNow,"Category");
+        }
         //解析列表的下一页
         if (websiteNow.getNextPageRule()!=null){
             nextPageUrl=SelectorAndRegex.getOtherData(doc,websiteNow,"NextPage",sizeNow+1,pageNext);
@@ -169,8 +194,94 @@ public class Browser {
         MyApplication.getContext().sendBroadcast(intent);
     }
 
-    private static void analysisJSON(JSONObject jsonObject,String refreshPlace){
-        LogUtil.d("1"+jsonObject);
+    private static void analysisJSON(String jsonData,String refreshPlace){
+
+        List<Object> links = JsonPath.read(jsonData, websiteNow.getItemRule().getJsonLinkRule().getJsonPath());
+        List<Object> thumbnails = JsonPath.read(jsonData, websiteNow.getItemRule().getJsonThumbnailRule().getJsonPath());
+        List<Object> titles = JsonPath.read(jsonData, websiteNow.getItemRule().getJsonTitleRule().getJsonPath());
+        String nextpage = JsonPath.read(jsonData, websiteNow.getItemRule().getJsonNextPageRule().getJsonPath()).toString();
+
+        utiltoStringList(links);
+        utiltoStringList(thumbnails);
+        utiltoStringList(titles);
+
+        for (int i=0;i<links.size();i++){
+            links.set(i,websiteNow.getItemRule().getJsonLinkRule().getHeadString() + links.get(i) + websiteNow.getItemRule().getJsonLinkRule().getTailString());
+            thumbnails.set(i,websiteNow.getItemRule().getJsonThumbnailRule().getHeadString() + thumbnails.get(i) + websiteNow.getItemRule().getJsonThumbnailRule().getTailString());
+            titles.set(i,websiteNow.getItemRule().getJsonTitleRule().getHeadString() + titles.get(i) + websiteNow.getItemRule().getJsonTitleRule().getTailString());
+        }
+
+
+        nextpage = websiteNow.getItemRule().getJsonNextPageRule().getHeadString() + nextpage + websiteNow.getItemRule().getJsonNextPageRule().getTailString();
+
+        nextPageUrl=nextpage.replaceAll("category",categoryNow);
+
+        sizeThisPage=links.size();
+        int sizeNow=webContentList.size();//sizeNow=已经加载的item数量
+        //如果是相同的一个页面 就覆盖原来的,且不增加长度  否则就加在后面
+        switch (refreshPlace){
+            case ("new"):
+            {
+                //为空(首次加载)
+                webContentList.clear();
+                for (int i=0;i<sizeThisPage;i++){
+                    webContentList.add(new WebItem());
+                }
+                sizeNow=0;
+                pageNext =2;
+                nextPageUrl="";
+                break;
+            }
+            case ("top"):
+            {
+                //是同一页面(顶部下拉刷新)刷新后可能数组过小
+                for (int i=sizeNow;i<sizeThisPage;i++){
+                    webContentList.add(new WebItem());
+                }
+                sizeNow=0;
+                break;
+            }
+            case ("bottom"):{
+                //不是同一页面(底部上拉刷新)
+                for (int i=0;i<sizeThisPage;i++){
+                    webContentList.add(new WebItem());
+                }
+                break;
+            }
+            default:break;
+        }
+
+        //解析主要信息
+        for (int i=0;i<sizeThisPage;i++,sizeNow++){
+            if (webContentList.size()==0){
+                return;
+            }
+            webContentList.get(sizeNow).setLink(links.get(i).toString());
+            webContentList.get(sizeNow).setThumbnail(thumbnails.get(i).toString());
+            webContentList.get(sizeNow).setTitle(titles.get(i).toString());
+/*
+            LogUtil.d("No.+i Link:"+webContentList.get(sizeNow).getLink());
+            LogUtil.d("No.+i Thumbnail:"+webContentList.get(sizeNow).getThumbnail());
+            LogUtil.d("No.+i Title:"+webContentList.get(sizeNow).getTitle());
+*/
+        }
+        LogUtil.d("Finish load "+sizeNow+" item  Next item is No "+sizeNow);
+        //解析列表的下一页
+        if (websiteNow.getNextPageRule()!=null){
+            //nextPageUrl=;
+        }
+        LogUtil.d("nextPageUrl "+nextPageUrl);
+        //发送一个加载完成了的广播
+        Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");
+        intent.putExtra("websiteIndex",websiteNow.getIndexUrl());
+        MyApplication.getContext().sendBroadcast(intent);
+
+    }
+    private static void utiltoStringList(List<Object> lists){
+        for(Object list : lists)
+        {
+            list.toString();
+        }
     }
 
     public  static void sendRequestDetail(final int id,final String refreshPlace){

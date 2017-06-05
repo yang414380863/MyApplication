@@ -87,7 +87,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name="com.example.yang.myapplication.addWebsite" >
+        <activity android:name="com.example.yang.myapplication.AddWebsite" >
         </activity>
         <activity android:name="com.avos.avoscloud.search.SearchActivity" >
         </activity>

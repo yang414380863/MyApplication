@@ -1,4 +1,4 @@
-package com.example.yang.myapplication.web;
+package com.example.yang.myapplication.web.html;
 
 /**
  * Created by YanGGGGG on 2017/4/6.

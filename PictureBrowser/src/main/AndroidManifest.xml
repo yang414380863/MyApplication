@@ -77,7 +77,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".addWebsite">
+        <activity android:name=".AddWebsite">
         </activity>
     </application>
 

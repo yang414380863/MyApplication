@@ -41,10 +41,11 @@ import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.basic.LogUtil;
 import com.example.yang.myapplication.web.Browser;
 import com.example.yang.myapplication.web.GetToolBarImg;
-import com.example.yang.myapplication.web.JsonUtils;
-import com.example.yang.myapplication.web.Rule;
-import com.example.yang.myapplication.web.ItemRule;
+import com.example.yang.myapplication.web.html.Rule;
+import com.example.yang.myapplication.web.html.ItemRule;
 import com.example.yang.myapplication.web.Website;
+import com.example.yang.myapplication.web.json.JsonItemRule;
+import com.example.yang.myapplication.web.json.JsonRule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,14 +85,19 @@ public class ListActivity extends AppCompatActivity {
     final static Website POOCG=new Website("Poocg","https://www.poocg.com/works/index/type/new",rulePOOCG);
     static ItemRule ruleDEVIANTART=new ItemRule();
     final static Website DEVIANTART=new Website("Deviantart","http://www.deviantart.com/whats-hot/",ruleDEVIANTART);
-    static ItemRule ruleUNSPLASH=new ItemRule();
-    final static Website UNSPLASH=new Website("Unsplash","https://unsplash.com/",ruleUNSPLASH);
     static ItemRule ruleLEIFENG=new ItemRule();
     final static Website LEIFENG=new Website("雷锋网","http://www.leiphone.com/category/sponsor",ruleLEIFENG);
-    static ItemRule ruleHAOQIXIN=new ItemRule();
-    final static Website HAOQIXIN=new Website("好奇心日报","http://www.qdaily.com/tags/1068.html",ruleHAOQIXIN,0,1);
+    static ItemRule ruleQdaily=new ItemRule();
+    final static Website Qdaily =new Website("好奇心日报","http://www.qdaily.com/tags/1068.html",ruleQdaily,0,1);
+    public static ItemRule ruleSspai=new ItemRule();
+    final static Website SSPAI=new Website("少数派","https://sspai.com/api/v1/articles?offset=0&limit=20&has_tag=1&tag=%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7&type=recommend_to_home",ruleSspai,1,1);
 
-    final static Website[] websites=new Website[]{POOCG,DEVIANTART,UNSPLASH,LEIFENG,HAOQIXIN};//先暂时这样写WebsiteList 以后再动态生成
+
+    //public static JsonItemRule ruleQdaily = new JsonItemRule();
+    //public static JsonItemRule ruleSspai = new JsonItemRule();
+    public static JsonItemRule ruleJiqizhixin = new JsonItemRule();
+
+    final static Website[] websites=new Website[]{POOCG,DEVIANTART,LEIFENG, Qdaily,SSPAI};//先暂时这样写WebsiteList 以后再动态生成
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,14 +125,6 @@ public class ListActivity extends AppCompatActivity {
         DEVIANTART.setCategory(new String[]{"Newest","http://www.deviantart.com/newest/","What's Hot","http://www.deviantart.com/whats-hot/"
                 ,"Undiscovered","http://www.deviantart.com/undiscovered/","Popular 24 hours","http://www.deviantart.com/popular-24-hours/","Popular All Time","http://www.deviantart.com/popular-all-time/"});
 
-        UNSPLASH.setItemSelector("div.y5w1y");
-        ruleUNSPLASH.setLinkRule(new Rule("a[title]","attr","href","()(\\/\\?photo=[a-z|A-Z|0-9|-]+)","https://unsplash.com$1"));
-        ruleUNSPLASH.setThumbnailRule(new Rule("a[href]","attr","style","(https:\\/\\/images\\.unsplash\\.com\\/[a-z|0-9|-|-|?|=|&|,|\\/]+)","$1"));
-        ruleUNSPLASH.setTitleRule(new Rule("a[class=cV68d]","attr","title"));
-        UNSPLASH.setDetailItemSelector("div.RN0KT");
-        ruleUNSPLASH.setImgRule(new Rule("*","attr","style","(https:\\/\\/images\\.unsplash\\.com\\/[a-z|0-9|&||\\/|-]+)","$1"));
-        UNSPLASH.setCategory(new String[]{"home","https://unsplash.com/","New","https://unsplash.com/new"});
-        //ruleUNSPLASH.setNextPageRule(new Rule());没写下一页RULE
 
         LEIFENG.setItemSelector("li > div.box:has(div.img)");
         ruleLEIFENG.setLinkRule(new Rule("div.img > a[target]","attr","href"));
@@ -140,17 +138,41 @@ public class ListActivity extends AppCompatActivity {
                 ,"AR/VR","http://www.leiphone.com/category/arvr","机器人","http://www.leiphone.com/category/robot","Fintect","http://www.leiphone.com/category/fintech","物联网","http://www.leiphone.com/category/iot"
                 ,"未来医疗","http://www.leiphone.com/category/aihealth","智能硬件","http://www.leiphone.com/category/weiwu","AI+","http://www.leiphone.com/category/aijuejinzhi"});
 
-        HAOQIXIN.setItemSelector("div[class*=packery-item] > a[href]");
-        ruleHAOQIXIN.setLinkRule(new Rule("a[href]","attr","href","(.*)","http://www.qdaily.com$1"));
-        ruleHAOQIXIN.setThumbnailRule(new Rule("div[class*=hd] > div >img","attr","data-src"));
-        ruleHAOQIXIN.setTitleRule(new Rule("div[class*=hd] > div >img","attr","alt"));
-        HAOQIXIN.setDetailItemSelector("div.detail > p,div.detail > div[class*=images]");
-        ruleHAOQIXIN.setImgRule(new Rule("figure > img[data-ratio]","attr","data-src"));
-        ruleHAOQIXIN.setArticleRule(new Rule("p","text"));
-        HAOQIXIN.setNextPageRule(new Rule("div[class=page-content]","html","data-lastkey\\=\"([0-9]+)\" data-tagid\\=\"([0-9]+)\"","http://www.qdaily.com/tags/tagmore/$2/$1"));
-        HAOQIXIN.setCategory(new String[]{"长文章","http://www.qdaily.com/tags/1068.html","10个图","http://www.qdaily.com/tags/1615.html","TOP15","http://www.qdaily.com/tags/29.html"
+        Qdaily.setItemSelector("div[class*=packery-item] > a[href]");
+        ruleQdaily.setLinkRule(new Rule("a[href]","attr","href","(.*)","http://www.qdaily.com$1"));
+        ruleQdaily.setThumbnailRule(new Rule("div[class*=hd] > div >img","attr","data-src"));
+        ruleQdaily.setTitleRule(new Rule("div[class*=hd] > div >img","attr","alt"));
+        Qdaily.setDetailItemSelector("div.detail > p,div.detail > div[class*=images]");
+        ruleQdaily.setImgRule(new Rule("figure > img[data-ratio]","attr","data-src"));
+        ruleQdaily.setArticleRule(new Rule("p","text"));
+        Qdaily.setNextPageRule(new Rule("div[class=page-content]","html","data-lastkey\\=\"([0-9]+)\" data-tagid\\=\"([0-9]+)\"","http://www.qdaily.com/tags/tagmore/$2/$1.json"));
+        Qdaily.setCategory(new String[]{"长文章","http://www.qdaily.com/tags/1068.html","10个图","http://www.qdaily.com/tags/1615.html","TOP15","http://www.qdaily.com/tags/29.html"
                 ,"商业","http://www.qdaily.com/categories/18.html","智能","http://www.qdaily.com/categories/4.html","设计","http://www.qdaily.com/categories/17.html","时尚","http://www.qdaily.com/categories/19.html"
                 ,"娱乐","http://www.qdaily.com/categories/3.html","城市","http://www.qdaily.com/categories/5.html","游戏","http://www.qdaily.com/categories/54.html"});
+        Qdaily.setCategoryRule(new Rule("div[class=page-content]","html","data-lastkey\\=\"([0-9]+)\" data-tagid\\=\"([0-9]+)\"","$2"));
+        ruleQdaily.setJsonThumbnailRule(new JsonRule("$.data.feeds[*].image"));
+        ruleQdaily.setJsonTitleRule(new JsonRule("$.data.feeds[*].post.title"));
+        ruleQdaily.setJsonLinkRule(new JsonRule("$.data.feeds[*].post.id", "http://www.qdaily.com/articles/", ".html"));
+        ruleQdaily.setJsonNextPageRule(new JsonRule("$.data.last_key","http://www.qdaily.com/tags/tagmore/category/",".json"));
+
+
+
+
+        ruleSspai.setJsonThumbnailRule(new JsonRule("$.list[*].banner","https://cdn.sspai.com/"));
+        ruleSspai.setJsonTitleRule(new JsonRule("$.list[*].title"));
+        ruleSspai.setJsonLinkRule(new JsonRule("$.list[*].id","https://sspai.com/post/"));
+        ruleSspai.setJsonNextPageRule(new JsonRule(".$list[*]."));
+
+
+/*
+        ruleJiqizhixin.setTitleRule(new JsonRule("%.list[*].post_title"));
+        ruleJiqizhixin.setThumbnailRule(new JsonRule("$.list[*].thumb","http://www.jiqizhixin.com"));
+        //ruleJiqizhixin.setCategoryRule(new JsonRule());
+        ruleJiqizhixin.setLinkRule(new JsonRule("$.list[*].url","http://www.jiqizhixin.com"));
+        ruleJiqizhixin.setPublishTimeRule(new JsonRule("$.list[*].post_date"));
+*/
+
+
 
         GetToolBarImg.sendRequest();
 
@@ -293,7 +315,7 @@ public class ListActivity extends AppCompatActivity {
         addWebsite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(ListActivity.this,addWebsite.class);
+                Intent intent=new Intent(ListActivity.this,AddWebsite.class);
                 startActivity(intent);
             }
         });
@@ -301,7 +323,7 @@ public class ListActivity extends AppCompatActivity {
         addWebsiteText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(ListActivity.this,addWebsite.class);
+                Intent intent=new Intent(ListActivity.this,AddWebsite.class);
                 startActivity(intent);
             }
         });
