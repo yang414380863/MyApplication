@@ -11,7 +11,6 @@ import com.example.yang.myapplication.basic.LogUtil;
 import com.example.yang.myapplication.basic.MyApplication;
 import com.example.yang.myapplication.web.html.SelectorAndRegex;
 import com.example.yang.myapplication.web.json.JsonRuleConnector;
-import com.jayway.jsonpath.JsonPath;
 
 
 import org.jsoup.Jsoup;
@@ -44,7 +43,7 @@ public class Browser {
     private static String nextPageUrl;
     private static int pageNext;
     static Date latestUpdate;
-    static String categoryNow;
+    private static String categoryNow;
 
     public static void sendRequest(final Website website,final String refreshPlace){
         websiteNow =website;
@@ -125,7 +124,6 @@ public class Browser {
 
     private static void analysis(Document doc,String refreshPlace){
 
-
         Elements list = doc.select(websiteNow.getItemSelector());
         sizeThisPage=list.size();
         int sizeNow=webContentList.size();//sizeNow=已经加载的item数量
@@ -199,6 +197,7 @@ public class Browser {
         List<Object> titles = JsonRuleConnector.getCompleteTitles(jsonData);
         String nextPage = JsonRuleConnector.getCompleteNextPage(jsonData);
 
+        categoryNow=categoryNow.replaceAll("categorys","categories");
         nextPageUrl=nextPage.replaceAll("category",categoryNow);
 
         sizeThisPage=links.size();
