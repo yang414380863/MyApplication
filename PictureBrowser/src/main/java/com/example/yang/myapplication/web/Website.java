@@ -32,6 +32,9 @@ public class Website {
         this.indexUrl=indexUrl;
         this.itemRule = itemRule;
         detailItemSelector="*";
+        nextPageRule=new Rule("");
+        nextPageDetailRule=new Rule("");
+        categoryRule=new Rule("");
     }
 
     public Website(String webSiteName,String indexUrl,ItemRule itemRule,int JsonIndex,int JsonNext){

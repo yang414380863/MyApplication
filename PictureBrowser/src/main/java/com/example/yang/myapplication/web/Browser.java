@@ -175,11 +175,11 @@ public class Browser {
         }
         LogUtil.d("Finish load "+sizeNow+" item  Next item is No "+sizeNow);
 
-        if (websiteNow.getCategoryRule()!=null){
+        if (!websiteNow.getCategoryRule().getSelector().equals("")){
             categoryNow=SelectorAndRegex.getOtherData(doc,websiteNow,"Category");
         }
         //解析列表的下一页
-        if (websiteNow.getNextPageRule()!=null){
+        if (!websiteNow.getNextPageRule().getSelector().equals("")){
             nextPageUrl=SelectorAndRegex.getOtherData(doc,websiteNow,"NextPage",sizeNow+1,pageNext);
             nextPageUrl=nextPageUrl.replaceAll("categorys","categories");
         }
@@ -313,7 +313,7 @@ public class Browser {
             webContentList.get(id).getImg().set(webContentList.get(id).getImg().size()-1,SelectorAndRegex.getDetailData(doc,websiteNow,"Img",i));
             webContentList.get(id).getArticle().set(webContentList.get(id).getArticle().size()-1,SelectorAndRegex.getDetailData(doc,websiteNow,"Article",i));
         }
-        if (websiteNow.getNextPageDetailRule()!=null) {
+        if (!websiteNow.getNextPageDetailRule().getSelector().equals("")) {
             nextPageDetail = SelectorAndRegex.getOtherData(doc,websiteNow,"NextPageDetail");
             //LogUtil.d("nextPageDetail "+nextPageDetail);
             if (nextPageDetail.equals("")) {

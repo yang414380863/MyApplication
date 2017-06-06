@@ -86,4 +86,17 @@ public class ItemRule {
     public void setJsonLinkRule(JsonRule jsonLinkRule) {
         JsonLinkRule = jsonLinkRule;
     }
+
+    public ItemRule(){
+        thumbnailRule=new Rule("");
+        titleRule=new Rule("");
+        linkRule=new Rule("");
+        imgRule=new Rule("");
+        articleRule=new Rule("");
+
+        JsonThumbnailRule=new JsonRule("");
+        JsonTitleRule=new JsonRule("");
+        JsonLinkRule=new JsonRule("");
+        JsonNextPageRule=new JsonRule("");
+    }
 }

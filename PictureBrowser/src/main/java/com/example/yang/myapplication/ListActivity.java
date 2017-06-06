@@ -39,18 +39,21 @@ import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
 import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.basic.LogUtil;
+import com.example.yang.myapplication.basic.MyApplication;
 import com.example.yang.myapplication.web.Browser;
 import com.example.yang.myapplication.web.GetToolBarImg;
-import com.example.yang.myapplication.web.html.Rule;
-import com.example.yang.myapplication.web.html.ItemRule;
+import com.example.yang.myapplication.web.JsonUtils;
 import com.example.yang.myapplication.web.Website;
-import com.example.yang.myapplication.web.json.JsonRule;
+import com.example.yang.myapplication.web.WebsiteInit;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.example.yang.myapplication.R.id.*;
 import static com.example.yang.myapplication.web.Browser.*;
+import static com.example.yang.myapplication.web.JsonUtils.JsonToObject;
+import static com.example.yang.myapplication.web.WebsiteInit.*;
 
 
 //列表所在Activity
@@ -80,103 +83,54 @@ public class ListActivity extends AppCompatActivity {
     static int isRefreshing=0;
     static String refreshPlace;
 
-    static ItemRule rulePOOCG=new ItemRule();
-    final static Website POOCG=new Website("Poocg","https://www.poocg.com/works/index/type/new",rulePOOCG);
-    static ItemRule ruleDEVIANTART=new ItemRule();
-    final static Website DEVIANTART=new Website("Deviantart","http://www.deviantart.com/whats-hot/",ruleDEVIANTART);
-    static ItemRule ruleLEIFENG=new ItemRule();
-    final static Website LEIFENG=new Website("雷锋网","http://www.leiphone.com/category/sponsor",ruleLEIFENG);
-    static ItemRule ruleQdaily=new ItemRule();
-    final static Website Qdaily =new Website("好奇心日报","http://www.qdaily.com/tags/1068.html",ruleQdaily,0,1);
-    public static ItemRule ruleSspai=new ItemRule();
-    final static Website SSPAI=new Website("少数派","https://sspai.com/api/v1/articles?offset=0&limit=20&has_tag=1&tag=%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7&type=recommend_to_home",ruleSspai,1,1);
-
-
-
-    final static Website[] websites=new Website[]{POOCG,DEVIANTART,LEIFENG, Qdaily,SSPAI};//先暂时这样写WebsiteList 以后再动态生成
+    static Website[] websites;//=new Website[]{POOCG,DEVIANTART,LEIFENG, Qdaily,SSPAI};//先暂时这样写WebsiteList 以后再动态生成
+    static String[] websitesString;//=new String[]{"POOCG","DEVIANTART","LEIFENG","Qdaily","SSPAI"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list);
+        WebsiteInit.init();
 
-        POOCG.setItemSelector("li:has(div.imgbox)");
-        rulePOOCG.setLinkRule(new Rule("div.imgbox > a[href]","attr","href"));
-        rulePOOCG.setThumbnailRule(new Rule("div.imgbox > a > img[src]","attr","src"));
-        rulePOOCG.setTitleRule(new Rule("div.infobox > p.titles","text"));
-        POOCG.setDetailItemSelector("img[style*=max-width]");
-        rulePOOCG.setImgRule(new Rule("*","attr","src"
-                ,"(https:\\/\\/imagescdn\\.poocg\\.me\\/uploadfile\\/photo\\/[0-9]{4}\\/[0-9]{1,2}\\/[a-z|0-9]+\\.[a-z]+)","$1"));
-        POOCG.setNextPageRule(new Rule("a#pagenav","attr","href"));
-        POOCG.setCategory(new String[]{"最新","https://www.poocg.com/works/index/type/new","新赞","https://www.poocg.com/works/index/type/love","热门","https://www.poocg.com/works/index/type/hot"
-                ,"精华","https://www.poocg.com/works/index/type/best","推荐","https://www.poocg.com/works/index/type/rem"});
-
-        DEVIANTART.setItemSelector("span[class*=thumb]:has(img[data-sigil=torpedo-img])");
-        ruleDEVIANTART.setLinkRule(new Rule("a.torpedo-thumb-link","attr","href"));
-        ruleDEVIANTART.setThumbnailRule(new Rule("a.torpedo-thumb-link > img[data-sigil=torpedo-img]","attr","src"));
-        ruleDEVIANTART.setTitleRule(new Rule("span.info > span.title-wrap > span.title","text"));
-        DEVIANTART.setDetailItemSelector("div[class=dev-view-deviation]");
-        ruleDEVIANTART.setImgRule(new Rule("img[class=dev-content-full]","attr","src"));
-        DEVIANTART.setNextPageRule(new Rule("a.selected","attr","href","(http:\\/\\/www\\.deviantart\\.com\\/[a-z|-]+\\/)","$1?offset=!size"));
-        DEVIANTART.setCategory(new String[]{"Newest","http://www.deviantart.com/newest/","What's Hot","http://www.deviantart.com/whats-hot/"
-                ,"Undiscovered","http://www.deviantart.com/undiscovered/","Popular 24 hours","http://www.deviantart.com/popular-24-hours/","Popular All Time","http://www.deviantart.com/popular-all-time/"});
-
-
-        LEIFENG.setItemSelector("li > div.box:has(div.img)");
-        ruleLEIFENG.setLinkRule(new Rule("div.img > a[target]","attr","href"));
-        ruleLEIFENG.setThumbnailRule(new Rule("div.img > a[target] > img.lazy","attr","data-original"));
-        ruleLEIFENG.setTitleRule(new Rule("div.img > a[target] > img.lazy","attr","title"));
-        LEIFENG.setDetailItemSelector("div[class=lph-article-comView] > p");
-        ruleLEIFENG.setImgRule(new Rule("p img[alt]","attr","src"));
-        ruleLEIFENG.setArticleRule(new Rule("p","text"));
-        LEIFENG.setNextPageRule(new Rule("div.lph-page > a.next","attr","href"));
-        LEIFENG.setCategory(new String[]{"人工智能","http://www.leiphone.com/category/ai","智能驾驶","http://www.leiphone.com/category/transportation","网络安全","http://www.leiphone.com/category/letshome"
-                ,"AR/VR","http://www.leiphone.com/category/arvr","机器人","http://www.leiphone.com/category/robot","Fintect","http://www.leiphone.com/category/fintech","物联网","http://www.leiphone.com/category/iot"
-                ,"未来医疗","http://www.leiphone.com/category/aihealth","智能硬件","http://www.leiphone.com/category/weiwu","AI+","http://www.leiphone.com/category/aijuejinzhi"});
-
-        Qdaily.setItemSelector("div[class*=packery-item] > a[href]");
-        ruleQdaily.setLinkRule(new Rule("a[href]","attr","href","(.*)","http://www.qdaily.com$1"));
-        ruleQdaily.setThumbnailRule(new Rule("div[class*=hd] > div >img","attr","data-src"));
-        ruleQdaily.setTitleRule(new Rule("div[class*=hd] > div >img","attr","alt"));
-        Qdaily.setDetailItemSelector("div.detail > p,div.detail > div[class*=images]");
-        ruleQdaily.setImgRule(new Rule("figure > img[data-ratio]","attr","data-src"));
-        ruleQdaily.setArticleRule(new Rule("p","text"));
-        Qdaily.setNextPageRule(new Rule("div[class=page-content]","html","data-lastkey\\=\"([0-9]+)\" data-([a-z]+)id\\=\"([0-9]+)\"","http://www.qdaily.com/$2s/$2more/$3/$1.json"));
-        Qdaily.setCategory(new String[]{"长文章","http://www.qdaily.com/tags/1068.html","10个图","http://www.qdaily.com/tags/1615.html","TOP15","http://www.qdaily.com/tags/29.html"
-                ,"商业","http://www.qdaily.com/categories/18.html","智能","http://www.qdaily.com/categories/4.html","设计","http://www.qdaily.com/categories/17.html","时尚","http://www.qdaily.com/categories/19.html"
-                ,"娱乐","http://www.qdaily.com/categories/3.html","城市","http://www.qdaily.com/categories/5.html","游戏","http://www.qdaily.com/categories/54.html"});
-        Qdaily.setCategoryRule(new Rule("div[class=page-content]","html","data-lastkey\\=\"([0-9]+)\" data-([a-z]+)id\\=\"([0-9]+)\"","$2s/$2more/$3/"));
-        ruleQdaily.setJsonThumbnailRule(new JsonRule("$.data.feeds[*].image"));
-        ruleQdaily.setJsonTitleRule(new JsonRule("$.data.feeds[*].post.title"));
-        ruleQdaily.setJsonLinkRule(new JsonRule("$.data.feeds[*].post.id", "http://www.qdaily.com/articles/", ".html"));
-        ruleQdaily.setJsonNextPageRule(new JsonRule("$.data.last_key","http://www.qdaily.com/category/",".json"));
+        pref= PreferenceManager.getDefaultSharedPreferences(this);
+        editor=pref.edit();
+        boolean haveInit=pref.getBoolean("haveInit",false);
+        editor.putBoolean("haveInit",true);
+        if (haveInit){
+            //读"websitesString"个数->创建数组->String->Object
+            String[] websitesStringNew=pref.getString("websitesString","").split(",");
+            Website[] websitesNew=new Website[websitesStringNew.length];
+            for (int i=0;i<websitesStringNew.length;i++){
+                String websiteInJson=pref.getString(websitesStringNew[i],"");
+                websitesNew[i]=JsonUtils.JsonToObject(websiteInJson);
+            }
+            websites=websitesNew;
+            websitesString=websitesStringNew;
+        }else {
+            //第一次登录 赋初始值
+            websites=new Website[]{POOCG,DEVIANTART,LEIFENG, Qdaily,SSPAI};
+            websitesString=new String[]{"Poocg","Deviantart","雷锋网","好奇心日报","少数派"};
+            String s=websitesString[0];
+            for (int i=1;i<websitesString.length;i++){
+                s=s+","+websitesString[i];
+            }
+            editor.putString("websitesString", s);
+            for (int i=0;i<websites.length;i++){
+                editor.putString(websites[i].getWebSiteName(),JsonUtils.ObjectToJson(websites[i]));
+                editor.apply();
+                LogUtil.d(pref.getString(websites[i].getWebSiteName(),""));
+            }
+            editor.apply();
+        }
 
 
-
-
-        ruleSspai.setJsonThumbnailRule(new JsonRule("$.list[*].banner","https://cdn.sspai.com/"));
-        ruleSspai.setJsonTitleRule(new JsonRule("$.list[*].title"));
-        ruleSspai.setJsonLinkRule(new JsonRule("$.list[*].id","https://sspai.com/post/"));
-        ruleSspai.setJsonNextPageRule(new JsonRule(".$list[*]."));
-
-
-/*
-        ruleJiqizhixin.setTitleRule(new JsonRule("%.list[*].post_title"));
-        ruleJiqizhixin.setThumbnailRule(new JsonRule("$.list[*].thumb","http://www.jiqizhixin.com"));
-        //ruleJiqizhixin.setCategoryRule(new JsonRule());
-        ruleJiqizhixin.setLinkRule(new JsonRule("$.list[*].url","http://www.jiqizhixin.com"));
-        ruleJiqizhixin.setPublishTimeRule(new JsonRule("$.list[*].post_date"));
-*/
-
-
-
-        GetToolBarImg.sendRequest();
-
-        //Log.d("JSON_________________", JsonUtils.ObjectToJson(POOCG));
+        //Log.d("JSON_________________", JsonUtils.ObjectToJson(Qdaily));
         //Log.d("JSON", JsonUtils.ObjectToJson(DEVIANTART));
         //final Website newWebsite=JsonUtils.JsonToObject(JsonUtils.ObjectToJson(POOCG));
         //Browser.sendRequest(newWebsite,"new");//从JSON格式转换为Website对象
 
+
+        GetToolBarImg.sendRequest();
         adapter2=adapter;
 
         //点击推送通知后跳转的category
@@ -231,7 +185,7 @@ public class ListActivity extends AppCompatActivity {
                 .into(rightBackground);
         TextView usernameShow=(TextView)navViewLeftHeader.findViewById(R.id.username_show);
         ImageView userIcon=(ImageView)navViewLeftHeader.findViewById(R.id.user_icon);
-        pref= PreferenceManager.getDefaultSharedPreferences(this);
+
         final String loginUsername=pref.getString("loginUsername","");
         if (!loginUsername.equals("")){
             //已登录
@@ -312,7 +266,7 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(ListActivity.this,AddWebsite.class);
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
         final TextView addWebsiteText=(TextView)navViewLeftHeader.findViewById(R.id.add_website_text);
@@ -382,6 +336,7 @@ public class ListActivity extends AppCompatActivity {
         IntentFilter intentFilter=new IntentFilter();
         intentFilter.addAction("com.example.yang.myapplication.LOAD_FINISH");
         intentFilter.addAction("com.example.yang.myapplication.TOOL_BAR_LOAD_FINISH");
+        intentFilter.addAction("com.example.yang.myapplication.ADD_FINISH");
         receiver=new LoadFinishReceiver();
         registerReceiver(receiver,intentFilter);
         swipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
@@ -519,6 +474,19 @@ public class ListActivity extends AppCompatActivity {
                     }
                     swipeRefreshLayout.setRefreshing(false);
                     isRefreshing=0;
+                }
+            }else if(intent.getAction().equals("com.example.yang.myapplication.ADD_FINISH")){
+                //动态生成侧滑菜单(left)设置被选中item
+                Menu menuLeft=navViewLeft.getMenu();
+                menuLeft.clear();
+                if (websites.length!=0){
+                    for (int i=0;i<websites.length;i++){
+                        menuLeft.add(group_left,i,i,websites[i].getWebSiteName());
+                        menuLeft.findItem(i).setCheckable(true);
+                        if (websites[i].getWebSiteName().equals(websiteNow.getWebSiteName())){
+                            navViewLeft.setCheckedItem(menuLeft.findItem(i).getItemId());
+                        }
+                    }
                 }
             }
         }
@@ -671,6 +639,5 @@ public class ListActivity extends AppCompatActivity {
             System.exit(0);
         }
     }
-
 
 }

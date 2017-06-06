@@ -52,7 +52,7 @@ public class SelectorAndRegex {
         //先用选择器
         if (doc.select(website.getItemSelector()).size()==0){
             //匹配不到
-LogUtil.d(ruleString+" Selector can't find");
+//LogUtil.d(ruleString+" Selector can't find");
             return "";
         }
         if (rule.getMethod().equals("attr")){
@@ -63,7 +63,7 @@ LogUtil.d(ruleString+" Selector can't find");
         }else if (rule.getMethod().equals("html")){
             string=doc.select(website.getDetailItemSelector()).get(position).select(rule.getSelector()).html();
         }
-LogUtil.d(ruleString+" Selector"+position+" "+string);
+//LogUtil.d(ruleString+" Selector"+position+" "+string);
         if (rule.getRegex()!=null){
             //用正则
             Pattern pattern=Pattern.compile(rule.getRegex());
@@ -80,7 +80,7 @@ LogUtil.d(ruleString+" Selector"+position+" "+string);
                 string=string.replace("$"+i,strings.get(i-1));
             }
         }
-LogUtil.d(ruleString+" result "+position+": "+string);
+//LogUtil.d(ruleString+" result "+position+": "+string);
         return string;
     }
 
@@ -110,7 +110,7 @@ LogUtil.d(ruleString+" result "+position+": "+string);
         //先用选择器
         if (doc.select(rule.getSelector()).size()==0){
             //匹配不到
-LogUtil.d(ruleString+" Selector can't find");
+//LogUtil.d(ruleString+" Selector can't find");
             return "";
         }
         if (rule.getMethod().equals("html")){
@@ -118,7 +118,7 @@ LogUtil.d(ruleString+" Selector can't find");
         }else {
             string=doc.select(rule.getSelector()).attr(rule.getAttribute());
         }
-LogUtil.d(ruleString+" Selector "+string);
+//LogUtil.d(ruleString+" Selector "+string);
         if (rule.getRegex()!=null){
             //用正则
             Pattern pattern=Pattern.compile(rule.getRegex());
@@ -137,7 +137,7 @@ LogUtil.d(ruleString+" Selector "+string);
             string=string.replace("!size",String.valueOf(sizeNow));
             string=string.replace("!page",String.valueOf(pageNow));
         }
-LogUtil.d(ruleString+" result : "+string);
+//LogUtil.d(ruleString+" result : "+string);
         return string;
     }
 
@@ -163,7 +163,7 @@ LogUtil.d(ruleString+" result : "+string);
         //先用选择器
         if (doc.select(website.getDetailItemSelector()).size()==0){
             //匹配不到
-LogUtil.d(ruleString+" Selector can't find");
+//LogUtil.d(ruleString+" Selector can't find");
             return "";
         }
         if (rule.getMethod().equals("attr")){
@@ -173,7 +173,7 @@ LogUtil.d(ruleString+" Selector can't find");
         }else if (rule.getMethod().equals("html")){
             string=doc.select(website.getDetailItemSelector()).get(position).select(rule.getSelector()).html();
         }
-LogUtil.d(ruleString+" Selector"+position+" "+string);
+//LogUtil.d(ruleString+" Selector"+position+" "+string);
         if (rule.getRegex()!=null){
             //用正则
             Pattern pattern=Pattern.compile(rule.getRegex());
@@ -190,7 +190,7 @@ LogUtil.d(ruleString+" Selector"+position+" "+string);
                 string=string.replace("$"+i,strings.get(i-1));
             }
         }
-LogUtil.d(ruleString+" result "+position+" "+string);
+//LogUtil.d(ruleString+" result "+position+" "+string);
         return string;
     }
 

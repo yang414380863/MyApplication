@@ -34,6 +34,22 @@
                     android:layout_height="match_parent"
                     android:maxLines="1"/>
             </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:text="Index is JSON"
+                android:id="@+id/index_json"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <CheckBox
+                android:text="NextPage is JSON"
+                android:id="@+id/next_json"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
             <!--下面是Category-->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -51,12 +67,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <EditText
+                    android:id="@+id/item_selector"
                     android:hint="ItemSelector"
                     android:layout_width="0dp"
                     android:layout_weight="0.5"
                     android:layout_height="match_parent"
                     android:maxLines="1"/>
                 <EditText
+                    android:id="@+id/detail_selector"
                     android:hint="DetailSelector"
                     android:layout_width="0dp"
                     android:layout_weight="0.5"
@@ -71,12 +89,6 @@
                 android:orientation="vertical"
                 android:id="@+id/item_rule_parent">
             </LinearLayout>
-            <Button
-                android:id="@+id/add_item_rule"
-                android:text="Add ItemRule"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
         </LinearLayout>
     </ScrollView>
     <android.support.design.widget.FloatingActionButton
