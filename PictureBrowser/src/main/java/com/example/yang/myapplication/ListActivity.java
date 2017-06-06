@@ -44,7 +44,6 @@ import com.example.yang.myapplication.web.GetToolBarImg;
 import com.example.yang.myapplication.web.html.Rule;
 import com.example.yang.myapplication.web.html.ItemRule;
 import com.example.yang.myapplication.web.Website;
-import com.example.yang.myapplication.web.json.JsonItemRule;
 import com.example.yang.myapplication.web.json.JsonRule;
 
 import java.util.ArrayList;
@@ -93,9 +92,6 @@ public class ListActivity extends AppCompatActivity {
     final static Website SSPAI=new Website("少数派","https://sspai.com/api/v1/articles?offset=0&limit=20&has_tag=1&tag=%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7&type=recommend_to_home",ruleSspai,1,1);
 
 
-    //public static JsonItemRule ruleQdaily = new JsonItemRule();
-    //public static JsonItemRule ruleSspai = new JsonItemRule();
-    public static JsonItemRule ruleJiqizhixin = new JsonItemRule();
 
     final static Website[] websites=new Website[]{POOCG,DEVIANTART,LEIFENG, Qdaily,SSPAI};//先暂时这样写WebsiteList 以后再动态生成
 

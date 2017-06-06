@@ -30,7 +30,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.example.yang.myapplication.ListActivity.ruleSspai;
 
 
 /**
@@ -45,7 +44,6 @@ public class Browser {
     public static int sizeThisPage;
     private static String nextPageUrl;
     private static int pageNext;
-    private static int isNext;
     static Date latestUpdate;
     static String categoryNow;
 
@@ -67,8 +65,9 @@ public class Browser {
                     OkHttpClient client = new OkHttpClient();
                     if (refreshPlace.equals("bottom")){
                         url=websiteNow.getNextPageUrl();
-                        isNext=1;
                         pageNext++;
+                    }else if (refreshPlace.equals("new")){
+                        pageNext=2;
                     }
                     //LogUtil.d("url "+url);
                     final Request request = new Request.Builder()
@@ -89,7 +88,7 @@ public class Browser {
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
                             try{
-                                if (isNext==1){
+                                if (pageNext>2){
                                     if (!website.isJsonNext()){
                                         //解析HTML
                                         Document doc=Jsoup.parse(response.body().string());
@@ -141,7 +140,6 @@ public class Browser {
                     webContentList.add(new WebItem());
                 }
                 sizeNow=0;
-                pageNext =2;
                 nextPageUrl="";
                 break;
             }
@@ -228,7 +226,6 @@ public class Browser {
                     webContentList.add(new WebItem());
                 }
                 sizeNow=0;
-                pageNext =2;
                 nextPageUrl="";
                 break;
             }
