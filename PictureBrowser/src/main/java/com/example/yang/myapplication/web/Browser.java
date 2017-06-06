@@ -7,11 +7,10 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.example.yang.myapplication.basic.LogUtil;
 import com.example.yang.myapplication.basic.MyApplication;
 import com.example.yang.myapplication.web.html.SelectorAndRegex;
+import com.example.yang.myapplication.web.json.JsonRuleConnector;
 import com.jayway.jsonpath.JsonPath;
 
 
@@ -184,6 +183,7 @@ public class Browser {
         //解析列表的下一页
         if (websiteNow.getNextPageRule()!=null){
             nextPageUrl=SelectorAndRegex.getOtherData(doc,websiteNow,"NextPage",sizeNow+1,pageNext);
+            nextPageUrl=nextPageUrl.replaceAll("categorys","categories");
         }
         LogUtil.d("nextPageUrl "+nextPageUrl);
         //发送一个加载完成了的广播
@@ -194,25 +194,12 @@ public class Browser {
 
     private static void analysisJSON(String jsonData,String refreshPlace){
 
-        List<Object> links = JsonPath.read(jsonData, websiteNow.getItemRule().getJsonLinkRule().getJsonPath());
-        List<Object> thumbnails = JsonPath.read(jsonData, websiteNow.getItemRule().getJsonThumbnailRule().getJsonPath());
-        List<Object> titles = JsonPath.read(jsonData, websiteNow.getItemRule().getJsonTitleRule().getJsonPath());
-        String nextpage = JsonPath.read(jsonData, websiteNow.getItemRule().getJsonNextPageRule().getJsonPath()).toString();
+        List<Object> links = JsonRuleConnector.getCompleteLinks(jsonData);
+        List<Object> thumbnails = JsonRuleConnector.getCompleteThumbnails(jsonData);
+        List<Object> titles = JsonRuleConnector.getCompleteTitles(jsonData);
+        String nextPage = JsonRuleConnector.getCompleteNextPage(jsonData);
 
-        utiltoStringList(links);
-        utiltoStringList(thumbnails);
-        utiltoStringList(titles);
-
-        for (int i=0;i<links.size();i++){
-            links.set(i,websiteNow.getItemRule().getJsonLinkRule().getHeadString() + links.get(i) + websiteNow.getItemRule().getJsonLinkRule().getTailString());
-            thumbnails.set(i,websiteNow.getItemRule().getJsonThumbnailRule().getHeadString() + thumbnails.get(i) + websiteNow.getItemRule().getJsonThumbnailRule().getTailString());
-            titles.set(i,websiteNow.getItemRule().getJsonTitleRule().getHeadString() + titles.get(i) + websiteNow.getItemRule().getJsonTitleRule().getTailString());
-        }
-
-
-        nextpage = websiteNow.getItemRule().getJsonNextPageRule().getHeadString() + nextpage + websiteNow.getItemRule().getJsonNextPageRule().getTailString();
-
-        nextPageUrl=nextpage.replaceAll("category",categoryNow);
+        nextPageUrl=nextPage.replaceAll("category",categoryNow);
 
         sizeThisPage=links.size();
         int sizeNow=webContentList.size();//sizeNow=已经加载的item数量
@@ -264,21 +251,12 @@ public class Browser {
         }
         LogUtil.d("Finish load "+sizeNow+" item  Next item is No "+sizeNow);
         //解析列表的下一页
-        if (websiteNow.getNextPageRule()!=null){
-            //nextPageUrl=;
-        }
         LogUtil.d("nextPageUrl "+nextPageUrl);
         //发送一个加载完成了的广播
         Intent intent=new Intent("com.example.yang.myapplication.LOAD_FINISH");
         intent.putExtra("websiteIndex",websiteNow.getIndexUrl());
         MyApplication.getContext().sendBroadcast(intent);
 
-    }
-    private static void utiltoStringList(List<Object> lists){
-        for(Object list : lists)
-        {
-            list.toString();
-        }
     }
 
     public  static void sendRequestDetail(final int id,final String refreshPlace){
