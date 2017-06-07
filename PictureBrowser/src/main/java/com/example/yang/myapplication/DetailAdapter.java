@@ -47,7 +47,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.web_content_item, parent, false);
+                .inflate(R.layout.web_content_item_detail, parent, false);
         final ViewHolder holder = new ViewHolder(view);
         view.setElevation(0);
         view.setOnClickListener(this);

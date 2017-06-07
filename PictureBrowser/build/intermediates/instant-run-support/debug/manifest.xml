@@ -40,7 +40,9 @@
         </activity>
         <activity android:name="com.example.yang.myapplication.DetailActivity" >
         </activity>
-        <activity android:name="com.example.yang.myapplication.ViewPicture" >
+        <activity
+            android:name="com.example.yang.myapplication.ViewPicture"
+            android:theme="@style/AppThemePic" >
         </activity>
 
         <service

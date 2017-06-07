@@ -118,7 +118,7 @@ public class DetailActivity extends AppCompatActivity {
                                     .load(webContent.getImg().get(i))
                                     .fitCenter()
                                     .into(imageView);
-                            imageView.setImageAlpha(150);
+                            imageView.setImageAlpha(200);
                             break;
                         }
                     }

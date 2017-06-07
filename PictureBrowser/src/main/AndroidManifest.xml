@@ -30,7 +30,8 @@
         </activity>
         <activity android:name=".DetailActivity">
         </activity>
-        <activity android:name=".ViewPicture">
+        <activity android:name=".ViewPicture"
+            android:theme="@style/AppThemePic">
         </activity>
 
         <service
