@@ -6,7 +6,10 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -26,8 +29,6 @@ import java.util.Arrays;
 
 import static com.example.yang.myapplication.ListActivity.websites;
 import static com.example.yang.myapplication.ListActivity.websitesString;
-import static com.example.yang.myapplication.web.Browser.websiteNow;
-import static com.example.yang.myapplication.web.WebsiteInit.Qdaily;
 
 
 public class AddWebsite extends AppCompatActivity {
@@ -40,6 +41,10 @@ public class AddWebsite extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_website);
+        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar3);
+        toolbar.setTitle("Add Website");
+        setSupportActionBar(toolbar);
+
 
         final LinearLayout categoryLayout=(LinearLayout)findViewById(R.id.category_parent);
         final LinearLayout itemRuleLayout=(LinearLayout)findViewById(R.id.item_rule_parent);
@@ -245,5 +250,25 @@ public class AddWebsite extends AppCompatActivity {
                 break;
         }
         return rule;
+    }
+
+    //ToolBar
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.toolbar3,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.add_json:{
+                Intent intent=new Intent(AddWebsite.this,AddWebsiteWithJson.class);
+                startActivity(intent);
+                finish();
+                break;
+            }
+            default:break;
+        }
+        return true;
     }
 }

@@ -615,6 +615,7 @@
     <dimen name="design_tab_text_size_2line">12sp</dimen>
     <item format="float" name="disabled_alpha_material_dark" type="dimen">0.30</item>
     <item format="float" name="disabled_alpha_material_light" type="dimen">0.26</item>
+    <dimen name="fab_margin">16dp</dimen>
     <item format="float" name="highlight_alpha_material_colored" type="dimen">0.26</item>
     <item format="float" name="highlight_alpha_material_dark" type="dimen">0.20</item>
     <item format="float" name="highlight_alpha_material_light" type="dimen">0.12</item>
@@ -730,6 +731,7 @@
     <string name="prompt_username">UserName</string>
     <string name="search_menu_title">Search</string>
     <string name="status_bar_notification_info_overflow">999+</string>
+    <string name="title_activity_add_json">AddJson</string>
     <string name="title_activity_login">Sign in</string>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>
@@ -740,16 +742,21 @@
         <item name="android:windowExitAnimation">@anim/design_bottom_sheet_slide_out</item>
     </style>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-    <!-- Customize your theme here. -->
-    <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
-    <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
-    <!--<item name="android:windowIsTranslucent">true</item>窗口透明-->
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
+        <!--<item name="android:windowIsTranslucent">true</item>窗口透明-->
 
-</style>
+    </style>
     <style name="AppTheme2" parent="AppTheme">
-</style>
+    </style>
+    <style name="AppTheme2.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme2.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="AppThemeNormal" parent="AppTheme">
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+    </style>
     <style name="AppThemePic" parent="AppTheme">
         <item name="android:windowBackground">@color/colorBlack</item>
     </style>

@@ -89,7 +89,13 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name="com.example.yang.myapplication.AddWebsite" >
+        <activity
+            android:name="com.example.yang.myapplication.AddWebsite"
+            android:theme="@style/AppThemeNormal" >
+        </activity>
+        <activity
+            android:name="com.example.yang.myapplication.AddWebsiteWithJson"
+            android:theme="@style/AppThemeNormal" >
         </activity>
         <activity android:name="com.avos.avoscloud.search.SearchActivity" >
         </activity>

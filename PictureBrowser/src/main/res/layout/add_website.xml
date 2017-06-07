@@ -7,9 +7,18 @@
     android:layout_height="match_parent"
     tools:context="com.example.yang.myapplication.AddWebsite"
     android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar3"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Light">
+    </android.support.v7.widget.Toolbar>
     <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+        android:layout_marginTop="70dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

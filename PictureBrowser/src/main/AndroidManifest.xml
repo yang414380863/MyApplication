@@ -23,14 +23,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme2">
-
         <activity
             android:name=".ListActivity"
             android:launchMode="singleTask">
         </activity>
         <activity android:name=".DetailActivity">
         </activity>
-        <activity android:name=".ViewPicture"
+        <activity
+            android:name=".ViewPicture"
             android:theme="@style/AppThemePic">
         </activity>
 
@@ -78,7 +78,13 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".AddWebsite">
+        <activity
+            android:name=".AddWebsite"
+            android:theme="@style/AppThemeNormal">
+        </activity>
+        <activity
+            android:name=".AddWebsiteWithJson"
+            android:theme="@style/AppThemeNormal">
         </activity>
     </application>
 
