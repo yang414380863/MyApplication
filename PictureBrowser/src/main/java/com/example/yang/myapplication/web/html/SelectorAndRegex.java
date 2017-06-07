@@ -157,7 +157,7 @@ public class SelectorAndRegex {
                 rule=website.getItemRule().getImgRule();//肯定不触发
                 break;
         }
-        if (rule==null){
+        if (rule.getSelector().equals("")){
             return "";
         }
         //先用选择器

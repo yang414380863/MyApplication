@@ -15,9 +15,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -57,6 +59,7 @@ public class DetailActivity extends AppCompatActivity {
         //标题栏
         imageView=(ImageView)findViewById(R.id.image_view);
         collapsingToolbarLayout=(CollapsingToolbarLayout)findViewById(collapsing_toolbar);
+        collapsingToolbarLayout.setTitle("Loading...");
         //ToolBar
         toolbar=(Toolbar)findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
@@ -92,8 +95,6 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
     @Override
     protected void onDestroy(){
@@ -174,4 +175,5 @@ public class DetailActivity extends AppCompatActivity {
         }
         return true;
     }
+
 }

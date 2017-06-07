@@ -15,17 +15,27 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.yang.myapplication.basic.LogUtil;
 import com.example.yang.myapplication.download.DownloadService;
 import com.github.chrisbanes.photoview.PhotoView;
 
+import static com.bumptech.glide.Glide.with;
+
 public class ViewPicture extends AppCompatActivity implements View.OnClickListener {
 
+    //沉浸式
+    static View systemBar;
     //广播接收器
     private Receiver receiver;
 
@@ -57,6 +67,16 @@ public class ViewPicture extends AppCompatActivity implements View.OnClickListen
         intentFilter.addAction("com.example.yang.myapplication.CLICK_PUSH");
         receiver=new Receiver();
         registerReceiver(receiver,intentFilter);
+
+        //沉浸式
+        systemBar=getWindow().getDecorView();
+        systemBar.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        //| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION//显示导航栏
+                        //| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN//显示状态栏
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION//不显示导航栏
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN//不显示状态栏
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);//STICKY沉浸模式
 
         FloatingActionButton fab=(FloatingActionButton)findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -131,4 +151,5 @@ public class ViewPicture extends AppCompatActivity implements View.OnClickListen
             }
         }
     }
+
 }

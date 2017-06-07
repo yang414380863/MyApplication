@@ -51,6 +51,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.example.yang.myapplication.R.id.*;
+import static com.example.yang.myapplication.ViewPicture.systemBar;
 import static com.example.yang.myapplication.web.Browser.*;
 import static com.example.yang.myapplication.web.JsonUtils.JsonToObject;
 import static com.example.yang.myapplication.web.WebsiteInit.*;
@@ -59,6 +60,8 @@ import static com.example.yang.myapplication.web.WebsiteInit.*;
 //列表所在Activity
 public class ListActivity extends AppCompatActivity {
 
+    //瀑布流
+    RecyclerView recyclerView;
     //侧滑菜单
     private DrawerLayout drawerLayout;
     NavigationView navViewRight;
@@ -90,8 +93,6 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list);
-        WebsiteInit.init();
-
         pref= PreferenceManager.getDefaultSharedPreferences(this);
         editor=pref.edit();
         boolean haveInit=pref.getBoolean("haveInit",false);
@@ -108,6 +109,7 @@ public class ListActivity extends AppCompatActivity {
             websitesString=websitesStringNew;
         }else {
             //第一次登录 赋初始值
+            WebsiteInit.init();
             websites=new Website[]{POOCG,DEVIANTART,LEIFENG, Qdaily,SSPAI};
             websitesString=new String[]{"Poocg","Deviantart","雷锋网","好奇心日报","少数派"};
             String s=websitesString[0];
@@ -134,13 +136,20 @@ public class ListActivity extends AppCompatActivity {
         adapter2=adapter;
 
         //点击推送通知后跳转的category
+        //无推送时默认进入上次最后打开的
+        //之前没打开过则打开默认的第一个
         if (getIntent().hasExtra("index")){
             Intent intent=getIntent();
             String index=intent.getExtras().getString("index");
             LogUtil.d("index:"+index);
             for (int i=0;i<websites.length;i++){
                 if (websites[i].getCategory()==null){
-                    continue;
+                    if (websites[i].getIndexUrl().equals(index)){
+                        Browser.sendRequest(websiteNow,"new");
+                    }else {
+                        //无Category/Index的跳过
+                        continue;
+                    }
                 }
                 for (int j=0;j<websites[i].getCategory().length;j++,j++){
                     if (websites[i].getCategory()[j+1].equals(index)){
@@ -151,11 +160,32 @@ public class ListActivity extends AppCompatActivity {
                 }
             }
         }else {
-            Browser.sendRequest(POOCG,"new");//默认首页 无推送时默认打开
+            String indexNow=pref.getString("IndexNow","");
+            if (indexNow.equals("")){
+                Browser.sendRequest(websites[0],"new");//默认首页第一个
+            }else {
+                for (int i=0;i<websites.length;i++){
+                    if (websites[i].getCategory()==null){
+                        if (websites[i].getIndexUrl().equals(indexNow)){
+                            Browser.sendRequest(websiteNow,"new");
+                        }else {
+                            //无Category/Index的跳过
+                            continue;
+                        }
+                    }
+                    for (int j=0;j<websites[i].getCategory().length;j++,j++){
+                        if (websites[i].getCategory()[j+1].equals(indexNow)){
+                            websiteNow=websites[i];
+                            websiteNow.setIndexUrl(websites[i].getCategory()[j+1]);
+                            Browser.sendRequest(websiteNow,"new");
+                        }
+                    }
+                }
+            }
         }
 
         // 沉浸式
-        final View systemBar = findViewById(collapsing_toolbar);
+        //final View systemBar = findViewById(collapsing_toolbar);
         //折叠标题栏
         imageView=(ImageView)findViewById(R.id.image_view);
         collapsingToolbarLayout=(CollapsingToolbarLayout)findViewById(collapsing_toolbar);
@@ -341,7 +371,7 @@ public class ListActivity extends AppCompatActivity {
         registerReceiver(receiver,intentFilter);
         swipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
         //瀑布流
-        RecyclerView recyclerView=(RecyclerView)findViewById(R.id.recycle_view);
+        recyclerView=(RecyclerView)findViewById(R.id.recycle_view);
         StaggeredGridLayoutManager layoutManager=new
                 StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);//列数2
         recyclerView.setLayoutManager(layoutManager);
@@ -384,7 +414,7 @@ public class ListActivity extends AppCompatActivity {
                     */
                 }
                 if(newState == SCROLL_STATE_IDLE){
-                    systemBar.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                    //systemBar.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
                 }
                 //划到底部刷新
                 if(!recyclerView.canScrollVertically(1)){//检测划到了底部
@@ -398,7 +428,7 @@ public class ListActivity extends AppCompatActivity {
                         snackbar.show();
                     }
                 }else if(!recyclerView.canScrollVertically(-1)) {//检测划到了顶部
-                    systemBar.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                    //systemBar.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
                 }
 
             }
@@ -429,6 +459,7 @@ public class ListActivity extends AppCompatActivity {
                     adapter.getWebContents().clear();//要重新指向一次才能检测到刷新
                     adapter.getWebContents().addAll(webContentList);
                     if (refreshPlace.equals("top")){
+                        recyclerView.smoothScrollToPosition(0);//回到顶端
                         adapter.notifyDataSetChanged();
                         snackbar = Snackbar.make(collapsingToolbarLayout, "Loading", Snackbar.LENGTH_INDEFINITE);
                         snackbar.getView().getBackground().setAlpha(100);
