@@ -50,6 +50,9 @@ public class Browser {
     public static void sendRequest(final Website website,final String refreshPlace){
         pref= PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext());
         editor=pref.edit();
+        if (website==null){
+            return;
+        }
         websiteNow =website;
         editor.putString("IndexNow",websiteNow.getIndexUrl());
         editor.apply();//保存最后一次打开的网页URL

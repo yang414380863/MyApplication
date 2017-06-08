@@ -39,7 +39,6 @@ import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
 import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.basic.LogUtil;
-import com.example.yang.myapplication.basic.MyApplication;
 import com.example.yang.myapplication.web.Browser;
 import com.example.yang.myapplication.web.GetToolBarImg;
 import com.example.yang.myapplication.web.JsonUtils;
@@ -47,13 +46,10 @@ import com.example.yang.myapplication.web.Website;
 import com.example.yang.myapplication.web.WebsiteInit;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.example.yang.myapplication.R.id.*;
-import static com.example.yang.myapplication.ViewPicture.systemBar;
 import static com.example.yang.myapplication.web.Browser.*;
-import static com.example.yang.myapplication.web.JsonUtils.JsonToObject;
 import static com.example.yang.myapplication.web.WebsiteInit.*;
 
 
@@ -110,7 +106,7 @@ public class ListActivity extends AppCompatActivity {
         }else {
             //第一次登录 赋初始值
             WebsiteInit.init();
-            websites=new Website[]{POOCG,DEVIANTART,LEIFENG, Qdaily,SSPAI};
+            websites=websitesInit;
             websitesString=new String[]{"Poocg","Deviantart","雷锋网","好奇心日报","少数派"};
             String s=websitesString[0];
             for (int i=1;i<websitesString.length;i++){
@@ -161,23 +157,33 @@ public class ListActivity extends AppCompatActivity {
             }
         }else {
             String indexNow=pref.getString("IndexNow","");
-            if (indexNow.equals("")){
+            if (indexNow==null||indexNow.equals("")){
                 Browser.sendRequest(websites[0],"new");//默认首页第一个
             }else {
+                int isFind=0;
                 for (int i=0;i<websites.length;i++){
-                    if (websites[i].getCategory()==null){
-                        if (websites[i].getIndexUrl().equals(indexNow)){
-                            Browser.sendRequest(websiteNow,"new");
-                        }else {
-                            //无Category/Index的跳过
-                            continue;
-                        }
+                    if (isFind==1){
+                        break;
                     }
+                    if (websites[i]==null||websites[i].getIndexUrl()==null){
+                        continue;
+                    }
+                    if (websites[i].getCategory()==null||websites[i].getCategory().length==0){
+                        continue;
+                    }
+                    if (websites[i].getIndexUrl().equals(indexNow)){
+                        Browser.sendRequest(websiteNow,"new");
+                        isFind=1;
+                    }
+                    //检查category
                     for (int j=0;j<websites[i].getCategory().length;j++,j++){
                         if (websites[i].getCategory()[j+1].equals(indexNow)){
                             websiteNow=websites[i];
                             websiteNow.setIndexUrl(websites[i].getCategory()[j+1]);
                             Browser.sendRequest(websiteNow,"new");
+                            isFind=1;
+                            break;
+
                         }
                     }
                 }
@@ -204,13 +210,13 @@ public class ListActivity extends AppCompatActivity {
         ImageView leftBackground=(ImageView)navViewLeftHeader.findViewById(R.id.left_background);
         Glide
                 .with(this)
-                .load(R.drawable.leftheader)
+                .load(R.drawable.head_background)
                 .centerCrop()
                 .into(leftBackground);
         ImageView rightBackground=(ImageView)navViewRight.getHeaderView(0).findViewById(R.id.right_background);
         Glide
                 .with(this)
-                .load(R.drawable.rightheader)
+                .load(R.drawable.head_background)
                 .centerCrop()
                 .into(rightBackground);
         TextView usernameShow=(TextView)navViewLeftHeader.findViewById(R.id.username_show);
@@ -220,7 +226,7 @@ public class ListActivity extends AppCompatActivity {
         if (!loginUsername.equals("")){
             //已登录
             usernameShow.setText("Welcome:"+loginUsername);
-            userIcon.setImageResource(R.drawable.ic_power_settings_new_black_48dp);
+            userIcon.setImageResource(R.drawable.ic_logout);
             //同步云端订阅 _User->pref->_Installation
             final AVQuery<AVObject> query1 = new AVQuery<>("_User");
             query1.whereEqualTo("username", loginUsername);
@@ -250,7 +256,7 @@ public class ListActivity extends AppCompatActivity {
         }else {
             //未登录
             usernameShow.setText("Welcome: visitor");
-            userIcon.setImageResource(R.drawable.ic_account_circle_black_48dp);
+            userIcon.setImageResource(R.drawable.ic_login);
             final AVQuery<AVObject> query2 = new AVQuery<>("_Installation");
             query2.whereEqualTo("installationId", AVInstallation.getCurrentInstallation().getInstallationId());
             query2.findInBackground(new FindCallback<AVObject>() {
@@ -312,6 +318,9 @@ public class ListActivity extends AppCompatActivity {
         menuLeft.clear();
         if (websites.length!=0){
             for (int i=0;i<websites.length;i++){
+                if (websites[i]==null){
+                    continue;
+                }
                 menuLeft.add(group_left,i,i,websites[i].getWebSiteName());
             }
         }
@@ -324,6 +333,9 @@ public class ListActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
                 int position=0;
                 for (int i=0;i<websites.length;i++){
+                    if (websites[i]==null){
+                        continue;
+                    }
                     if (item.getTitle().equals(websites[i].getWebSiteName())){
                         position=i;
                     }
@@ -489,6 +501,9 @@ public class ListActivity extends AppCompatActivity {
                     menuLeft.clear();
                     if (websites.length!=0){
                         for (int i=0;i<websites.length;i++){
+                            if (websites[i]==null){
+                                continue;
+                            }
                             menuLeft.add(group_left,i,i,websites[i].getWebSiteName());
                             menuLeft.findItem(i).setCheckable(true);
                             if (websites[i].getWebSiteName().equals(websiteNow.getWebSiteName())){
@@ -512,6 +527,9 @@ public class ListActivity extends AppCompatActivity {
                 menuLeft.clear();
                 if (websites.length!=0){
                     for (int i=0;i<websites.length;i++){
+                        if (websites[i]==null){
+                            continue;
+                        }
                         menuLeft.add(group_left,i,i,websites[i].getWebSiteName());
                         menuLeft.findItem(i).setCheckable(true);
                         if (websites[i].getWebSiteName().equals(websiteNow.getWebSiteName())){

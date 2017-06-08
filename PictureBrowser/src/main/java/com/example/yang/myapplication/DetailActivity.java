@@ -15,11 +15,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -27,12 +24,9 @@ import com.bumptech.glide.Glide;
 import com.example.yang.myapplication.basic.LogUtil;
 import com.example.yang.myapplication.web.Browser;
 import com.example.yang.myapplication.web.WebItem;
-import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 import static com.example.yang.myapplication.R.id.collapsing_toolbar;
-import static com.example.yang.myapplication.R.id.toolbar2;
 import static com.example.yang.myapplication.web.Browser.webContentList;
-import static com.example.yang.myapplication.web.Browser.websiteNow;
 
 
 //详情所在Activity

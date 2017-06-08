@@ -19,11 +19,11 @@ public class Website {
     private Rule nextPageDetailRule;//Detail页面下一页Rule
     private Rule categoryRule;
     private String[] category;//分类
-    private int JsonIndex=0;
-    private int JsonNext=0;
+    private int JsonIndex=0;//第一页是否JSON格式
+    private int JsonNext=0;//下一页是否JSON格式
 
-    private ItemRule itemRule;
-    private String itemSelector;
+    private ItemRule itemRule;//对一个item内部的属性的选择器
+    private String itemSelector;//筛选出所有item的选择器
     private String detailItemSelector;
 
 

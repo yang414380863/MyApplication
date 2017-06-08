@@ -153,8 +153,9 @@ public class Login extends AppCompatActivity {
                                 editor.putString("username",username);
                                 editor.putString("password",password);
                             }else{
-                                //清除SharedPreferences文件中的数据
-                                editor.clear();
+                                //清除帐号密码
+                                editor.remove("username");
+                                editor.remove("password");
                             }
                             editor.putString("loginUsername",username);
                             editor.apply();
@@ -179,8 +180,9 @@ public class Login extends AppCompatActivity {
                                             editor.putString("username",username);
                                             editor.putString("password",password);
                                         }else{
-                                            //清除SharedPreferences文件中的数据
-                                            editor.clear();
+                                            //清除帐号密码
+                                            editor.remove("username");
+                                            editor.remove("password");
                                         }
                                         editor.putString("loginUsername",username);
                                         editor.apply();

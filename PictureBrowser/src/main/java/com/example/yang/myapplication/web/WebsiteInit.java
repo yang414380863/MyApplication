@@ -15,14 +15,13 @@ public class WebsiteInit {
     static ItemRule ruleDEVIANTART=new ItemRule();
     public final static Website DEVIANTART=new Website("Deviantart","http://www.deviantart.com/whats-hot/",ruleDEVIANTART);
     static ItemRule ruleLEIFENG=new ItemRule();
-    public final static Website LEIFENG=new Website("雷锋网","http://www.leiphone.com/category/sponsor",ruleLEIFENG);
+    public final static Website LEIFENG=new Website("雷锋网","https://www.leiphone.com/category/sponsor",ruleLEIFENG);
     static ItemRule ruleQdaily=new ItemRule();
     public final static Website Qdaily =new Website("好奇心日报","http://www.qdaily.com/tags/1068.html",ruleQdaily,0,1);
-    static ItemRule ruleSspai=new ItemRule();
-    public final static Website SSPAI=new Website("少数派","https://sspai.com/api/v1/articles?offset=0&limit=20&has_tag=1&tag=%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7&type=recommend_to_home",ruleSspai,1,1);
 
-
+    public static Website[] websitesInit=new Website[]{POOCG,DEVIANTART,LEIFENG, Qdaily};
     public static void init(){
+
         POOCG.setItemSelector("li:has(div.imgbox)");
         rulePOOCG.setLinkRule(new Rule("div.imgbox > a[href]","attr","href"));
         rulePOOCG.setThumbnailRule(new Rule("div.imgbox > a > img[src]","attr","src"));
@@ -53,7 +52,7 @@ public class WebsiteInit {
         ruleLEIFENG.setImgRule(new Rule("p img[alt]","attr","src"));
         ruleLEIFENG.setArticleRule(new Rule("p","text"));
         LEIFENG.setNextPageRule(new Rule("div.lph-page > a.next","attr","href"));
-        LEIFENG.setCategory(new String[]{"人工智能","http://www.leiphone.com/category/ai","智能驾驶","http://www.leiphone.com/category/transportation","网络安全","http://www.leiphone.com/category/letshome"
+        LEIFENG.setCategory(new String[]{"业界","https://www.leiphone.com/category/sponsor","人工智能","http://www.leiphone.com/category/ai","智能驾驶","http://www.leiphone.com/category/transportation","网络安全","http://www.leiphone.com/category/letshome"
                 ,"AR/VR","http://www.leiphone.com/category/arvr","机器人","http://www.leiphone.com/category/robot","Fintect","http://www.leiphone.com/category/fintech","物联网","http://www.leiphone.com/category/iot"
                 ,"未来医疗","http://www.leiphone.com/category/aihealth","智能硬件","http://www.leiphone.com/category/weiwu","AI+","http://www.leiphone.com/category/aijuejinzhi"});
 
@@ -74,21 +73,5 @@ public class WebsiteInit {
         ruleQdaily.setJsonLinkRule(new JsonRule("$.data.feeds[*].post.id", "http://www.qdaily.com/articles/", ".html"));
         ruleQdaily.setJsonNextPageRule(new JsonRule("$.data.last_key","http://www.qdaily.com/category/",".json"));
 
-
-
-
-        ruleSspai.setJsonThumbnailRule(new JsonRule("$.list[*].banner","https://cdn.sspai.com/"));
-        ruleSspai.setJsonTitleRule(new JsonRule("$.list[*].title"));
-        ruleSspai.setJsonLinkRule(new JsonRule("$.list[*].id","https://sspai.com/post/"));
-        ruleSspai.setJsonNextPageRule(new JsonRule(".$list[*]."));
-
-
-/*
-        ruleJiqizhixin.setTitleRule(new JsonRule("%.list[*].post_title"));
-        ruleJiqizhixin.setThumbnailRule(new JsonRule("$.list[*].thumb","http://www.jiqizhixin.com"));
-        //ruleJiqizhixin.setCategoryRule(new JsonRule());
-        ruleJiqizhixin.setLinkRule(new JsonRule("$.list[*].url","http://www.jiqizhixin.com"));
-        ruleJiqizhixin.setPublishTimeRule(new JsonRule("$.list[*].post_date"));
-*/
     }
 }
